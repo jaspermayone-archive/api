@@ -1,28 +1,9 @@
-const { Router } = require("express");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const listQuotes = require("./controllers/quotes/listQuotes");
-// const getQuoteById = require("./controllers/quotes/getQuoteById");
-// const randomQuote = require("./controllers/quotes/randomQuote");
+import express from "express";
 
-const router = Router();
 
-router.get("/checkout", async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price: `${process.env.STRIPE_ITEM_PRICE}`,
-      },
-    ],
-    success_url: `${process.env.STRIPE_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.STRIPE_CANCEL_URL}`,
-  });
+const router = express.Router();
 
-  res.send(session);
-});
-
-router.get("/webhook", async (req, res) => {
+router.get("/", async (req, res) => {
   let data;
   let eventType;
   // Check if webhook signing is configured.
@@ -89,48 +70,4 @@ router.get("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-// GET http://localhost:8080/api?apiKey=API_KEY
-// Make a call to the API
-router.get("/api", async (req, res) => {
-  const { apiKey } = req.query;
-
-  if (!apiKey) {
-    res.sendStatus(400); // bad request
-  }
-
-  const hashedAPIKey = hashAPIKey(apiKey);
-
-  const customerId = apiKeys[hashedAPIKey];
-  const customer = customers[customerId];
-
-  if (!customer || !customer.active) {
-    res.sendStatus(403); // not authorized
-  } else {
-    // Record usage with Stripe Billing
-    const record = await stripe.subscriptionItems.createUsageRecord(
-      customer.itemId,
-      {
-        quantity: 1,
-        timestamp: "now",
-        action: "increment",
-      }
-    );
-    res.send({ data: "🔥🔥🔥🔥🔥🔥🔥🔥", usage: record });
-  }
-});
-
-router.get("/usage/:customer", async (req, res) => {
-  const customerId = req.params.customer;
-  const invoice = await stripe.invoices.retrieveUpcoming({
-    customer: customerId,
-  });
-
-  res.send(invoice);
-});
-
-/*
-router.get("/api/quotes", listQuotes);
-router.get("/api/quotes/:id", getQuoteById);
-router.get("/api/quotes/random", randomQuote); */
-
-module.exports = router;
+export default router;
