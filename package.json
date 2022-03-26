@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "2.0.15"
   }
 }
