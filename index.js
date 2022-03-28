@@ -1,8 +1,7 @@
-import fs from "fs";
-import https from "https";
+import http from "http";
 import express from "express";
 import actuator from "express-actuator";
-// import createLightship from "lightship";
+//import createLightship from "lightship";
 import bodyParser from "body-parser";
 import compression from "compression";
 
@@ -16,13 +15,14 @@ import apiRoutes from "./routes/api.js";
 
 import { handle404, logErrors, handleErrors } from "./handleErrors.js";
 
-// const lightship = createLightship();
+//const lightship = createLightship();
 const PORT = process.env.PORT;
 const app = express();
 
 app.use(bodyParser.json());
 app.use(compression());
-app.use(actuator());
+app.use(actuator())
+
 
 app.get("/", (req, res) => {
   res.redirect("/api");
@@ -38,29 +38,7 @@ app.use(handle404);
 app.use(logErrors);
 app.use(handleErrors);
 
-const server = https
-  .createServer(
-    {
-      key: fs.readFileSync("server.key"),
-      cert: fs.readFileSync("server.cert"),
-    },
-    app
-  )
-  .listen(PORT, function () {
-    // lightship.signalReady();
-    console.log(chalk.green(`Server started on http://localhost:${PORT}`));
-  });
-
-/*const server = https
-.createServer(
-  {
-    key: fs.readFileSync("server.key"),
-    cert: fs.readFileSync("server.cert"),
-  },
-  app
-)*/
-
-//const server = app.listen(PORT, () => {
-// lightship.signalReady();
-//console.log(chalk.green(`Server started on http://localhost:${PORT}`));
-//});
+const server = app.listen(PORT, () => {
+  // lightship.signalReady();
+  console.log(chalk.green(`Server started on http://localhost:${PORT}`));
+});
