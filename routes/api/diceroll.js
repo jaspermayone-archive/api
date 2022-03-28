@@ -5,7 +5,7 @@ router.get("/", (req, res) => {
   const dice1Resault = Math.floor(Math.random() * 6) + 1;
   const dice2Resault = Math.floor(Math.random() * 6) + 1;
 
-  res.send({
+  res.status(200).send({
     "Dice 1": dice1Resault,
     "Dice 2": dice2Resault,
   });
