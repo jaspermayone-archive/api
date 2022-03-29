@@ -2,7 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "exports": "./index.js",
   "type": "module",
   "dependencies": {
     "chalk": "^5.0.1",
@@ -12,8 +12,10 @@
     "express-actuator": "^1.8.0",
     "http-terminator": "^3.2.0",
     "lightship": "^7.0.2",
+    "log-symbols": "^5.1.0",
     "mathjs": "^10.4.1",
     "mongoose": "^6.2.8",
+    "ora": "^6.1.0",
     "stripe": "^8.212.0",
     "uuid": "^8.3.2"
   },
@@ -29,7 +31,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "EPL-2.0",
   "bugs": {
     "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
   },

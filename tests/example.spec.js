@@ -1,3 +1,6 @@
+// TODO: ADD PROPER TESTS
+// https://playwright.dev/docs/intro
+
 // @ts-check
 import  { test, expect } from '@playwright/test';
 
