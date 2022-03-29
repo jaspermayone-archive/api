@@ -10,6 +10,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-actuator": "^1.8.0",
+    "forever": "^4.0.3",
     "http-terminator": "^3.2.0",
     "lightship": "^7.0.2",
     "log-symbols": "^5.1.0",
@@ -37,6 +38,7 @@
   },
   "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.26",
     "@playwright/test": "1.20.1",
     "nodemon": "2.0.15"
   }
