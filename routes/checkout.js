@@ -1,5 +1,5 @@
 import express from "express";
-import Stripe from 'stripe';
+import Stripe from "stripe";
 
 const stipe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();

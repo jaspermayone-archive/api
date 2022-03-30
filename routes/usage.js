@@ -1,6 +1,5 @@
 import express from "express";
 
-
 const router = express.Router();
 
 router.get("/:customer", async (req, res) => {
@@ -9,7 +8,7 @@ router.get("/:customer", async (req, res) => {
     customer: customerId,
   });
 
-  res.send(invoice);
+  res.status(200).send(invoice);
 });
 
 export default router;
