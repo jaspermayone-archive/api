@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import compression from "compression";
 
 import chalk from "chalk";
+import winston from "winston";
 import "dotenv/config";
 
 import checkoutRoutes from "./routes/checkout.js";
@@ -40,5 +41,6 @@ app.use(handleErrors);
 
 const server = app.listen(PORT, () => {
   // lightship.signalReady();
-  console.log(chalk.green(`Server started on http://localhost:${PORT}`));
+ // console.log(chalk.green(`Server started on http://localhost:${PORT}`));
+  logger.ready(`Server started on http://localhost:${PORT}`);
 });
