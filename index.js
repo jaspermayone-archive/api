@@ -15,7 +15,6 @@ import webhookRoute from "./routes/webhook.js";
 import checkoutRoute from "./routes/checkout.js";
 import usageRoute from "./routes/usage.js";
 import apiRoute from "./routes/api.js";
-import postsRoute from "./routes/posts.js";
 
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
@@ -36,7 +35,6 @@ app.use("/checkout", checkoutRoute);
 app.use("/usage", usageRoute);
 // app.use('/files', express.stat ic(path.join(__dirname, 'files')))
 app.use("/api", apiRoute);
-app.use("/posts", postsRoute);
 
 mongoose.connect(process.env.MONGODB_URI_REMOTE, {
   useNewUrlParser: true,
