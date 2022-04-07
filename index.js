@@ -1,21 +1,22 @@
 import http from "http";
 import express from "express";
 import actuator from "express-actuator";
-//import createLightship from "lightship";
 import bodyParser from "body-parser";
 import compression from "compression";
+
 
 import chalk from "chalk";
 //import winston from "winston";
 import mongoose from "mongoose";
-import "dotenv/config"
+import "dotenv/config";
 
-import checkoutRoutes from "./routes/checkout.js";
-import webhookRoutes from "./routes/webhook.js";
-import usageRoutes from "./routes/usage.js";
-import apiRoutes from "./routes/api.js";
+import authRoute from "./routes/auth.js";
+import webhookRoute from "./routes/webhook.js";
+import checkoutRoute from "./routes/checkout.js";
+import usageRoute from "./routes/usage.js";
+import apiRoute from "./routes/api.js";
+import postsRoute from "./routes/posts.js";
 
-//const lightship = createLightship();
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 const app = express();
@@ -29,14 +30,13 @@ app.get("/", (req, res) => {
   res.redirect("/api");
 });
 
-app.use("/checkout", checkoutRoutes);
-app.use("/webhook", webhookRoutes);
-app.use("/usage", usageRoutes);
-// app.use('/files', express.static(path.join(__dirname, 'files')))
-app.use("/api", apiRoutes);
-
-app.use(logErrors);
-app.use(handleErrors);
+app.use('/auth', authRoute);
+app.use("/webhook", webhookRoute);
+app.use("/checkout", checkoutRoute);
+app.use("/usage", usageRoute);
+// app.use('/files', express.stat ic(path.join(__dirname, 'files')))
+app.use("/api", apiRoute);
+app.use("/posts", postsRoute);
 
 mongoose.connect(process.env.MONGODB_URI_REMOTE, {
   useNewUrlParser: true,
@@ -58,6 +58,5 @@ db.once("open", () => {
 });
 
 const server = app.listen(PORT, HOST, () => {
-  // lightship.signalReady();
   console.log(chalk.green(`Server started on http://${HOST}:${PORT}`));
 });

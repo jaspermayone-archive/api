@@ -1,11 +1,12 @@
 import express from "express";
+const router = express.Router();
+import { auth as verify } from "../utils/verifytoken.js";
 
 import qoutesRoutes from "./api/quotes.js";
 import jokesRoutes from "./api/jokes.js";
 import coinflipRoutes from "./api/coinflip.js";
 import dicerollRoutes from "./api/diceroll.js";
 
-const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send(
@@ -14,9 +15,9 @@ router.get("/", (req, res) => {
   );
 });
 
-router.use("/quotes", qoutesRoutes);
-router.use("/jokes", jokesRoutes);
-router.use("/coinflip", coinflipRoutes);
-router.use("/diceroll", dicerollRoutes);
+router.use("/quotes", verify, qoutesRoutes);
+router.use("/jokes", verify, jokesRoutes);
+router.use("/coinflip", verify, coinflipRoutes);
+router.use("/diceroll", verify, dicerollRoutes);
 
 export default router;
