@@ -1,8 +1,7 @@
 {
   "name": "api",
   "version": "0.5.0",
-  "description": "",
-  "author": "First Last <first.last@example.com>",
+  "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
   "keywords": [],
   "main": "index.js",
@@ -26,7 +25,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "serverstart": "node --experimental-json-modules index.js"
   },
   "repository": {
     "type": "git",

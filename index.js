@@ -1,4 +1,3 @@
-import http from "http";
 import express from "express";
 import actuator from "express-actuator";
 import bodyParser from "body-parser";
@@ -17,7 +16,6 @@ import usageRoute from "./routes/usage.js";
 import apiRoute from "./routes/api.js";
 
 const PORT = process.env.PORT;
-const HOST = process.env.HOST;
 const app = express();
 
 app.use(express.json());
@@ -55,6 +53,6 @@ db.once("open", () => {
   );
 });
 
-const server = app.listen(PORT, HOST, () => {
-  console.log(chalk.green(`Server started on http://${HOST}:${PORT}`));
+const server = app.listen(PORT, () => {
+  console.log(chalk.green(`Server started on port ${PORT}`));
 });
