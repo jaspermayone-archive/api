@@ -11,7 +11,12 @@ import { auth as verify } from "../utils/verifytoken.js";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
+
+  const passcode = req.headers.passcode;
   const { error } = registerValidation(req.body);
+
+  if (!passcode) return res.status(400).send("Passcode is required for this command");
+  if (passcode != process.env.REGISTER_PAS) return res.status(400).send("Passcode is incorrect");
   if (error) return res.status(400).send(error.details[0].message);
 
   const emailExists = await User.findOne({ email: req.body.email });
