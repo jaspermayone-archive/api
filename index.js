@@ -53,6 +53,6 @@ db.once("open", () => {
   );
 });
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "localhost", () => {
   console.log(chalk.green(`Server started on port ${PORT}`));
 });
