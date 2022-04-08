@@ -6,7 +6,6 @@ import 'dotenv/config';
 
 import User from "../models/User.js";
 import { registerValidation, loginValidation } from "../utils/validation.js";
-import { auth as verify } from "../utils/verifytoken.js";
 
 const router = express.Router();
 
