@@ -34,3 +34,15 @@ export const loginValidation = (data) => {
     password: data.password,
   });
 };
+
+export const ScamLinkValidation = (data) => {
+  const schema = Joi.object({
+    link: Joi.string().required(),
+    reportedBy: Joi.string().required(),
+  });
+
+  return schema.validate({
+    link: data.link,
+    reportedBy: data.reportedBy,
+  });
+}

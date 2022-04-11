@@ -6,6 +6,7 @@ import qoutesRoutes from "./api/quotes.js";
 import jokesRoutes from "./api/jokes.js";
 import coinflipRoutes from "./api/coinflip.js";
 import dicerollRoutes from "./api/diceroll.js";
+import scamLinkRoutes from "./api/scamlinks.js";
 
 
 router.get("/", (req, res) => {
@@ -19,5 +20,6 @@ router.use("/quotes", verify, qoutesRoutes);
 router.use("/jokes", verify, jokesRoutes);
 router.use("/coinflip", verify, coinflipRoutes);
 router.use("/diceroll", verify, dicerollRoutes);
+router.use("/scamlinks", verify, scamLinkRoutes);
 
 export default router;

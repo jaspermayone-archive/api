@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 // create user model
 const userSchema = new mongoose.Schema({
   id: {
     type: String,
+    default: uuidv4(),
     required: true,
   },
   name: {
@@ -21,6 +23,7 @@ const userSchema = new mongoose.Schema({
   dateCreated: {
     type: Date,
     default: Date.now,
+    required: true,
   },
 });
 
