@@ -46,3 +46,13 @@ export const ScamLinkValidation = (data) => {
     reportedBy: data.reportedBy,
   });
 }
+
+export const QuoteValidation = (data) => {
+  const schema = Joi.object({
+    quote: Joi.string().required(),
+  });
+
+  return schema.validate({
+    quote: data.quote,
+  });
+}

@@ -2,12 +2,11 @@ import express from "express";
 import "dotenv/config";
 
 import ScamLink from "../../models/ScamLink.js";
-import { ScamLinkValidation } from '../../utils/validation.js';
+import { ScamLinkValidation } from "../../utils/validation.js";
 
 const router = express.Router();
 
 router.post("/report", async (req, res) => {
-
   const { error } = ScamLinkValidation(req.body);
 
   const linkExists = await ScamLink.findOne({ link: req.body.link });
@@ -36,18 +35,11 @@ router.post("/report", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
-  let linkIsScam;
+ // const link = req.query.link;
 
-  const link = req.query.link;
-  const linkExists = await ScamLink.findOne({ link: link });
+const linkExists = await ScamLink.findOne({ link: req.body.link });
 
   if (linkExists) {
-    linkIsScam = true;
-  } else {
-    linkIsScam = false;
-  }
-
-  if (linkIsScam) {
     res.send("Link is a scam!");
   } else {
     res.send(

@@ -1,7 +1,7 @@
 import express from "express";
 
 import jokes from "../../data/jokes.json" assert { type: "json" };
-import getRandomItem from "../../functions/getRandomItem.js";
+import getRandomItem from "../../utils/getRandomItem.js";
 
 const router = express.Router();
 
@@ -19,6 +19,10 @@ router.get("/random", (req, res) => {
   const jokesArray = Object.values(jokes.jokes);
   const randomItem = getRandomItem(jokesArray);
   res.send(randomItem);
+});
+
+// TODO: add endpoint needs to be locked to admins only
+router.post("/add", async (req, res) => {
 });
 
 export default router;
