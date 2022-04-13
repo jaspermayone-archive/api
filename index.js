@@ -2,7 +2,6 @@ import app from "./app.js";
 import mongoose from "mongoose";
 // started implementing testing following this guide:
 // https://dev.to/franciscomendes10866/testing-express-api-with-jest-and-supertest-3gf
-import { request } from "supertest";
 import chalk from "chalk";
 import "dotenv/config";
 
