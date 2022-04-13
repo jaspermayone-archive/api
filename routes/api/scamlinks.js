@@ -25,7 +25,7 @@ router.post("/report", async (req, res) => {
     res.send({
       message: "Link reported!",
       link: newLink.link,
-      email: newLink.reportedBy,
+      reportedBy: newLink.reportedBy,
       id: newLink.id,
       dateReported: newLink.dateCreated,
     });
