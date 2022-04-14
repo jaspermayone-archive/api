@@ -8,14 +8,20 @@ const router = express.Router();
 
 router.post("/report", async (req, res) => {
   const { error } = ScamLinkValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-  const linkExists = await ScamLink.findOne({ link: req.body.link });
+  const rawlink = req.body.link;
+  const linky = rawlink.replace(/^https?:\/\//i, "");
+  const linky2 = linky.split(".").slice(-2).join(".");
+  const linky3 = linky2.split("/")[0];
+
+  const linkExists = await ScamLink.findOne({ link: linky3 });
   if (linkExists) return res.status(400).send("Link already flagged!");
 
   if (error) return res.status(400).send(error.details[0].message);
 
   const link = new ScamLink({
-    link: req.body.link,
+    link: linky3,
     reportedBy: req.body.reportedBy,
     reportedByID: req.header("auth-token"),
   });
@@ -35,9 +41,13 @@ router.post("/report", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
- // const link = req.query.link;
 
-const linkExists = await ScamLink.findOne({ link: req.body.link });
+  const rawlink = req.body.link;
+  const linky = rawlink.replace(/^https?:\/\//i, "");
+  const linky2 = linky.split(".").slice(-2).join(".");
+  const linky3 = linky2.split("/")[0];
+
+  const linkExists = await ScamLink.findOne({ link: linky3 });
 
   if (linkExists) {
     res.send("Link is a scam!");
