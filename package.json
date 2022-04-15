@@ -40,9 +40,11 @@
   },
   "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "devDependencies": {
+    "@japa/api-client": "^1.2.0",
+    "@japa/assert": "^1.3.4",
+    "@japa/runner": "^2.0.7",
+    "@japa/spec-reporter": "^1.1.12",
     "eslint": "8.10.0",
-    "jest": "^27.5.1",
-    "nodemon": "^2.0.15",
-    "supertest": "^6.2.2"
+    "nodemon": "^2.0.15"
   }
 }

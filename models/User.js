@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 // create user model
 const userSchema = new mongoose.Schema({
-  id: {
+  _id: {
     type: String,
     default: uuidv4(),
     required: true,
