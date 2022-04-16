@@ -4,6 +4,10 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+
+import * as Sentry from "@sentry/node";
+import * as Tracing from "@sentry/tracing";
+
 import "dotenv/config";
 
 import { authToken } from "./utils/authToken.js";
@@ -11,6 +15,10 @@ import { authToken } from "./utils/authToken.js";
 import apiRoute from "./routes/api.js";
 
 const server = express();
+
+server.use(Sentry.Handlers.requestHandler());
+server.use(Sentry.Handlers.tracingHandler());
+server.use(Sentry.Handlers.errorHandler());
 
 server.use(express.json());
 server.use(bodyParser.json());
