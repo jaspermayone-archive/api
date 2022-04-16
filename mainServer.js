@@ -21,6 +21,7 @@ server.use(Sentry.Handlers.tracingHandler());
 server.use(Sentry.Handlers.errorHandler());
 
 server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 server.use(compression());
 server.use(actuator());
@@ -28,10 +29,10 @@ server.use(helmet());
 server.use(cors());
 
 server.get("/", (req, res) => {
-  res.redirect("/api");
+  res.redirect("/api/v0");
 });
 
 // server.use('/files', express.stat ic(path.join(__dirname, 'files')))
-server.use("/api", authToken, apiRoute);
+server.use("/api/v0", authToken, apiRoute);
 
 export default server;

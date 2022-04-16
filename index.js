@@ -29,6 +29,9 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
+console.log(chalk.yellowBright('Sentry Connected!'));
+
+
 mongoose.connect(process.env.MONGODB_URI_REMOTE, {
   useNewUrlParser: true,
 });

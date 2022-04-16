@@ -8,6 +8,28 @@ import { registerValidation } from "../../utils/validation.js";
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  User.find({}, (err, users) => {
+      if (err) {
+          console.log(err);
+          res.status(500).send(err);
+      } else {
+          res.json(users);
+      }
+  });
+});
+
+router.get("/:id", (req, res) => {
+
+  User.findById(req.params.id, (err, user) => {
+      if (err) {
+          res.status(500).send(err);
+      } else {
+          res.json(user);
+      }
+  });
+});
+
 router.post("/add", async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(401).send(error.details[0].message);
@@ -36,5 +58,26 @@ router.post("/add", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+router.put("/:id", (req, res) => {
+  User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(user);
+    }
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(user);
+    }
+  });
+});
+
 
 export default router;
