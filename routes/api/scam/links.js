@@ -43,11 +43,13 @@ router.get("/check", async (req, res) => {
   const linkExists = await ScamLink.findOne({ link: req.body.link });
 
   if (linkExists) {
-    res.send("Link is a scam!");
+    res.json({
+      isScam: true,
+    });
   } else {
-    res.send(
-      "Link is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-    );
+    res.json({
+      isScam: false,
+    });
   }
 });
 
