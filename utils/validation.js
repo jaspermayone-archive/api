@@ -5,7 +5,6 @@ export const registerValidation = (data) => {
     name: Joi.string().required(),
 
     password: Joi.string()
-      .pattern()
       .required(),
 
     email: Joi.string()
