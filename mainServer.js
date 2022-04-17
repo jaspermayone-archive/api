@@ -33,6 +33,6 @@ server.get("/", (req, res) => {
 });
 
 // server.use('/files', express.stat ic(path.join(__dirname, 'files')))
-server.use("/api", authToken, apiRoute);
+server.use("/api/v0", authToken, apiRoute);
 
 export default server;
