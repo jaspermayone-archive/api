@@ -6,8 +6,8 @@ const jwt = jsonwebtoken;
 
 const router = express.Router();
 
-import { loginValidation } from '../../utils/validation.js';
-import User from "../../models/User.js";
+import { loginValidation } from '../utils/validation.js';
+import User from "../models/User.js";
 
 function generateAccessToken(user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);

@@ -5,13 +5,8 @@ import mongoose from "mongoose";
 import chalk from "chalk";
 import "dotenv/config";
 
-import server from "./mainServer.js";
-import authServer from "./authServer.js";
-import adminServer from "./adminServer.js";
-
-const serverPort = process.env.SERVER_PORT;
-const authServerPort = process.env.AUTH_SERVER_PORT;
-const adminServerPort = process.env.ADMIN_SERVER_PORT;
+import app from "./app.js";
+const PORT = process.env.PORT;
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -19,9 +14,7 @@ Sentry.init({
     // enable HTTP calls tracing
     new Sentry.Integrations.Http({ tracing: true }),
     // enable Express.js middleware tracing
-    new Tracing.Integrations.Express({ server }),
-    new Tracing.Integrations.Express({ authServer }),
-    new Tracing.Integrations.Express({ adminServer }),
+    new Tracing.Integrations.Express({ app }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
@@ -53,18 +46,6 @@ mongoose.connection.on("error", (err) => {
   console.log(chalk.red(err));
 });
 
-server.listen(serverPort, () => {
-  console.log(chalk.green(`API running at http://localhost:${serverPort}`));
-});
-
-authServer.listen(authServerPort, () => {
-  console.log(
-    chalk.green(`Auth Server running at http://localhost:${authServerPort}`)
-  );
-});
-
-adminServer.listen(adminServerPort, () => {
-  console.log(
-    chalk.green(`Admin Server running at http://localhost:${adminServerPort}`)
-  );
+app.listen(PORT, () => {
+  console.log(chalk.green(`API running at http://localhost:${PORT}`));
 });
