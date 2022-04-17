@@ -9,10 +9,6 @@ const router = express.Router();
 import { loginValidation } from '../utils/validation.js';
 import User from "../models/User.js";
 
-function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-  }
-
 router.post("/", async (req, res) => {
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -22,7 +18,7 @@ router.post("/", async (req, res) => {
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      const accessToken = generateAccessToken({ id: user._id });
+      const accessToken = await jwt.sign({ userId: user._id, accountType: user.accountType }, process.env.ACCESS_TOKEN_SECRET);
 
       res.json({
         accessToken: accessToken,

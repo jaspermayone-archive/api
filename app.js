@@ -11,11 +11,11 @@ import * as Tracing from "@sentry/tracing";
 import "dotenv/config";
 
 import { authToken } from "./utils/authToken.js";
+import { isAdmin } from "./utils/isAdmin.js";
 
 import apiRoute from "./routes/api.js";
-import usersRoutes from "./routes/admin.js";
+import adminRoutes from "./routes/admin.js";
 import loginRoute from "./routes/login.js";
-import metricsRoutes from "./routes/admin/metrics.js";
 
 const app = express();
 
@@ -35,13 +35,8 @@ app.get("/", (req, res) => {
   res.redirect("/api/v0");
 });
 
-// app.use('/files', express.stat ic(path.join(__dirname, 'files')))
-app.use("/api/v0", authToken, apiRoute);
 app.use("/login", loginRoute);
-app.use("/users", usersRoutes);
-
-app.get("/debug-sentry", function mainHandler(req, res) {
-  throw new Error("My first Sentry error!");
-});
+app.use("/admin", isAdmin, adminRoutes);
+app.use("/api/v0", authToken, apiRoute);
 
 export default app;

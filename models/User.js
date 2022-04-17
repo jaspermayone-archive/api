@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
     default: uuidv4(),
     required: true,
   },
+  accountType: {
+    type: String, enum: ["user", "bot", "admin"],
+    default: "user",
+    required: true,
+  },
   name: {
     type: String,
     required: true,

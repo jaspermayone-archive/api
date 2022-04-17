@@ -53,6 +53,7 @@ router.post("/add", async (req, res) => {
       email: newUser.email,
       _id: newUser._id,
       dateCreated: newUser.dateCreated,
+      accountType: newUser.accountType,
     });
   } catch (err) {
     res.status(500).send(err);
