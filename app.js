@@ -40,6 +40,6 @@ app.get("/", (req, res) => {
 
 app.use("/login", loginRoute);
 app.use("/api/v0", authToken, apiRoute);
-app.use("/admin", adminRoutes);
+app.use("/admin", isAdmin, adminRoutes);
 
 export default app;
