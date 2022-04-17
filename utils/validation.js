@@ -27,7 +27,7 @@ export const loginValidation = (data) => {
       .email()
       .required(),
 
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+    password: Joi.string().required(),
   });
 
   return schema.validate({

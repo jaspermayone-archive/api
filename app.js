@@ -32,11 +32,14 @@ app.use(helmet());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.redirect("/api/v0");
+  res.send(
+    `<h1>Welcome to the API</h1>
+    <p>You can find the API documentation <a href="/api/docs">here</a></p>`
+  );
 });
 
 app.use("/login", loginRoute);
-app.use("/admin", isAdmin, adminRoutes);
 app.use("/api/v0", authToken, apiRoute);
+app.use("/admin", adminRoutes);
 
 export default app;
