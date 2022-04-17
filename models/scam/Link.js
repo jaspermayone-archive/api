@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
-// create scam link model
 const scamLinkSchema = new mongoose.Schema({
     id: {
         type: String,
