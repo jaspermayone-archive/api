@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
-const scamEmailSchema = new mongoose.Schema({
+const scamPhoneNumberSchema = new mongoose.Schema({
     id: {
         type: String,
         default: uuidv4(),
@@ -26,4 +26,4 @@ const scamEmailSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model("ScamEmail", scamEmailSchema);
+export default mongoose.model("ScamPhoneNumber", scamPhoneNumberSchema);

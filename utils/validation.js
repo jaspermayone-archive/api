@@ -54,6 +54,13 @@ export const ScamEmailValidation = (data) => {
   });
 };
 
+export const ScamPhoneNumberValidation = (data) => {
+  const schema = Joi.object({
+    phoneNumber: Joi.string().required().phoneNumber(),
+    reportedBy: Joi.string().required(),
+  });
+};
+
 export const QuoteValidation = (data) => {
   const schema = Joi.object({
     quote: Joi.string().required(),
