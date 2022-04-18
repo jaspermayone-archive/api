@@ -8,17 +8,6 @@ import { registerValidation } from "../../utils/validation.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  User.find({}, (err, users) => {
-      if (err) {
-          console.log(err);
-          res.status(500).send(err);
-      } else {
-          res.json(users);
-      }
-  });
-});
-
 router.get("/:id", (req, res) => {
 
   User.findById(req.params.id, (err, user) => {
