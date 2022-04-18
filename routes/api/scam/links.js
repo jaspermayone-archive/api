@@ -37,35 +37,36 @@ router.post("/report", async (req, res) => {
 
 router.get("/check", async (req, res) => {
 
+  const url = req.query.url;
   const link = req.body.link;
-  if (!link) return res.status(400).send("No link provided!");
 
-  const linkExists = await ScamLink.findOne({ link: req.body.link });
+  if (!url) {
 
-  if (linkExists) {
-    res.send("Link is a scam!");
-  } else {
-    res.send(
-      "Link is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-    );
+    if (!link) return res.status(400).send("No link provided!");
+
+    const linkExists = await ScamLink.findOne({ link: req.body.link });
+
+    if (linkExists) {
+      res.send("Link is a scam!");
+    } else {
+      res.send(
+        "Link is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
+      );
+    }
   }
-});
+  if (url) {
 
-router.get("/check:url", async (req, res) => {
+    const linkExists = await ScamLink.findOne({ link: url });
 
-  const link = req.params.url;
-  if (!link) return res.status(400).send("No link provided!");
-
-  const linkExists = await ScamLink.findOne({ link: req.body.link });
-
-  if (linkExists) {
-    res.json({
-      scamDetected: true,
-    });
-  } else {
-    res.json({
-      scamDetected: false,
-    });
+    if (linkExists) {
+      res.json({
+        scamDetected: true,
+      });
+    } else {
+      res.json({
+        scamDetected: false,
+      });
+    }
   }
 });
 
