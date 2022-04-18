@@ -51,4 +51,22 @@ router.get("/check", async (req, res) => {
   }
 });
 
+router.get("/check:email", async (req, res) => {
+
+  const email = req.params.email;
+  if (!email) return res.status(400).send("No email provided!");
+
+  const emailExists = await ScamEmail.findOne({ email: req.body.email });
+
+  if (emailExists) {
+    res.json({
+      scamDetected: true,
+    });
+  } else {
+    res.json({
+      scamDetected: false,
+    });
+  }
+});
+
 export default router;
