@@ -13,7 +13,7 @@ router.get("/random", (req, res) => {
   const quotesArray = Object.values(quotes.quotes);
   const randomItem = getRandomItem(quotesArray);
   res.json({
-    joke: randomItem
+    quote: randomItem
   });
 });
 
