@@ -12,7 +12,9 @@ router.get("/", (req, res) => {
 router.get("/random", (req, res) => {
   const quotesArray = Object.values(quotes.quotes);
   const randomItem = getRandomItem(quotesArray);
-  res.send(randomItem);
+  res.json({
+    joke: randomItem
+  });
 });
 
 export default router;
