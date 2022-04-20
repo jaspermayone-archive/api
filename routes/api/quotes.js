@@ -12,9 +12,8 @@ router.get("/", (req, res) => {
 router.get("/random", (req, res) => {
   const quotesArray = Object.values(quotes.quotes);
   const randomItem = getRandomItem(quotesArray);
-  res.json({
-    quote: randomItem,
-  });
+
+  res.send(randomItem)
 });
 
 export default router;
