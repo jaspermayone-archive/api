@@ -24,28 +24,22 @@ Sentry.init({
 
 console.log(chalk.yellowBright('Sentry Connected!'));
 
-
-mongoose.connect(process.env.MONGODB_URI_REMOTE, {
+ const db = new mongoose.createConnection(process.env.MONGODB_URI_REMOTE, {
   useNewUrlParser: true,
 });
 
-// once db is connected
-mongoose.connection.once("open", () => {
-  console.log(
-    chalk.magenta("Connected to Database at: " + process.env.MONGODB_URI_REMOTE)
-  );
+// once connected to the database, print success message
+db.once("open", () => {
+  console.log(chalk.magenta("MongoDB Connected at: ") + chalk.blue(process.env.MONGODB_URI_REMOTE));
 });
 
-mongoose.connection.on("error", (err) => {
-  console.log(
-    chalk.red(
-      "Error Connecting to MongoDB Instance at: " +
-        chalk.blue(process.env.MONGODB_URI_REMOTE)
-    )
-  );
-  console.log(chalk.red(err));
+// on error, print error message
+db.on("error", (err) => {
+  console.log(chalk.redBright("MongoDB Error: ", err));
 });
 
 app.listen(PORT, () => {
   console.log(chalk.green(`API running at http://localhost:${PORT}`));
 });
+
+export default db;

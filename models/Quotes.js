@@ -2,12 +2,16 @@ import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
 const quoteSchema = new mongoose.Schema({
-    id: {
+    _id: {
         type: String,
         default: uuidv4(),
         required: true,
     },
     quote: {
+        type: String,
+        required: true,
+    },
+    author: {
         type: String,
         required: true,
     },
@@ -17,6 +21,5 @@ const quoteSchema = new mongoose.Schema({
         required: true,
     }
 })
-
 
 export default mongoose.model("Quote", quoteSchema);

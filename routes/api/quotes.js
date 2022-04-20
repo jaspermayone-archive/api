@@ -1,7 +1,5 @@
 import express from "express";
-
-import quotes from "../../data/quotes.json" assert { type: "json" };
-import getRandomItem from "../../utils/getRandomItem.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -9,13 +7,20 @@ router.get("/", (req, res) => {
   res.redirect("/api/v0/quotes/random");
 });
 
-router.get("/random", (req, res) => {
-  const quotesArray = Object.values(quotes.quotes);
-  const randomItem = getRandomItem(quotesArray);
+router.get("/random", async (req, res) => {
+  const Connection = mongoose.createConnection()
+  await Connection.openUri(process.env.MONGODB_URI_REMOTE)
 
-  res.json({
-    quote: randomItem
-  });
+  Connection.collection('quotes').aggregate([
+    { $sample: { size: 1 } }
+  ]).toArray(function (err, result) {
+    if (err) throw err;
+    res.json({
+      id: result[0]._id,
+      quote: result[0].quote,
+      author: result[0].author,
+    });
+  })
 });
 
 export default router;
