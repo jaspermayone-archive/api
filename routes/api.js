@@ -8,10 +8,10 @@ import dicerollRoutes from "./api/diceroll.js";
 import scamRoutes from "./api/scam.js";
 
 router.get("/", (req, res) => {
-  res.send(
-    `<h1>Welcome to the API</h1>
+	res.send(
+		`<h1>Welcome to the API</h1>
     <p>You can find the API documentation <a href="/api/docs">here</a></p>`
-  );
+	);
 });
 
 router.use("/quotes", qoutesRoutes);

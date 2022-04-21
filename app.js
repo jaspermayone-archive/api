@@ -16,6 +16,9 @@ import { isAdmin } from "./utils/isAdmin.js";
 import apiRoute from "./routes/api.js";
 import adminRoutes from "./routes/admin.js";
 import loginRoute from "./routes/login.js";
+import { apiSpecs } from "./utils/apiSpecs.js";
+
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -32,14 +35,14 @@ app.use(helmet());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send(
-    `<h1>Welcome to the API</h1>
+	res.send(
+		`<h1>Welcome to the API</h1>
     <p>You can find the API documentation <a href="/api/docs">here</a></p>`
-  );
+	);
 });
 
 app.use("/login", loginRoute);
 app.use("/api/v0", authToken, apiRoute);
 app.use("/admin", isAdmin, adminRoutes);
-
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 export default app;
