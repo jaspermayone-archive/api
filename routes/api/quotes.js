@@ -8,13 +8,13 @@ router.get("/", (req, res) => {
 });
 
 router.get("/random", async (req, res) => {
-  const Connection = mongoose.createConnection()
-  await Connection.openUri(process.env.MONGODB_URI_REMOTE)
+
+  const Connection = await mongoose.connection;
 
   Connection.collection('quotes').aggregate([
     { $sample: { size: 1 } }
   ]).toArray(function (err, result) {
-    if (err) throw err;
+    if (err) return res.status(500).send(err);
     res.json({
       id: result[0]._id,
       quote: result[0].quote,
