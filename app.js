@@ -45,4 +45,5 @@ app.use("/login", loginRoute);
 app.use("/api/v0", authToken, apiRoute);
 app.use("/admin", isAdmin, adminRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
+
 export default app;
