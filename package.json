@@ -31,6 +31,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint --fix",
     "test": "jest",
     "serverstart": "node --experimental-json-modules index.js"
   },
