@@ -13,8 +13,6 @@ router.post("/report", async (req, res) => {
   const linkExists = await ScamLink.findOne({ link: req.body.link });
   if (linkExists) return res.status(400).send("Link already flagged!");
 
-  if (error) return res.status(400).send(error.details[0].message);
-
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
