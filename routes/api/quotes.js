@@ -16,14 +16,13 @@ router.get("/random", async (req, res) => {
   ]).toArray(function (err, result) {
     if (err) return res.status(500).send(err);
 
-let author;
+    let author;
 
-if (result[0].author === "null" || result[0].author === "unknown") {
-  author = "Author Unknown. Know the author for this quote? Please email jasper@heptagrambotproject.com and let us know!";
-} else {
-  author = result[0].author;
-}
-
+    if (result[0].author === "null" || result[0].author === "unknown") {
+      author = "Author Unknown. Know the author for this quote? Please email jasper@heptagrambotproject.com and let us know!";
+    } else {
+      author = result[0].author;
+    }
     res.json({
       id: result[0]._id,
       quote: result[0].quote,

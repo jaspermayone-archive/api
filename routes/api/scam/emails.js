@@ -15,10 +15,14 @@ router.post("/report", async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
   const email = new ScamEmail({
     email: req.body.email,
     reportedBy: req.body.reportedBy,
-    reportedByID: req.header("auth-token"),
+    reportedByID: decodedToken.userId,
   });
 
   try {
@@ -27,7 +31,7 @@ router.post("/report", async (req, res) => {
       message: "Email reported!",
       email: newEmail.email,
       reportedBy: newEmail.reportedBy,
-      id: newEmail.id,
+      reportedByID: newLink.reportedByID,
       dateReported: newEmail.dateCreated,
     });
   } catch (err) {

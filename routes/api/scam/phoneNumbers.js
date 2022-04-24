@@ -15,10 +15,14 @@ router.post("/report", async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
   const phoneNumber = new ScamPhoneNumber({
     phoneNumber: req.body.phoneNumber,
     reportedBy: req.body.reportedBy,
-    reportedByID: req.header("auth-token"),
+    reportedByID: decodedToken.userId,
   });
 
   try {
@@ -27,7 +31,7 @@ router.post("/report", async (req, res) => {
       message: "Phone Number reported!",
       phoneNumber: newPhoneNumber.phoneNumber,
       reportedBy: newPhoneNumber.reportedBy,
-      id: newPhoneNumber.id,
+      reportedByID: newLink.reportedByID,
       dateReported: newPhoneNumber.dateCreated,
     });
   } catch (err) {

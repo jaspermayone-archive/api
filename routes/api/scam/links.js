@@ -1,5 +1,8 @@
 import express from "express";
 import "dotenv/config";
+import jsonwebtoken from "jsonwebtoken";
+
+const jwt = jsonwebtoken;
 
 import ScamLink from "../../../models/scam/Link.js";
 import { ScamLinkValidation } from "../../../utils/validation.js";
@@ -15,10 +18,14 @@ router.post("/report", async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
   const link = new ScamLink({
     link: req.body.link,
     reportedBy: req.body.reportedBy,
-    reportedByID: req.header("auth-token"),
+    reportedByID: decodedToken.userId,
   });
 
   try {
@@ -27,7 +34,7 @@ router.post("/report", async (req, res) => {
       message: "Link reported!",
       link: newLink.link,
       reportedBy: newLink.reportedBy,
-      id: newLink.id,
+      reportedByID: newLink.reportedByID,
       dateReported: newLink.dateCreated,
     });
   } catch (err) {
