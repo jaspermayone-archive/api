@@ -2,6 +2,7 @@ import express from "express";
 import bcryptjs from "bcryptjs";
 const bcrypt = bcryptjs;
 import "dotenv/config";
+import { v4 as uuidv4 } from "uuid";
 
 import User from "../../models/User.js";
 import { registerValidation } from "../../utils/validation.js";
@@ -30,6 +31,7 @@ router.post("/add", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   const user = new User({
+    _id: uuidv4(),
     name: req.body.name,
     email: req.body.email,
     password: hashedPassword,

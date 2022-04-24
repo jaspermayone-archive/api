@@ -1330,6 +1330,11 @@ express-ping@^1.4.0:
     express "~3.x || ~4.x"
     node-df "^0.1.1"
 
+express-suite@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/express-suite/-/express-suite-1.6.3.tgz#c6b63830f4b4e70a8097ff61b5b6decd53763543"
+  integrity sha512-qmOtQoqoDj4peLZ/owzRppW7khV9IKYQEs6BUsqh6y4VphzKLoxIqQrta6rP34Q9GyOXuksd+5RFZiJN2vLBfA==
+
 express@^4.13.3, express@^4.17.1, express@^4.17.3, "express@~3.x || ~4.x":
   version "4.17.3"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.3.tgz#f6c7302194a4fb54271b73a1fe7a06478c8f85a1"
@@ -1365,6 +1370,13 @@ express@^4.13.3, express@^4.17.1, express@^4.17.3, "express@~3.x || ~4.x":
     type-is "~1.6.18"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+fail-express@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/fail-express/-/fail-express-1.0.2.tgz#88cc17d862287256f00146f63e757b7cf2227642"
+  integrity sha512-qUqeIlh2ln5+E/6WQMZ5FdELXVn9E1nU8bSrPZ+P7gzoaN3/CF/RV1AX9stppJBse6lxxDLxR6mLpLOEd/TyqQ==
+  dependencies:
+    http-status "^1.3.2"
 
 fast-decode-uri-component@^1.0.1:
   version "1.0.1"
@@ -1744,6 +1756,11 @@ http-errors@1.8.1:
     setprototypeof "1.2.0"
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.1"
+
+http-status@^1.3.2:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/http-status/-/http-status-1.5.1.tgz#b3ba90522267702c43821b549c1ca58f7dabab72"
+  integrity sha512-EP6M4naWmtIrCHL1QfVHz6hsQb8dJLP5rDO1oPn03eAXD3CNVXgUqR5302gr3Gl8B/gVE1zz+Pmws7aJx+VMSw==
 
 http-terminator@^3.2.0:
   version "3.2.0"

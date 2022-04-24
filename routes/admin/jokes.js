@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { v4 as uuidv4 } from "uuid";
 
 import Joke from "../../models/Jokes.js";
 
@@ -22,6 +23,7 @@ router.post("/add", async (req, res) => {
 
 
     const joke = new Joke({
+        _id: uuidv4(),
         joke: req.body.joke,
     });
 

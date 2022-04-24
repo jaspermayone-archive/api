@@ -18,6 +18,8 @@
     "express": "^4.17.3",
     "express-actuator": "^1.8.1",
     "express-ping": "^1.4.0",
+    "express-suite": "^1.6.3",
+    "fail-express": "^1.0.2",
     "fastify": "^3.28.0",
     "helmet": "^5.0.2",
     "http-terminator": "^3.2.0",

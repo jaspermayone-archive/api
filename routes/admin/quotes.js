@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { v4 as uuidv4 } from "uuid";
 
 import Quote from "../../models/Quotes.js";
 
@@ -21,6 +22,7 @@ router.post("/add", async (req, res) => {
   if (quoteExists) return res.status(400).send("Quote already exists in system!");
 
   const quote = new Quote({
+    _id: uuidv4(),
     quote: req.body.quote,
   });
 

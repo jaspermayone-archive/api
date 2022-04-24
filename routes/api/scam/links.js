@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 
 const jwt = jsonwebtoken;
 
@@ -21,6 +22,7 @@ router.post("/report", async (req, res) => {
 
 
   const link = new ScamLink({
+    _id: uuidv4(),
     link: req.body.link,
     reportedBy: req.body.reportedBy,
     reportedByID: decodedToken.userId,
@@ -37,6 +39,7 @@ router.post("/report", async (req, res) => {
     });
   } catch (err) {
     res.status(400).send(err);
+    console.log(err);
   }
 });
 

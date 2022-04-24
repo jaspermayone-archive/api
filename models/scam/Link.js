@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
 
 const scamLinkSchema = new mongoose.Schema({
     _id: {
         type: String,
-        default: uuidv4(),
         required: true,
     },
     link: {
@@ -17,6 +15,7 @@ const scamLinkSchema = new mongoose.Schema({
     },
     reportedByID: {
         type: String,
+        required: true,
     },
     dateReported: {
         type: Date,
