@@ -34,6 +34,7 @@ router.post("/report", async (req, res) => {
     res.send({
       message: "Link reported!",
       link: newLink.link,
+      type: newLink.type,
       reportedBy: newLink.reportedBy,
       reportedByID: newLink.reportedByID,
       dateReported: newLink.dateCreated,
