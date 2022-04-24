@@ -5,7 +5,7 @@ import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
 import errorHandler from "node-error-handler";
-import { routeCheck, emptyInputCheck } from 'express-suite';
+import { routeCheck } from 'express-suite';
 import failExpress from "fail-express";
 
 import * as Sentry from "@sentry/node";
@@ -33,15 +33,6 @@ app.use(compression());
 app.use(actuator());
 app.use(helmet());
 app.use(cors());
-
-app.use(
-  emptyInputCheck({
-    checkGet: true, //Wether to check the GET requests or not
-    emptyBodyMsg: 'Empty BODY', //Custom msg for empty body
-    emptyFieldMsg: 'Empty FIELD', //Custom msg for missing fields
-    supressFieldKey: false, //To supress the key of the missing field
-  }),
-);
 
 app.get("/", (req, res) => {
   res.send(
