@@ -9,6 +9,11 @@ const scamLinkSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type: {
+        type: String, enum: ["unknown", "discord", "instagram", "other"],
+        required: true,
+        default: "unknown",
+    },
     reportedBy: {
         type: String,
         required: true,

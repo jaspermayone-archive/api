@@ -24,6 +24,7 @@ router.post("/report", async (req, res) => {
   const link = new ScamLink({
     _id: uuidv4(),
     link: req.body.link,
+    type: req.body.type,
     reportedBy: req.body.reportedBy,
     reportedByID: decodedToken.userId,
   });
