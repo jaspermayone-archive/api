@@ -34,39 +34,3 @@ export const loginValidation = (data) => {
     password: data.password,
   });
 };
-
-export const ScamLinkValidation = (data) => {
-  const schema = Joi.object({
-    link: Joi.string().required(),
-    reportedBy: Joi.string().required(),
-  });
-
-  return schema.validate({
-    link: data.link,
-    reportedBy: data.reportedBy,
-  });
-};
-
-export const ScamEmailValidation = (data) => {
-  const schema = Joi.object({
-    email: Joi.string().required().email(),
-    reportedBy: Joi.string().required(),
-  });
-};
-
-export const ScamPhoneNumberValidation = (data) => {
-  const schema = Joi.object({
-    phoneNumber: Joi.string().required().phoneNumber(),
-    reportedBy: Joi.string().required(),
-  });
-};
-
-export const QuoteValidation = (data) => {
-  const schema = Joi.object({
-    quote: Joi.string().required(),
-  });
-
-  return schema.validate({
-    quote: data.quote,
-  });
-};

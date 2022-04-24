@@ -5,13 +5,10 @@ import jsonwebtoken from "jsonwebtoken";
 const jwt = jsonwebtoken;
 
 import ScamLink from "../../../models/scam/Link.js";
-import { ScamLinkValidation } from "../../../utils/validation.js";
 
 const router = express.Router();
 
 router.post("/report", async (req, res) => {
-  const { error } = ScamLinkValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
 
   const linkExists = await ScamLink.findOne({ link: req.body.link });
   if (linkExists) return res.status(400).send("Link already flagged!");
