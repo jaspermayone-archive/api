@@ -27,7 +27,10 @@ router.post("/", async (req, res) => {
       res.send("Not allowed");
     }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json({
+      error: err,
+      message: "Server error"
+    });
     console.log(err);
   }
 });
