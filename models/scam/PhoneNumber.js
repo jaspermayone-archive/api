@@ -17,7 +17,6 @@ const scamPhoneNumberSchema = new mongoose.Schema({
     },
     reportedByID: {
         type: String,
-        required: true,
     },
     dateReported: {
         type: Date,
