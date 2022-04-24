@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import errorHandler from "node-error-handler";
 
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
@@ -22,7 +23,7 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 app.use(Sentry.Handlers.errorHandler());
-
+app.use(errorHandler({ debug: true, trace: true, camel_case: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
