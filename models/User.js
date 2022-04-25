@@ -6,12 +6,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accountType: {
-    type: String, enum: ["user", "bot", "admin"],
-    default: "user",
+  first_name: {
+    type: String,
     required: true,
   },
-  name: {
+  last_name: {
     type: String,
     required: true,
   },
@@ -23,7 +22,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dateCreated: {
+  accountType: {
+    type: String, enum: ["user", "bot", "admin"],
+    default: "user",
+    required: true,
+  },
+  date_created: {
     type: Date,
     default: Date.now,
     required: true,

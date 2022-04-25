@@ -32,17 +32,21 @@ router.post("/add", async (req, res) => {
 
   const user = new User({
     _id: uuidv4(),
-    name: req.body.name,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     password: hashedPassword,
+    accountType: req.body.accountType,
   });
 
   try {
     const newUser = await user.save();
     res.send({
-      name: newUser.name,
-      email: newUser.email,
       _id: newUser._id,
+      first_name: newUser.first_name,
+      last_name: newUser.last_name,
+      email: newUser.email,
+      password: newUser.password,
       dateCreated: newUser.dateCreated,
       accountType: newUser.accountType,
     });
