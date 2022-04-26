@@ -32,8 +32,8 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node --experimental-json-modules index.js",
+    "dev": "nodemon --experimental-json-modules index.js",
     "lint": "eslint",
     "lint --fix": "eslint --fix",
     "test": "jest",
