@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import { v4 as uuidv4 } from "uuid";
 
-import Joke from "../../models/Jokes.js";
+import Joke from "../../models/Jokes";
 
 
 router.get("/:id", (req, res) => {

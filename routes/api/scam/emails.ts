@@ -1,8 +1,11 @@
 import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
+import jsonwebtoken from "jsonwebtoken";
 
-import ScamEmail from "../../../models/scam/Email.js";
+const jwt = jsonwebtoken
+
+import ScamEmail from "../../../models/scam/Email";
 
 const router = express.Router();
 
@@ -28,7 +31,7 @@ router.post("/report", async (req, res) => {
             message: "Email reported!",
             email: newEmail.email,
             reportedBy: newEmail.reportedBy,
-            reportedByID: newLink.reportedByID,
+            reportedByID: newEmail.reportedByID,
             dateReported: newEmail.dateCreated,
         });
     } catch (err) {

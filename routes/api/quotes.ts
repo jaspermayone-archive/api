@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import Quote from "../../models/Quotes.js";
+import Quote from "../../models/Quotes";
 
 router.get("/", (req, res) => {
   res.redirect("/api/v0/quotes/random");

@@ -1,8 +1,11 @@
 import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
+import jsonwebtoken from "jsonwebtoken";
 
-import ScamPhoneNumber from "../../../models/scam/PhoneNumber.js";
+const jwt = jsonwebtoken;
+
+import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
 
 const router = express.Router();
 
@@ -27,7 +30,7 @@ router.post("/report", async (req, res) => {
             message: "Phone Number reported!",
             phoneNumber: newPhoneNumber.phoneNumber,
             reportedBy: newPhoneNumber.reportedBy,
-            reportedByID: newLink.reportedByID,
+            reportedByID: newPhoneNumber.reportedByID,
             dateReported: newPhoneNumber.dateCreated,
         });
     } catch (err) {

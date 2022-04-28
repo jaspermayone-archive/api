@@ -6,8 +6,8 @@ const jwt = jsonwebtoken;
 
 const router = express.Router();
 
-import { loginValidation } from '../utils/validation.js';
-import User from "../models/User.js";
+import { loginValidation } from '../utils/validation';
+import User from "../models/User";
 
 router.post("/", async (req, res) => {
   const { error } = loginValidation(req.body);
@@ -31,7 +31,6 @@ router.post("/", async (req, res) => {
       error: err,
       message: "Server error"
     });
-    console.log(err);
   }
 });
 

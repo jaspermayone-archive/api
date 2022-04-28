@@ -4,15 +4,17 @@
   "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
   "keywords": [],
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "dependencies": {
     "@nymdev/health-check": "^0.1.3",
     "@sentry/node": "^6.19.6",
     "@sentry/tracing": "^6.19.6",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "axios": "^0.27.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.0.1",
+    "colors": "^1.4.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -33,12 +35,12 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "node --experimental-json-modules index.js",
-    "dev": "nodemon --experimental-json-modules index.js",
-    "lint": "eslint",
-    "lint --fix": "eslint --fix",
+    "start": "ts-node index.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' index.ts",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
     "test": "jest",
-    "serverstart": "node --experimental-json-modules index.js"
+    "serverstart": "node --experimental-json-modules index.ts"
   },
   "repository": {
     "type": "git",
@@ -53,7 +55,11 @@
     "@japa/assert": "^1.3.4",
     "@japa/runner": "^2.0.7",
     "@japa/spec-reporter": "^1.1.12",
-    "eslint": "8.10.0",
-    "nodemon": "^2.0.15"
+    "@types/node": "^14.11.2",
+    "eslint": "^8.14.0",
+    "gts": "^3.1.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.0.3"
   }
 }

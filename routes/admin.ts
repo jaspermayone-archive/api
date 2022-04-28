@@ -3,10 +3,10 @@ import healthCheck from '@nymdev/health-check'
 
 const router = express.Router();
 
-import userRoutes from './admin/users.js';
-import jokeRoutes from './admin/jokes.js';
-import quoteRoutes from './admin/quotes.js';
-import restartRoute from './admin/restart.js';
+import userRoutes from './admin/users';
+import jokeRoutes from './admin/jokes';
+import quoteRoutes from './admin/quotes';
+import restartRoute from './admin/restart';
 
 router.use(healthCheck({}));
 

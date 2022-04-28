@@ -4,8 +4,8 @@ const bcrypt = bcryptjs;
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
 
-import User from "../../models/User.js";
-import { registerValidation } from "../../utils/validation.js";
+import User from "../../models/User";
+import { registerValidation } from "../../utils/validation";
 
 const router = express.Router();
 

@@ -1,11 +1,11 @@
-import express from "express";
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
 import mongoose from "mongoose";
-import chalk from "chalk";
+import colors from "colors";
+
 import "dotenv/config";
 
-import app from "./app.js";
+import app from "./app";
 const PORT = process.env.PORT;
 
 Sentry.init({
@@ -21,22 +21,18 @@ Sentry.init({
   autoSessionTracking: true,
 });
 
-console.log(chalk.yellowBright('Sentry Connected!'));
+console.log(colors.yellow("Sentry Connected!"));
 
-mongoose.connect(process.env.MONGODB_URI_REMOTE, {
-  useNewUrlParser: true,
-});
+mongoose.connect(`${process.env.MONGODB_URI_REMOTE}`);
 
-// once connected to the database, print success message
 mongoose.connection.on("open", () => {
-  console.log(chalk.magenta("MongoDB Connected at: ") + chalk.blue(process.env.MONGODB_URI_REMOTE));
+  console.log(colors.magenta("MongoDB Connected at: " + `${process.env.MONGODB_URI_REMOTE}`));
 });
 
-// on error, print error message
 mongoose.connection.on("error", (err) => {
-  console.log(chalk.redBright("MongoDB Error: ", err));
+  console.log(colors.red(`MongoDB Error: \n${err}`));
 });
 
 app.listen(PORT, () => {
-  console.log(chalk.green(`API running at http://localhost:${PORT}`));
+  console.log(colors.green(`API running at http://localhost:${PORT}`));
 });

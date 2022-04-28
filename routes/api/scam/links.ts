@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const jwt = jsonwebtoken;
 
-import ScamLink from "../../../models/scam/Link.js";
+import ScamLink from "../../../models/scam/Link";
 
 const router = express.Router();
 
@@ -41,7 +41,6 @@ router.post("/report", async (req, res) => {
     });
   } catch (err) {
     res.status(400).send(err);
-    console.log(err);
   }
 });
 

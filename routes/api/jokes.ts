@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import Joke from "../../models/Jokes.js";
+import Joke from "../../models/Jokes";
 
 router.get("/", (req, res) => {
   res.redirect("/api/v0/jokes/random");

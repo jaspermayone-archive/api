@@ -1,11 +1,11 @@
 import express from "express";
 const router = express.Router();
 
-import qoutesRoutes from "./api/quotes.js";
-import jokesRoutes from "./api/jokes.js";
-import coinflipRoutes from "./api/coinflip.js";
-import dicerollRoutes from "./api/diceroll.js";
-import scamRoutes from "./api/scam.js";
+import qoutesRoutes from "./api/quotes";
+import jokesRoutes from "./api/jokes";
+import coinflipRoutes from "./api/coinflip";
+import dicerollRoutes from "./api/diceroll";
+import scamRoutes from "./api/scam";
 
 router.get("/", (req, res) => {
   res.send(
