@@ -21,6 +21,7 @@
     "express": "^4.17.3",
     "express-actuator": "^1.8.1",
     "express-ping": "^1.4.0",
+    "express-rate-limit": "^6.4.0",
     "express-suite": "^1.6.3",
     "fastify": "^3.28.0",
     "fs": "^0.0.1-security",

@@ -6,6 +6,7 @@ import jsonwebtoken from "jsonwebtoken";
 const jwt = jsonwebtoken
 
 import ScamEmail from "../../../models/scam/Email";
+import { getUserInfo } from "../../../utils/getUserInfo";
 
 const router = express.Router();
 
@@ -14,15 +15,13 @@ router.post("/report", async (req, res) => {
     const emailExists = await ScamEmail.findOne({ email: req.body.email });
     if (emailExists) return res.status(400).send("Email already flagged!");
 
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  const user = await getUserInfo(req, res);
 
     const email = new ScamEmail({
         _id: uuidv4(),
         email: req.body.email,
         reportedBy: req.body.reportedBy,
-        reportedByID: decodedToken.userId,
+        reportedByID: user.userId,
     });
 
     try {
