@@ -41,7 +41,6 @@ app.use(compression());
 app.use(actuator());
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(limiter);
 
 app.get("/", (req, res) => {
   res.send(
@@ -50,9 +49,9 @@ app.get("/", (req, res) => {
   );
 });
 
-app.use("/login", loginRoute);
-app.use("/api/v0", authToken, apiRoute);
-app.use("/admin", isAdmin, adminRoutes);
+app.use("/login", limiter, loginRoute);
+app.use("/api/v0", limiter, authToken, apiRoute);
+app.use("/admin", limiter, isAdmin, adminRoutes);
 
 app.use(routeCheck(app));
 

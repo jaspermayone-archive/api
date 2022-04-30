@@ -5,6 +5,8 @@ import colors from "colors";
 
 import "dotenv/config";
 
+import { loadPM2 } from "./modules/loadPM2";
+
 import app from "./app";
 const PORT = process.env.PORT;
 
