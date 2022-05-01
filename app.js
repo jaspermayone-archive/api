@@ -1,5 +1,6 @@
 import express from "express";
 import actuator from "express-actuator";
+import { RateLimit } from "express-rate-limit";
 import bodyParser from "body-parser";
 import compression from "compression";
 import helmet from "helmet";
@@ -22,6 +23,11 @@ import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
+var limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 app.use(Sentry.Handlers.errorHandler());
@@ -33,6 +39,8 @@ app.use(compression());
 app.use(actuator());
 app.use(helmet());
 app.use(cors());
+app.use(limiter);
+
 
 app.get("/", (req, res) => {
 	res.send(
