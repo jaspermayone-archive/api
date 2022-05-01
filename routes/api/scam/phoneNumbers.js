@@ -10,8 +10,11 @@ router.post("/report", async (req, res) => {
   const { error } = ScamPhoneNumberValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne({ phoneNumber: req.body.phoneNumber });
-  if (phoneNumberExists) return res.status(400).send("Phone Number already flagged!");
+  const phoneNumberExists = await ScamPhoneNumber.findOne({
+    phoneNumber: req.body.phoneNumber,
+  });
+  if (phoneNumberExists)
+    return res.status(400).send("Phone Number already flagged!");
 
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -36,11 +39,12 @@ router.post("/report", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
-
   const phoneNumber = req.body.phoneNumber;
   if (!phoneNumber) return res.status(400).send("No Phone Number provided!");
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne({ phoneNumber: req.body.phoneNumber });
+  const phoneNumberExists = await ScamPhoneNumber.findOne({
+    phoneNumber: req.body.phoneNumber,
+  });
 
   if (phoneNumberExists) {
     res.send("PhoneNumber is a scam!");
@@ -52,11 +56,12 @@ router.get("/check", async (req, res) => {
 });
 
 router.get("/check:phoneNumber", async (req, res) => {
-
   const phoneNumber = req.params.phoneNumber;
   if (!phoneNumber) return res.status(400).send("No Phone Number provided!");
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne({ phoneNumber: req.body.phoneNumber });
+  const phoneNumberExists = await ScamPhoneNumber.findOne({
+    phoneNumber: req.body.phoneNumber,
+  });
 
   if (phoneNumberExists) {
     res.json({

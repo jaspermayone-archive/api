@@ -5,25 +5,75 @@ import ScamLink from "../../../models/scam/Link.js";
 import { ScamLinkValidation } from "../../../utils/validation.js";
 
 const router = express.Router();
+
 /**
  * @swagger
  * /api/v0/scam/links/report:
- *    post:
- *      tags:
- *        - /api/v0
- *      summary: Report a link as scam
- *      responses:
- *        401:
- *          description: Unauthorized (No token provided)
+ *   post:
+ *     tags:
+ *       - /api/v0
+ *     summary: Report a link as scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: header
+ *         name: link
+ *         description: The URL you want to report
+ *         schema:
+ *           type: string
+ *           example: scam.example.com
+ *         required: true
+ *       - in: header
+ *         name: reportedBy
+ *         description: User that is reporting the URL
+ *         schema:
+ *           type: string
+ *           example: j-dogcoder
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *             link:
+ *               type: string
+ *             reportedBy:
+ *               type: string
+ *             id:
+ *               type: string
+ *             dateReported:
+ *               type: string
+ *               format: date
+ *       400:
+ *         description: Bad Request (Some error occurred, or link was already reported)
+ *         schema:
+ *           type: string
+ *           example: Link already flagged!
+ *       401:
+ *         description: Unauthorized (No token provided)
  * /api/v0/scam/links/check:
- *    get:
- *      tags:
- *        - /api/v0
- *      summary: Check a link for scam
- *      produces: application/json
- *      responses:
- *        401:
- *          description: Unauthorized (No token provided)
+ *   get:
+ *     tags:
+ *       - /api/v0
+ *     summary: Check a link for scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: query
+ *         name: url
+ *         description: The URL you want to query
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             scamDetected:
+ *               type: boolean
+ *       401:
+ *        description: Unauthorized (No token provided)
  */
 router.post("/report", async (req, res) => {
 	const { error } = ScamLinkValidation(req.body);

@@ -3,9 +3,7 @@ const router = express.Router();
 
 import Quote from "../../models/Quotes.js";
 
-
 router.get("/:id", (req, res) => {
-
   Quote.findById(req.params.id, (err, quote) => {
     if (err) {
       res.status(500).send(err);
@@ -16,9 +14,9 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-
   const quoteExists = await Quote.findOne({ quote: req.body.quote });
-  if (quoteExists) return res.status(400).send("Quote already exists in system!");
+  if (quoteExists)
+    return res.status(400).send("Quote already exists in system!");
 
   const quote = new Quote({
     quote: req.body.quote,

@@ -6,6 +6,27 @@ import { ScamEmailValidation } from "../../../utils/validation.js";
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /api/v0/scam/links/report:
+ *    post:
+ *      tags:
+ *        - /api/v0
+ *      summary: Report a link as scam
+ *      responses:
+ *        401:
+ *          description: Unauthorized (No token provided)
+ * /api/v0/scam/links/check:
+ *    get:
+ *      tags:
+ *        - /api/v0
+ *      summary: Check a link for scam
+ *      produces: application/json
+ *      responses:
+ *        401:
+ *          description: Unauthorized (No token provided)
+ */
+
 router.post("/report", async (req, res) => {
   const { error } = ScamEmailValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -36,7 +57,6 @@ router.post("/report", async (req, res) => {
 });
 
 router.get("/check", async (req, res) => {
-
   const email = req.body.email;
   if (!email) return res.status(400).send("No email provided!");
 
@@ -52,7 +72,6 @@ router.get("/check", async (req, res) => {
 });
 
 router.get("/check:email", async (req, res) => {
-
   const email = req.params.email;
   if (!email) return res.status(400).send("No email provided!");
 
