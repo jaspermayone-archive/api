@@ -1,12 +1,12 @@
-import express from "express";
-import "dotenv/config";
-import jsonwebtoken from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid";
+import express from 'express';
+import 'dotenv/config';
+import jsonwebtoken from 'jsonwebtoken';
+import {v4 as uuidv4} from 'uuid';
 
 const jwt = jsonwebtoken;
 
-import ScamLink from "../../../models/scam/Link";
-import { getUserInfo } from "../../../utils/getUserInfo";
+import ScamLink from '../../../models/scam/Link';
+import {getUserInfo} from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -40,6 +40,7 @@ const router = express.Router();
  *           properties:
  *             message:
  *               type: string
+ *               example: "Link reported!"
  *             link:
  *               type: string
  *             reportedBy:
@@ -56,6 +57,38 @@ const router = express.Router();
  *           example: Link already flagged!
  *       401:
  *         description: Unauthorized (No token provided)
+ */
+router.post('/report', async (req, res) => {
+  const linkExists = await ScamLink.findOne({link: req.body.link});
+  if (linkExists) return res.status(400).send('Link already flagged!');
+
+  const user = await getUserInfo(req, res);
+
+  const link = new ScamLink({
+    _id: uuidv4(),
+    link: req.body.link,
+    type: req.body.type,
+    reportedBy: req.body.reportedBy,
+    reportedByID: user.userId,
+  });
+
+  try {
+    const newLink = await link.save();
+    res.send({
+      message: 'Link reported!',
+      link: newLink.link,
+      type: newLink.type,
+      reportedBy: newLink.reportedBy,
+      reportedByID: newLink.reportedByID,
+      dateReported: newLink.dateCreated,
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+/**
+ * @swagger
  * /api/v0/scam/links/check:
  *   get:
  *     tags:
@@ -79,67 +112,38 @@ const router = express.Router();
  *       401:
  *        description: Unauthorized (No token provided)
  */
-router.post("/report", async (req, res) => {
-  const linkExists = await ScamLink.findOne({ link: req.body.link });
-  if (linkExists) return res.status(400).send("Link already flagged!");
+router.get('/check', async (req, res) => {
+  const url = req.query.url;
+  const link = req.body.link;
 
-  const user = await getUserInfo(req, res);
+  if (!url) {
+    if (!link) return res.status(400).send('No link provided!');
 
-  const link = new ScamLink({
-    _id: uuidv4(),
-    link: req.body.link,
-    type: req.body.type,
-    reportedBy: req.body.reportedBy,
-    reportedByID: user.userId,
-  });
+    const linkExists = await ScamLink.findOne({link: req.body.link});
 
-  try {
-    const newLink = await link.save();
-    res.send({
-      message: "Link reported!",
-      link: newLink.link,
-      type: newLink.type,
-      reportedBy: newLink.reportedBy,
-      reportedByID: newLink.reportedByID,
-      dateReported: newLink.dateCreated,
-    });
-  } catch (err) {
-    res.status(400).send(err);
+    if (linkExists) {
+      res.json({
+        scamDetected: true,
+      });
+    } else {
+      res.json({
+        scamDetected: false,
+      });
+    }
   }
-});
+  if (url) {
+    const linkExists = await ScamLink.findOne({link: url});
 
-router.get("/check", async (req, res) => {
-	const url = req.query.url;
-	const link = req.body.link;
-
-	if (!url) {
-		if (!link) return res.status(400).send("No link provided!");
-
-		const linkExists = await ScamLink.findOne({ link: req.body.link });
-
-		if (linkExists) {
-			res.json({
-				scamDetected: true,
-			});
-		} else {
-			res.json({
-				scamDetected: false,
-			});
-		}
-	}
-	if (url) {
-		const linkExists = await ScamLink.findOne({ link: url });
-
-		if (linkExists) {
-			res.json({
-				scamDetected: true,
-			});
-		} else {
-			res.json({
-				scamDetected: false,
-			});
-		}
-	}
+    if (linkExists) {
+      res.json({
+        scamDetected: true,
+      });
+    } else {
+      res.json({
+        scamDetected: false,
+      });
+    }
+  }
 });
 
 export default router;
