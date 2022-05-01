@@ -13,7 +13,7 @@ const options = {
       {name: '/admin', description: 'Admin endpoints'},
     ],
   },
-  apis: ['./src/routes/**/*.ts'],
+  apis: ['./src/routes/**/*.ts', './src/models/**/*.ts'],
 };
 
 export const apiSpecs = swaggerJsdoc(options);

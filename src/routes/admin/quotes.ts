@@ -22,17 +22,7 @@ import Quote from '../../models/Quotes';
  *        200:
  *          description: Successful Response
  *          schema:
- *            type: "object"
- *            properties:
- *              id:
- *                type: string
- *              quote:
- *                type: string
- *              author:
- *                type: string
- *              dateUploaded:
- *                type: string
- *                format: date
+ *            $ref: '#/definitions/Joke'
  *        401:
  *          description: Unauthorized (No token provided)
  *        500:
@@ -71,17 +61,7 @@ router.get('/:id', (req, res) => {
  *        200:
  *          description: Successful Response
  *          schema:
- *            type: "object"
- *            properties:
- *              id:
- *                type: string
- *              quote:
- *                type: string
- *              author:
- *                type: string
- *              dateUploaded:
- *                type: string
- *                format: date
+ *            $ref: "#/definitions/Quote"
  *        401:
  *          description: Unauthorized (No token provided)
  *        500:
@@ -116,17 +96,7 @@ router.put('/:id', (req, res) => {
  *        200:
  *          description: Successful Response
  *          schema:
- *            type: "object"
- *            properties:
- *              id:
- *                type: string
- *              quote:
- *                type: string
- *              author:
- *                type: string
- *              dateUploaded:
- *                type: string
- *                format: date
+ *            $ref: '#/definitions/Quote'
  *        401:
  *          description: Unauthorized (No token provided)
  *        500:
@@ -153,19 +123,9 @@ router.delete('/:id', (req, res) => {
  *        - in: header
  *          name: quote
  *          description: Quote to add
+ *          required: true
  *          schema:
- *            type: object
- *            required: true
- *            properties:
- *              _id:
- *                type: string
- *              quote:
- *                type: string
- *              author:
- *                type: string
- *              dateUploaded:
- *                type: string
- *                format: date
+ *            $ref: '#/definitions/Quote'
  *      produces: application/json
  *      responses:
  *        200:

@@ -1,6 +1,29 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-// create user model
+/**
+ * @swagger
+ * definitions:
+ *   User:
+ *     type: object
+ *     properties:
+ *       _id:
+ *         type: string
+ *       first_name:
+ *         type: string
+ *       last_name:
+ *         type: string
+ *       email:
+ *         type: string
+ *       password:
+ *         type: string
+ *       accountType:
+ *         type: string
+ *         enum: user, bot, admin
+ *       date_created:
+ *         type: string
+ *         format: date
+ */
+
 const userSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -23,8 +46,9 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   accountType: {
-    type: String, enum: ["user", "bot", "admin"],
-    default: "user",
+    type: String,
+    enum: ['user', 'bot', 'admin'],
+    default: 'user',
     required: true,
   },
   date_created: {
@@ -34,4 +58,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);
