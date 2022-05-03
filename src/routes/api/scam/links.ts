@@ -61,7 +61,9 @@ const router = express.Router();
 router.post('/report', async (req, res) => {
   const body = req.body;
 
-  const linkExists = await ScamLink.findOne({ link: body.link });
+let query = { link: body.link };
+
+  const linkExists = await ScamLink.findOne(query);
   if (linkExists) return res.status(400).send('Link already flagged!');
 
   const user = await getUserInfo(req, res);
@@ -121,10 +123,12 @@ router.get('/check', async (req, res) => {
   const url = query.url;
   const link = body.link;
 
+  let dbQuery = { link: link };
+
   if (!url) {
     if (!link) return res.status(400).send('No link provided!');
 
-    const linkExists = await ScamLink.findOne({ link: body.link });
+    const linkExists = await ScamLink.findOne(dbQuery);
 
     if (linkExists) {
       res.json({

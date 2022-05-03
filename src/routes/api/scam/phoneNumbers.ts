@@ -61,9 +61,9 @@ const router = express.Router();
 router.post('/report', async (req, res) => {
   const body = req.body;
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne({
-    phoneNumber: body.phoneNumber,
-  });
+  let query = { phoneNumber: body.phoneNumber };
+
+  const phoneNumberExists = await ScamPhoneNumber.findOne(query);
   if (phoneNumberExists)
     return res.status(400).send('Phone Number already flagged!');
 
@@ -120,11 +120,12 @@ router.get('/check', async (req, res) => {
   const body = req.body;
 
   const phoneNumber = body.phoneNumber;
+
+  let query = { phoneNumber: phoneNumber };
+
   if (!phoneNumber) return res.status(400).send('No Phone Number provided!');
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne({
-    phoneNumber: body.phoneNumber,
-  });
+  const phoneNumberExists = await ScamPhoneNumber.findOne(query);
 
   if (phoneNumberExists) {
     res.send('PhoneNumber is a scam!');
