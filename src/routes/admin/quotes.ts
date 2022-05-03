@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import Quote from '../../models/Quotes';
 /**
@@ -155,9 +155,11 @@ router.delete('/:id', (req, res) => {
  *          description: Internal Server Error
  */
 router.post('/add', async (req, res) => {
-const rawQuote = req.body.quote;
+  const rawQuote = req.body.quote;
 
-  const quoteExists = await Quote.findOne({quote: rawQuote});
+  let query = { quote: rawQuote };
+
+  const quoteExists = await Quote.findOne(query);
   if (quoteExists)
     return res.status(400).send('Quote already exists in system!');
 

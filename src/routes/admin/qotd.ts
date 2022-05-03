@@ -80,7 +80,9 @@ router.get("/:id", (req, res) => {
 router.post("/add", async (req, res) => {
     const rawQotd = req.body.qotd;
 
-    const qotdExists = await Qotd.findOne({ qotd: rawQotd });
+    let query = { qotd: rawQotd };
+
+    const qotdExists = await Qotd.findOne(query);
     if (qotdExists) return res.status(400).send("Qotd already exists in system!");
 
     const qotd = new Qotd({

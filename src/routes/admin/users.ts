@@ -93,7 +93,9 @@ router.post("/add", async (req, res) => {
   const last_name = req.body.last_name;
   const accountType = req.body.accountType;
 
-  const emailExists = await User.findOne({ email: email });
+  let query = { email: email };
+
+  const emailExists = await User.findOne(query);
   if (emailExists)
     return res.status(400).send("Email already exists in system!");
 
