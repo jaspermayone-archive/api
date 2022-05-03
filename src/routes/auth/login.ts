@@ -14,7 +14,7 @@ import User from "../../models/User";
 /**
  * @swagger
  * /auth/login:
- *    get:
+ *    post:
  *      tags:
  *        - /auth
  *      summary: Get JWT token for user
@@ -42,7 +42,7 @@ import User from "../../models/User";
  *        500:
  *          description: Internal Server Error
  */
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
