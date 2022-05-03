@@ -14,10 +14,10 @@ import User from "../../models/User";
 /**
  * @swagger
  * /auth/login:
- *    post:
+ *    get:
  *      tags:
  *        - /auth
- *      summary: Add a user
+ *      summary: Get JWT token for user
  *      parameters:
  *        - in: header
  *          name: user
