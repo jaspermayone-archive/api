@@ -158,7 +158,9 @@ router.post('/add', async (req, res) => {
 
   const rawJoke = req.body.joke;
 
-  const jokeExists = await Joke.findOne({ joke: rawJoke });
+  let query = { joke: rawJoke };
+
+  const jokeExists = await Joke.findOne(query);
   if (jokeExists) return res.status(400).send('Joke already exists in system!');
 
   const joke = new Joke({
