@@ -31,7 +31,7 @@ import Joke from '../../models/Jokes';
 router.get('/:id', (req, res) => {
   Joke.findById(req.params.id, (err, joke) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("Had an error: " + err + ".");
     } else {
       res.json(joke);
     }
