@@ -29,7 +29,8 @@ import Quote from '../../models/Quotes';
  *          description: Internal Server Error
  */
 router.get('/:id', (req, res) => {
-  Quote.findById(req.params.id, (err, quote) => {
+  const id = req.params.id;
+  Quote.findById(id, (err, quote) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -68,7 +69,9 @@ router.get('/:id', (req, res) => {
  *          description: Internal Server Error
  */
 router.put('/:id', (req, res) => {
-  Quote.findByIdAndUpdate(req.params.id, req.body, (err, quote) => {
+  const id = req.params.id;
+  const body = req.body;
+  Quote.findByIdAndUpdate(id, body, (err, quote) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -103,7 +106,8 @@ router.put('/:id', (req, res) => {
  *          description: Internal Server Error
  */
 router.delete('/:id', (req, res) => {
-  Quote.findByIdAndDelete(req.params.id, (err, quote) => {
+  const id = req.params.id;
+  Quote.findByIdAndDelete(id, (err, quote) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -151,13 +155,15 @@ router.delete('/:id', (req, res) => {
  *          description: Internal Server Error
  */
 router.post('/add', async (req, res) => {
-  const quoteExists = await Quote.findOne({quote: req.body.quote});
+const rawQuote = req.body.quote;
+
+  const quoteExists = await Quote.findOne({quote: rawQuote});
   if (quoteExists)
     return res.status(400).send('Quote already exists in system!');
 
   const quote = new Quote({
     _id: uuidv4(),
-    quote: req.body.quote,
+    quote: rawQuote,
   });
 
   try {
