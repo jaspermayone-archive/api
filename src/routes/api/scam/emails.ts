@@ -83,7 +83,7 @@ router.post('/report', async (req, res) => {
       dateReported: newEmail.dateCreated,
     });
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).send("An error has occured. Please contact a developer.");
   }
 });
 

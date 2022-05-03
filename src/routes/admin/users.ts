@@ -38,7 +38,7 @@ router.get("/:id", (req, res) => {
   const id = req.params.id;
   User.findById(id, (err, user) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(user);
     }
@@ -120,7 +120,7 @@ router.post("/add", async (req, res) => {
       accountType: newUser.accountType,
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send("An error has occured. Please contact a developer.");
   }
 });
 
@@ -157,7 +157,7 @@ router.put("/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndUpdate(id, req.body, (err, user) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(user);
     }
@@ -193,7 +193,7 @@ router.delete("/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndDelete(id, (err, user) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(user);
     }

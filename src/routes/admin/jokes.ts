@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
   const body = req.body;
   Joke.findByIdAndUpdate(id, body, (err, joke) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(joke);
     }
@@ -109,7 +109,7 @@ router.delete('/:id', (req, res) => {
   const id = req.params.id;
   Joke.findByIdAndDelete(id, (err, joke) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(joke);
     }
@@ -174,7 +174,7 @@ router.post('/add', async (req, res) => {
       dateUploaded: newJoke.dateUploaded,
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send("An error has occured. Please contact a developer.");
   }
 });
 

@@ -32,7 +32,7 @@ router.get('/:id', (req, res) => {
   const id = req.params.id;
   Quote.findById(id, (err, quote) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(quote);
     }
@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
   const body = req.body;
   Quote.findByIdAndUpdate(id, body, (err, quote) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(quote);
     }
@@ -109,7 +109,7 @@ router.delete('/:id', (req, res) => {
   const id = req.params.id;
   Quote.findByIdAndDelete(id, (err, quote) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send("An error has occured. Please contact a developer.");
     } else {
       res.json(quote);
     }
@@ -174,7 +174,7 @@ const rawQuote = req.body.quote;
       dateUploaded: newQuote.dateUploaded,
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send("An error has occured. Please contact a developer.");
   }
 });
 
