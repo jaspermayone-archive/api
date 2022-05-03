@@ -7,7 +7,6 @@
   "main": "src/index.ts",
   "dependencies": {
     "@nymdev/health-check": "^0.1.3",
-    "@pm2/io": "^5.0.0",
     "@sentry/node": "^6.19.6",
     "@sentry/tracing": "^6.19.6",
     "@typescript-eslint/eslint-plugin": "^5.21.0",

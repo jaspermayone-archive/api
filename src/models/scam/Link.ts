@@ -1,5 +1,25 @@
 import mongoose from "mongoose";
 
+/**
+ * @swagger
+ * definitions:
+ *   ScamLink:
+ *     type: object
+ *     properties:
+ *       _id:
+ *         type: string
+ *       link:
+ *         type: string
+ *       type:
+ *        type: string
+ *       reportedBy:
+ *        type: string
+ *       reportedByID:
+ *        type: string
+ *       dateReported:
+ *         type: string
+ *         format: date
+ */
 const scamLinkSchema = new mongoose.Schema({
     _id: {
         type: String,

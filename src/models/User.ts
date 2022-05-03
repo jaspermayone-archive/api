@@ -18,7 +18,6 @@ import mongoose from 'mongoose';
  *         type: string
  *       accountType:
  *         type: string
- *         enum: user, bot, admin
  *       date_created:
  *         type: string
  *         format: date
