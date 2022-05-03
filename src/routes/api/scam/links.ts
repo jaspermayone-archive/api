@@ -1,12 +1,12 @@
 import express from 'express';
 import 'dotenv/config';
 import jsonwebtoken from 'jsonwebtoken';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const jwt = jsonwebtoken;
 
 import ScamLink from '../../../models/scam/Link';
-import {getUserInfo} from '../../../utils/getUserInfo';
+import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -59,16 +59,18 @@ const router = express.Router();
  *         description: Unauthorized (No token provided)
  */
 router.post('/report', async (req, res) => {
-  const linkExists = await ScamLink.findOne({link: req.body.link});
+  const body = req.body;
+
+  const linkExists = await ScamLink.findOne({ link: body.link });
   if (linkExists) return res.status(400).send('Link already flagged!');
 
   const user = await getUserInfo(req, res);
 
   const link = new ScamLink({
     _id: uuidv4(),
-    link: req.body.link,
-    type: req.body.type,
-    reportedBy: req.body.reportedBy,
+    link: body.link,
+    type: body.type,
+    reportedBy: body.reportedBy,
     reportedByID: user.userId,
   });
 
@@ -113,13 +115,16 @@ router.post('/report', async (req, res) => {
  *        description: Unauthorized (No token provided)
  */
 router.get('/check', async (req, res) => {
-  const url = req.query.url;
-  const link = req.body.link;
+  const query = req.query;
+  const body = req.body;
+
+  const url = query.url;
+  const link = body.link;
 
   if (!url) {
     if (!link) return res.status(400).send('No link provided!');
 
-    const linkExists = await ScamLink.findOne({link: req.body.link});
+    const linkExists = await ScamLink.findOne({ link: body.link });
 
     if (linkExists) {
       res.json({
@@ -132,7 +137,7 @@ router.get('/check', async (req, res) => {
     }
   }
   if (url) {
-    const linkExists = await ScamLink.findOne({link: url});
+    const linkExists = await ScamLink.findOne({ link: url });
 
     if (linkExists) {
       res.json({

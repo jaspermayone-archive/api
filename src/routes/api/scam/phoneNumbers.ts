@@ -1,12 +1,12 @@
 import express from 'express';
 import 'dotenv/config';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import jsonwebtoken from 'jsonwebtoken';
 
 const jwt = jsonwebtoken;
 
 import ScamPhoneNumber from '../../../models/scam/PhoneNumber';
-import {getUserInfo} from '../../../utils/getUserInfo';
+import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -59,8 +59,10 @@ const router = express.Router();
  *         description: Unauthorized (No token provided)
  */
 router.post('/report', async (req, res) => {
+  const body = req.body;
+
   const phoneNumberExists = await ScamPhoneNumber.findOne({
-    phoneNumber: req.body.phoneNumber,
+    phoneNumber: body.phoneNumber,
   });
   if (phoneNumberExists)
     return res.status(400).send('Phone Number already flagged!');
@@ -69,8 +71,8 @@ router.post('/report', async (req, res) => {
 
   const phoneNumber = new ScamPhoneNumber({
     _id: uuidv4(),
-    phoneNumber: req.body.phoneNumber,
-    reportedBy: req.body.reportedBy,
+    phoneNumber: body.phoneNumber,
+    reportedBy: body.reportedBy,
     reportedByID: user.userId,
   });
 
@@ -115,11 +117,13 @@ router.post('/report', async (req, res) => {
  *        description: Unauthorized (No token provided)
  */
 router.get('/check', async (req, res) => {
-  const phoneNumber = req.body.phoneNumber;
+  const body = req.body;
+
+  const phoneNumber = body.phoneNumber;
   if (!phoneNumber) return res.status(400).send('No Phone Number provided!');
 
   const phoneNumberExists = await ScamPhoneNumber.findOne({
-    phoneNumber: req.body.phoneNumber,
+    phoneNumber: body.phoneNumber,
   });
 
   if (phoneNumberExists) {
