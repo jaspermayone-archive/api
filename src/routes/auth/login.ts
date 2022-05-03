@@ -6,10 +6,43 @@ const jwt = jsonwebtoken;
 const bcrypt = bcryptjs;
 const router = express.Router();
 
-import { loginValidation } from '../utils/validation';
-import User from "../models/User";
+import { loginValidation } from '../../utils/validation';
+import User from "../../models/User";
 
-router.post("/", async (req, res) => {
+
+
+/**
+ * @swagger
+ * /auth/login:
+ *    post:
+ *      tags:
+ *        - /auth
+ *      summary: Add a user
+ *      parameters:
+ *        - in: header
+ *          name: user
+ *          description: User to add
+ *          required: true
+ *          schema:
+ *            $ref: '#/definitions/User'
+ *      produces: application/json
+ *      responses:
+ *        200:
+ *          description: Successful Response
+ *          schema:
+ *            type: "object"
+ *            properties:
+ *             token:
+ *               type: string
+ *        400:
+ *          description: Bad Request
+ *          schema:
+ *            type: string
+ *            example: "Can not find user!"
+ *        500:
+ *          description: Internal Server Error
+ */
+router.get("/", async (req, res) => {
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 

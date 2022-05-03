@@ -15,7 +15,7 @@ import {isAdmin} from './middlewear/isAdmin';
 
 import apiRoute from './routes/api';
 import adminRoutes from './routes/admin';
-import loginRoute from './routes/login';
+import authRoutes from './routes/auth';
 
 import {apiSpecs} from './utils/apiSpecs';
 import swaggerUi from 'swagger-ui-express';
@@ -44,18 +44,20 @@ app.use(compression());
 app.use(actuator());
 app.use(helmet());
 app.use(cors(corsOptions));
+app.use(limiter);
 
 app.get('/', (req, res) => {
-  res.send(
-    `<h1>Welcome to the API</h1>
-    <p>You can find the API documentation <a href="/api/docs">here</a></p>`
-  );
+  res.redirect('/docs');
 });
 
-app.use('/login', limiter, loginRoute);
-app.use('/api/v0', limiter, authToken, apiRoute);
-app.use('/admin', limiter, isAdmin, adminRoutes);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(apiSpecs));
+app.get("/api/docs", (req, res) => {
+  res.redirect("/docs");
+});
+
+app.use('/auth', authRoutes);
+app.use('/api/v0', authToken, apiRoute);
+app.use('/admin', isAdmin, adminRoutes);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
 app.use(routeCheck(app));
 
