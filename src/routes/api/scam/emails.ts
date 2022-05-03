@@ -1,22 +1,22 @@
 import express from 'express';
 import 'dotenv/config';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import jsonwebtoken from 'jsonwebtoken';
 
 const jwt = jsonwebtoken;
 
 import ScamEmail from '../../../models/scam/Email';
-import {getUserInfo} from '../../../utils/getUserInfo';
+import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
 /**
  * @swagger
- * /api/v0/scam/phoneNumbers/report:
+ * /api/v0/scam/emails/report:
  *   post:
  *     tags:
  *       - /api/v0
- *     summary: Report a phoneNumber as scam
+ *     summary: Report a email as scam
  *     produces: application/json
  *     parameters:
  *       - in: header
@@ -59,15 +59,17 @@ const router = express.Router();
  *         description: Unauthorized (No token provided)
  */
 router.post('/report', async (req, res) => {
-  const emailExists = await ScamEmail.findOne({email: req.body.email});
+  const body = req.body;
+
+  const emailExists = await ScamEmail.findOne({ email: body.email });
   if (emailExists) return res.status(400).send('Email already flagged!');
 
   const user = await getUserInfo(req, res);
 
   const email = new ScamEmail({
     _id: uuidv4(),
-    email: req.body.email,
-    reportedBy: req.body.reportedBy,
+    email: body.email,
+    reportedBy: body.reportedBy,
     reportedByID: user.userId,
   });
 
@@ -85,11 +87,40 @@ router.post('/report', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/v0/scam/emails/check:
+ *   post:
+ *     tags:
+ *       - /api/v0
+ *     summary: check if email is flagged as scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: header
+ *         name: email
+ *         description: The email you want to check
+ *         schema:
+ *           type: string
+ *           example: user@mail.example.com
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             scamDetected:
+ *               type: boolean
+ *       401:
+ *         description: Unauthorized (No token provided)
+ */
 router.get('/check', async (req, res) => {
-  const email = req.body.email;
+  const body = req.body;
+
+  const email = body.email;
   if (!email) return res.status(400).send('No email provided!');
 
-  const emailExists = await ScamEmail.findOne({email: req.body.email});
+  const emailExists = await ScamEmail.findOne({ email: body.email });
 
   if (emailExists) {
     res.send('Email is a scam!');
