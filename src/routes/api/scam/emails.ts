@@ -61,7 +61,9 @@ const router = express.Router();
 router.post('/report', async (req, res) => {
   const body = req.body;
 
-  const emailExists = await ScamEmail.findOne({ email: body.email });
+  let query = { email: body.email };
+
+  const emailExists = await ScamEmail.findOne(query);
   if (emailExists) return res.status(400).send('Email already flagged!');
 
   const user = await getUserInfo(req, res);
@@ -117,10 +119,12 @@ router.post('/report', async (req, res) => {
 router.get('/check', async (req, res) => {
   const body = req.body;
 
+  let query = { email: body.email };
+
   const email = body.email;
   if (!email) return res.status(400).send('No email provided!');
 
-  const emailExists = await ScamEmail.findOne({ email: body.email });
+  const emailExists = await ScamEmail.findOne(query);
 
   if (emailExists) {
     res.send('Email is a scam!');
