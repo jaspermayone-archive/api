@@ -32,7 +32,7 @@ router.get("/:id", (req, res) => {
     const id = req.params.id;
     Qotd.findById(id, (err, qotd) => {
         if (err) {
-            res.status(500).send(err);
+            res.status(500).send("An error has occured. Please contact a developer.");
         } else {
             res.json(qotd);
         }
@@ -96,7 +96,7 @@ router.post("/add", async (req, res) => {
             dateUploaded: newQotd.dateUploaded,
         });
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send("An error has occured. Please contact a developer.");
     }
 });
 
@@ -134,7 +134,7 @@ router.put("/:id", (req, res) => {
     const body = req.body;
     Qotd.findByIdAndUpdate(id, body, (err, qotd) => {
         if (err) {
-            res.status(500).send(err);
+            res.status(500).send("An error has occured. Please contact a developer.");
         } else {
             res.json(qotd);
         }
@@ -169,7 +169,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
     Qotd.findByIdAndDelete(req.params.id, (err, qotd) => {
         if (err) {
-            res.status(500).send(err);
+            res.status(500).send("An error has occured. Please contact a developer.");
         } else {
             res.json(qotd);
         }
