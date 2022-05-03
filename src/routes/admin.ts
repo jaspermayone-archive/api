@@ -1,5 +1,5 @@
 import express from "express";
-import healthCheck from '@nymdev/health-check'
+import healthCheck from "@nymdev/health-check";
 
 const router = express.Router();
 

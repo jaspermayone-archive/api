@@ -10,13 +10,12 @@ import { registerValidation } from "../../utils/validation";
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
-
   User.findById(req.params.id, (err, user) => {
-      if (err) {
-          res.status(500).send(err);
-      } else {
-          res.json(user);
-      }
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(user);
+    }
   });
 });
 
@@ -74,6 +73,5 @@ router.delete("/:id", (req, res) => {
     }
   });
 });
-
 
 export default router;

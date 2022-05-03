@@ -1,10 +1,9 @@
 import express from "express";
 import bcryptjs from "bcryptjs";
-import jsonwebtoken from 'jsonwebtoken';
+import jsonwebtoken from "jsonwebtoken";
 
 const jwt = jsonwebtoken;
-const bcrypt = bcryptjs
-
+const bcrypt = bcryptjs;
 const router = express.Router();
 
 import { loginValidation } from '../utils/validation';
@@ -19,7 +18,10 @@ router.post("/", async (req, res) => {
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      const accessToken = await jwt.sign({ userId: user._id, accountType: user.accountType }, process.env.ACCESS_TOKEN_SECRET);
+      const accessToken = await jwt.sign(
+        { userId: user._id, accountType: user.accountType },
+        process.env.ACCESS_TOKEN_SECRET
+      );
 
       res.json({
         accessToken: accessToken,

@@ -1,56 +1,134 @@
-import express from "express";
-import "dotenv/config";
-import { v4 as uuidv4 } from "uuid";
-import jsonwebtoken from "jsonwebtoken";
+import express from 'express';
+import 'dotenv/config';
+import {v4 as uuidv4} from 'uuid';
+import jsonwebtoken from 'jsonwebtoken';
 
 const jwt = jsonwebtoken;
 
-import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
-import { getUserInfo } from "../../../utils/getUserInfo";
+import ScamPhoneNumber from '../../../models/scam/PhoneNumber';
+import {getUserInfo} from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
-router.post("/report", async (req, res) => {
-    const phoneNumberExists = await ScamPhoneNumber.findOne({ phoneNumber: req.body.phoneNumber });
-    if (phoneNumberExists) return res.status(400).send("Phone Number already flagged!");
+/**
+ * @swagger
+ * /api/v0/scam/phoneNumbers/report:
+ *   post:
+ *     tags:
+ *       - /api/v0
+ *     summary: Report a phoneNumber as scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: header
+ *         name: phoneNumber
+ *         description: The phoneNumber you want to report
+ *         schema:
+ *           type: string
+ *           example: +18143511283
+ *         required: true
+ *       - in: header
+ *         name: reportedBy
+ *         description: User that is reporting the phoneNumber
+ *         schema:
+ *           type: string
+ *           example: j-dogcoder
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               example: "Phone Number reported!"
+ *             phoneNumber:
+ *               type: string
+ *             reportedBy:
+ *               type: string
+ *             reportedById:
+ *               type: string
+ *             dateReported:
+ *               type: string
+ *               format: date
+ *       400:
+ *         description: Bad Request (Some error occurred, or phoneNumber was already reported)
+ *         schema:
+ *           type: string
+ *           example: Phone Number already flagged!
+ *       401:
+ *         description: Unauthorized (No token provided)
+ */
+router.post('/report', async (req, res) => {
+  const phoneNumberExists = await ScamPhoneNumber.findOne({
+    phoneNumber: req.body.phoneNumber,
+  });
+  if (phoneNumberExists)
+    return res.status(400).send('Phone Number already flagged!');
 
-    const user = await getUserInfo(req, res);
+  const user = await getUserInfo(req, res);
 
-    const phoneNumber = new ScamPhoneNumber({
-        _id: uuidv4(),
-        phoneNumber: req.body.phoneNumber,
-        reportedBy: req.body.reportedBy,
-        reportedByID: user.userId,
+  const phoneNumber = new ScamPhoneNumber({
+    _id: uuidv4(),
+    phoneNumber: req.body.phoneNumber,
+    reportedBy: req.body.reportedBy,
+    reportedByID: user.userId,
+  });
+
+  try {
+    const newPhoneNumber = await phoneNumber.save();
+    res.send({
+      message: 'Phone Number reported!',
+      phoneNumber: newPhoneNumber.phoneNumber,
+      reportedBy: newPhoneNumber.reportedBy,
+      reportedByID: newPhoneNumber.reportedByID,
+      dateReported: newPhoneNumber.dateCreated,
     });
-
-    try {
-        const newPhoneNumber = await phoneNumber.save();
-        res.send({
-            message: "Phone Number reported!",
-            phoneNumber: newPhoneNumber.phoneNumber,
-            reportedBy: newPhoneNumber.reportedBy,
-            reportedByID: newPhoneNumber.reportedByID,
-            dateReported: newPhoneNumber.dateCreated,
-        });
-    } catch (err) {
-        res.status(400).send(err);
-    }
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
-router.get("/check", async (req, res) => {
+/**
+ * @swagger
+ * /api/v0/scam/phoneNumbers/check:
+ *   get:
+ *     tags:
+ *       - /api/v0
+ *     summary: Check a phoneNumber for scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: header
+ *         name: phoneNumber
+ *         description: The phoneNumber you want to check
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: string
+ *       400:
+ *         description: Bad Request
+ *         schema:
+ *           type: string
+ *           example: "No Phone Number Provided!"
+ *       401:
+ *        description: Unauthorized (No token provided)
+ */
+router.get('/check', async (req, res) => {
+  const phoneNumber = req.body.phoneNumber;
+  if (!phoneNumber) return res.status(400).send('No Phone Number provided!');
 
-    const phoneNumber = req.body.phoneNumber;
-    if (!phoneNumber) return res.status(400).send("No Phone Number provided!");
+  const phoneNumberExists = await ScamPhoneNumber.findOne({
+    phoneNumber: req.body.phoneNumber,
+  });
 
-    const phoneNumberExists = await ScamPhoneNumber.findOne({ phoneNumber: req.body.phoneNumber });
-
-    if (phoneNumberExists) {
-        res.send("PhoneNumber is a scam!");
-    } else {
-        res.send(
-            "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-        );
-    }
+  if (phoneNumberExists) {
+    res.send('PhoneNumber is a scam!');
+  } else {
+    res.send(
+      'PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!'
+    );
+  }
 });
 
 export default router;

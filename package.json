@@ -34,6 +34,8 @@
     "mongoose": "^6.2.10",
     "mongoose-simple-random": "^0.4.1",
     "node-error-handler": "^1.2.5",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0",
     "uuid": "^8.3.2"
   },
   "scripts": {
