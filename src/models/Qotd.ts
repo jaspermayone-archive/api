@@ -20,7 +20,11 @@ const qotdSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    quotd: {
+    uniqueID: {
+        type: String,
+        required: true,
+    },
+    qotd: {
         type: String,
         required: true,
     },
