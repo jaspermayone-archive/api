@@ -9,41 +9,7 @@ import { registerValidation } from "../../utils/validation";
 
 const router = express.Router();
 
-/**
- * @swagger
- * /admin/users/{id}:
- *    get:
- *      tags:
- *        - /admin
- *      summary: Fetch a user by id
- *      parameters:
- *        - in: path
- *          name: id
- *          description: Numeric ID of the user to fetch
- *          schema:
- *            type: integer
- *            required: true
- *      produces: application/json
- *      responses:
- *        200:
- *          description: Successful Response
- *          schema:
- *            $ref: '#/definitions/Joke'
- *        401:
- *          description: Unauthorized (No token provided)
- *        500:
- *          description: Internal Server Error
- */
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  User.findById(id, (err, user) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
-    } else {
-      res.json(user);
-    }
-  });
-});
+
 
 /**
  * @swagger
@@ -89,8 +55,7 @@ router.post("/add", async (req, res) => {
 
   const email = req.body.email;
   const password = req.body.password;
-  const first_name = req.body.first_name;
-  const last_name = req.body.last_name;
+  const name = req.body.name;
   const accountType = req.body.accountType;
 
   let query = { email: email };
@@ -103,8 +68,7 @@ router.post("/add", async (req, res) => {
 
   const user = new User({
     _id: uuidv4(),
-    first_name: first_name,
-    last_name: last_name,
+    name: name,
     email: email,
     password: hashedPassword,
     accountType: accountType,
@@ -114,8 +78,7 @@ router.post("/add", async (req, res) => {
     const newUser = await user.save();
     res.send({
       _id: newUser._id,
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
+      name: newUser.name,
       email: newUser.email,
       password: newUser.password,
       dateCreated: newUser.dateCreated,
@@ -124,82 +87,6 @@ router.post("/add", async (req, res) => {
   } catch (err) {
     res.status(500).send("An error has occured. Please contact a developer.");
   }
-});
-
-/**
- * @swagger
- * /admin/users/{id}:
- *    put:
- *      tags:
- *        - /admin
- *      summary: Find a user by id and update it
- *      parameters:
- *        - in: path
- *          name: id
- *          description: Numeric ID of the user to find and update
- *          schema:
- *            type: integer
- *            required: true
- *        - in: header
- *          name: user
- *          schema:
- *            type: string
- *      produces: application/json
- *      responses:
- *        200:
- *          description: Successful Response
- *          schema:
- *            $ref: "#/definitions/User"
- *        401:
- *          description: Unauthorized (No token provided)
- *        500:
- *          description: Internal Server Error
- */
-router.put("/:id", (req, res) => {
-  const id = req.params.id;
-  User.findByIdAndUpdate(id, req.body, (err, user) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
-    } else {
-      res.json(user);
-    }
-  });
-});
-
-/**
- * @swagger
- * /admin/users/{id}:
- *    delete:
- *      tags:
- *        - /admin
- *      summary: Find a user by id and delete it
- *      parameters:
- *        - in: path
- *          name: id
- *          description: Numeric ID of the user to find and delete
- *          schema:
- *            type: integer
- *            required: true
- *      produces: application/json
- *      responses:
- *        200:
- *          description: Successful Response
- *          schema:
- *            $ref: '#/definitions/User'
- *        401:
- *          description: Unauthorized (No token provided)
- *        500:
- *          description: Internal Server Error
- */
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  User.findByIdAndDelete(id, (err, user) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
-    } else {
-      res.json(user);
-    }
-  });
 });
 
 export default router;

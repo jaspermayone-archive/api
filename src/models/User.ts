@@ -8,9 +8,7 @@ import mongoose from 'mongoose';
  *     properties:
  *       _id:
  *         type: string
- *       first_name:
- *         type: string
- *       last_name:
+ *       name:
  *         type: string
  *       email:
  *         type: string
@@ -28,11 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  first_name: {
-    type: String,
-    required: true,
-  },
-  last_name: {
+  name: {
     type: String,
     required: true,
   },

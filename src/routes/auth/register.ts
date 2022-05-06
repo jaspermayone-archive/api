@@ -53,8 +53,7 @@ router.post("/", async (req, res) => {
 
     const email = req.body.email;
     const password = req.body.password;
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
+    const name = req.body.name;
 
     let query = { email: email };
 
@@ -66,8 +65,7 @@ router.post("/", async (req, res) => {
 
     const user = new User({
         _id: uuidv4(),
-        first_name: first_name,
-        last_name: last_name,
+        name: name,
         email: email,
         password: hashedPassword,
     });
@@ -76,7 +74,7 @@ router.post("/", async (req, res) => {
         const newUser = await user.save();
         res.send({
             _id: newUser._id,
-            first_name: newUser.first_name,
+            name: newUser.name,
             last_name: newUser.last_name,
             email: newUser.email,
             password: newUser.password,
