@@ -1,11 +1,12 @@
-import express from "express";
 import bcryptjs from "bcryptjs";
-const bcrypt = bcryptjs;
+import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
 
 import User from "../../models/User";
 import { registerValidation } from "../../utils/validation";
+
+const bcrypt = bcryptjs;
 
 const router = express.Router();
 
@@ -51,18 +52,18 @@ const router = express.Router();
  */
 router.post("/add", async (req, res) => {
   const { error } = registerValidation(req.body);
-  if (error) return res.status(401).send(error.details[0].message);
+  if (error) {return res.status(401).send(error.details[0].message);}
 
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
   const accountType = req.body.accountType;
 
-  let query = { email: email };
+  const query = { email: email };
 
   const emailExists = await User.findOne(query);
   if (emailExists)
-    return res.status(400).send("Email already exists in system!");
+    {return res.status(400).send("Email already exists in system!");}
 
   const hashedPassword = await bcrypt.hash(password, 10);
 

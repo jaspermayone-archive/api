@@ -1,8 +1,9 @@
-import express from 'express';
-const router = express.Router();
-import { v4 as uuidv4 } from 'uuid';
+import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
-import Joke from '../../models/Jokes';
+import Joke from "../../models/Jokes";
+
+const router = express.Router();
 /**
  * @swagger
  * /admin/jokes/{id}:
@@ -28,7 +29,7 @@ import Joke from '../../models/Jokes';
  *        500:
  *          description: Internal Server Error
  */
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   const id = req.params.id;
   Joke.findById(id, (err, joke) => {
     if (err) {
@@ -68,7 +69,7 @@ router.get('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
   Joke.findByIdAndUpdate(id, body, (err, joke) => {
@@ -105,7 +106,7 @@ router.put('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Joke.findByIdAndDelete(id, (err, joke) => {
     if (err) {
@@ -154,14 +155,14 @@ router.delete('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.post('/add', async (req, res) => {
+router.post("/add", async (req, res) => {
 
   const rawJoke = req.body.joke;
 
-  let query = { joke: rawJoke };
+  const query = { joke: rawJoke };
 
   const jokeExists = await Joke.findOne(query);
-  if (jokeExists) return res.status(400).send('Joke already exists in system!');
+  if (jokeExists) {return res.status(400).send("Joke already exists in system!");}
 
   const joke = new Joke({
     _id: uuidv4(),

@@ -1,4 +1,5 @@
 import express from "express";
+
 const router = express.Router();
 
 /**
@@ -18,13 +19,12 @@ const router = express.Router();
  *
  *        401:
  *          description: Unauthorized (No token provided)
- *
  */
 
 router.get("/", (req, res) => {
   function isEven(value) {
-    if (value % 2 == 0) return true;
-    else return false;
+    if (value % 2 == 0) {return true;}
+    else {return false;}
   }
 
   let resault;

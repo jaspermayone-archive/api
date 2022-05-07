@@ -1,13 +1,13 @@
-import express from "express";
 import bcryptjs from "bcryptjs";
+import express from "express";
 import jsonwebtoken from "jsonwebtoken";
+
+import User from "../../models/User";
+import { loginValidation } from "../../utils/validation";
 
 const jwt = jsonwebtoken;
 const bcrypt = bcryptjs;
 const router = express.Router();
-
-import { loginValidation } from '../../utils/validation';
-import User from "../../models/User";
 
 
 
@@ -44,12 +44,12 @@ import User from "../../models/User";
  */
 router.post("/", async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) {return res.status(400).send(error.details[0].message);}
 
-  let query = { email: req.body.email };
+  const query = { email: req.body.email };
 
   const user = await User.findOne(query);
-  if (!user) return res.status(400).send("Can not find user");
+  if (!user) {return res.status(400).send("Can not find user");}
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {

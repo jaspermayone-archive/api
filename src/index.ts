@@ -1,11 +1,12 @@
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
-import mongoose from "mongoose";
 import colors from "colors";
+import mongoose from "mongoose";
 
 import "dotenv/config";
 
 import app from "./app";
+
 const PORT = process.env.PORT;
 
 Sentry.init({

@@ -1,12 +1,12 @@
-import express from 'express';
-import 'dotenv/config';
-import { v4 as uuidv4 } from 'uuid';
-import jsonwebtoken from 'jsonwebtoken';
+import express from "express";
+import "dotenv/config";
+import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+
+import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
+import { getUserInfo } from "../../../utils/getUserInfo";
 
 const jwt = jsonwebtoken;
-
-import ScamPhoneNumber from '../../../models/scam/PhoneNumber';
-import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -58,14 +58,14 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.post('/report', async (req, res) => {
+router.post("/report", async (req, res) => {
   const body = req.body;
 
-  let query = { phoneNumber: body.phoneNumber };
+  const query = { phoneNumber: body.phoneNumber };
 
   const phoneNumberExists = await ScamPhoneNumber.findOne(query);
   if (phoneNumberExists)
-    return res.status(400).send('Phone Number already flagged!');
+    {return res.status(400).send("Phone Number already flagged!");}
 
   const user = await getUserInfo(req, res);
 
@@ -79,7 +79,7 @@ router.post('/report', async (req, res) => {
   try {
     const newPhoneNumber = await phoneNumber.save();
     res.send({
-      message: 'Phone Number reported!',
+      message: "Phone Number reported!",
       phoneNumber: newPhoneNumber.phoneNumber,
       reportedBy: newPhoneNumber.reportedBy,
       reportedByID: newPhoneNumber.reportedByID,
@@ -116,22 +116,22 @@ router.post('/report', async (req, res) => {
  *       401:
  *        description: Unauthorized (No token provided)
  */
-router.get('/check', async (req, res) => {
+router.get("/check", async (req, res) => {
   const body = req.body;
 
   const phoneNumber = body.phoneNumber;
 
-  let query = { phoneNumber: phoneNumber };
+  const query = { phoneNumber: phoneNumber };
 
-  if (!phoneNumber) return res.status(400).send('No Phone Number provided!');
+  if (!phoneNumber) {return res.status(400).send("No Phone Number provided!");}
 
   const phoneNumberExists = await ScamPhoneNumber.findOne(query);
 
   if (phoneNumberExists) {
-    res.send('PhoneNumber is a scam!');
+    res.send("PhoneNumber is a scam!");
   } else {
     res.send(
-      'PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!'
+      "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
     );
   }
 });

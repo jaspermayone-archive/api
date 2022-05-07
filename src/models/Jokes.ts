@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * @swagger
@@ -32,4 +32,4 @@ const jokeSchema = new mongoose.Schema({
 });
 
 // export model
-export default mongoose.model('Joke', jokeSchema);
+export default mongoose.model("Joke", jokeSchema);

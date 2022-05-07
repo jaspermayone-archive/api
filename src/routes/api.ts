@@ -1,12 +1,13 @@
 import express from "express";
-const router = express.Router();
 
-import qoutesRoutes from "./api/quotes";
-import jokesRoutes from "./api/jokes";
 import coinflipRoutes from "./api/coinflip";
 import dicerollRoutes from "./api/diceroll";
+import jokesRoutes from "./api/jokes";
 import qotdRoutes from "./api/qotd";
+import qoutesRoutes from "./api/quotes";
 import scamRoutes from "./api/scam";
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send(

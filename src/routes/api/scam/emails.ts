@@ -1,12 +1,12 @@
-import express from 'express';
-import 'dotenv/config';
-import { v4 as uuidv4 } from 'uuid';
-import jsonwebtoken from 'jsonwebtoken';
+import express from "express";
+import "dotenv/config";
+import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+
+import ScamEmail from "../../../models/scam/Email";
+import { getUserInfo } from "../../../utils/getUserInfo";
 
 const jwt = jsonwebtoken;
-
-import ScamEmail from '../../../models/scam/Email';
-import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -58,13 +58,13 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.post('/report', async (req, res) => {
+router.post("/report", async (req, res) => {
   const body = req.body;
 
-  let query = { email: body.email };
+  const query = { email: body.email };
 
   const emailExists = await ScamEmail.findOne(query);
-  if (emailExists) return res.status(400).send('Email already flagged!');
+  if (emailExists) {return res.status(400).send("Email already flagged!");}
 
   const user = await getUserInfo(req, res);
 
@@ -78,7 +78,7 @@ router.post('/report', async (req, res) => {
   try {
     const newEmail = await email.save();
     res.send({
-      message: 'Email reported!',
+      message: "Email reported!",
       email: newEmail.email,
       reportedBy: newEmail.reportedBy,
       reportedByID: newEmail.reportedByID,
@@ -116,21 +116,21 @@ router.post('/report', async (req, res) => {
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.get('/check', async (req, res) => {
+router.get("/check", async (req, res) => {
   const body = req.body;
 
-  let query = { email: body.email };
+  const query = { email: body.email };
 
   const email = body.email;
-  if (!email) return res.status(400).send('No email provided!');
+  if (!email) {return res.status(400).send("No email provided!");}
 
   const emailExists = await ScamEmail.findOne(query);
 
   if (emailExists) {
-    res.send('Email is a scam!');
+    res.send("Email is a scam!");
   } else {
     res.send(
-      'Email is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!'
+      "Email is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
     );
   }
 });

@@ -1,5 +1,9 @@
 import Joi from "joi";
 
+/**
+ *
+ * @param data
+ */
 export const registerValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().required(),
@@ -19,6 +23,10 @@ export const registerValidation = (data) => {
   });
 };
 
+/**
+ *
+ * @param data
+ */
 export const loginValidation = (data) => {
 
   const schema = Joi.object({

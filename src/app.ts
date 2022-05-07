@@ -1,24 +1,23 @@
-import express from 'express';
-import actuator from 'express-actuator';
-import bodyParser from 'body-parser';
-import compression from 'compression';
-import helmet from 'helmet';
-import cors from 'cors';
-import errorHandler from 'node-error-handler';
-import {routeCheck} from 'express-suite';
-import {rateLimit} from 'express-rate-limit';
-import * as Sentry from '@sentry/node';
-import 'dotenv/config';
+import * as Sentry from "@sentry/node";
+import bodyParser from "body-parser";
+import compression from "compression";
+import cors from "cors";
+import express from "express";
+import actuator from "express-actuator";
+import {rateLimit} from "express-rate-limit";
+import {routeCheck} from "express-suite";
+import helmet from "helmet";
+import errorHandler from "node-error-handler";
+import "dotenv/config";
 
-import {authToken} from './middlewear/authToken';
-import {isAdmin} from './middlewear/isAdmin';
+import swaggerUi from "swagger-ui-express";
 
-import apiRoute from './routes/api';
-import adminRoutes from './routes/admin';
-import authRoutes from './routes/auth';
-
-import {apiSpecs} from './utils/apiSpecs';
-import swaggerUi from 'swagger-ui-express';
+import {authToken} from "./middlewear/authToken";
+import {isAdmin} from "./middlewear/isAdmin";
+import adminRoutes from "./routes/admin";
+import apiRoute from "./routes/api";
+import authRoutes from "./routes/auth";
+import {apiSpecs} from "./utils/apiSpecs";
 
 const corsOptions = {
   credentials: true,
@@ -46,18 +45,18 @@ app.use(helmet());
 app.use(cors(corsOptions));
 app.use(limiter);
 
-app.get('/', (req, res) => {
-  res.redirect('/docs');
+app.get("/", (req, res) => {
+  res.redirect("/docs");
 });
 
 app.get("/api/docs", (req, res) => {
   res.redirect("/docs");
 });
 
-app.use('/auth', authRoutes);
-app.use('/api/v0', authToken, apiRoute);
-app.use('/admin', isAdmin, adminRoutes);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSpecs));
+app.use("/auth", authRoutes);
+app.use("/api/v0", authToken, apiRoute);
+app.use("/admin", isAdmin, adminRoutes);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
 app.use(routeCheck(app));
 

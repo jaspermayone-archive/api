@@ -1,3 +1,7 @@
+/**
+ *
+ * @param link
+ */
 export async function flattenLink(link: string): Promise<string> {
   const rawlink = link;
   const linky = await rawlink.replace(/^https?:\/\//i, "");

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * @swagger
@@ -37,4 +37,4 @@ const quoteSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Quote', quoteSchema);
+export default mongoose.model("Quote", quoteSchema);

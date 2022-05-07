@@ -1,8 +1,9 @@
 import express from "express";
-const router = express.Router();
 import { v4 as uuidv4 } from "uuid";
 
 import Qotd from "../../models/Qotd";
+
+const router = express.Router();
 
 
 router.get("/:id", (req, res) => {
@@ -19,10 +20,10 @@ router.get("/:id", (req, res) => {
 router.post("/add", async (req, res) => {
 
     const qotdExists = await Qotd.findOne({ qotd: req.body.qotd });
-    if (qotdExists) return res.status(400).send("Qotd already exists in system!");
+    if (qotdExists) {return res.status(400).send("Qotd already exists in system!");}
 
     const uniqueIDexists = await Qotd.findOne({ uniqueID: req.body.uniqueID });
-    if (uniqueIDexists) return res.status(400).send("UniqueID already exists in system!");
+    if (uniqueIDexists) {return res.status(400).send("UniqueID already exists in system!");}
 
     const qotd = new Qotd({
         _id: uuidv4(),

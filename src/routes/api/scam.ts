@@ -1,9 +1,10 @@
 import express from "express";
-const router = express.Router();
 
-import linksRoute from './scam/links';
-import emailsRoute from './scam/emails';
-import phoneNumbersRoute from './scam/phoneNumbers';
+import emailsRoute from "./scam/emails";
+import linksRoute from "./scam/links";
+import phoneNumbersRoute from "./scam/phoneNumbers";
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send(

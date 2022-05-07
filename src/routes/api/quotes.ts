@@ -1,7 +1,8 @@
-import express from 'express';
-const router = express.Router();
+import express from "express";
 
-import Quote from '../../models/Quotes';
+import Quote from "../../models/Quotes";
+
+const router = express.Router();
 
 /**
  * @swagger
@@ -16,8 +17,8 @@ import Quote from '../../models/Quotes';
  *        401:
  *          description: Unauthorized (No token provided)
  */
-router.get('/', (req, res) => {
-  res.redirect('/api/v0/quotes/random');
+router.get("/", (req, res) => {
+  res.redirect("/api/v0/quotes/random");
 });
 
 /**
@@ -46,7 +47,7 @@ router.get('/', (req, res) => {
  *        401:
  *          description: Unauthorized (No token provided)
  */
-router.get('/random', async (req, res) => {
+router.get("/random", async (req, res) => {
   const targetRecord = await Quote.aggregate([{$sample: {size: 1}}]);
   res.send(targetRecord[0]);
 });

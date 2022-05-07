@@ -1,7 +1,8 @@
 import express from "express";
-const router = express.Router();
 
 import Qotd from "../../models/Qotd";
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
     res.redirect("/api/v0/qotd/random");

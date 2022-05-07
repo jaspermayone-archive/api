@@ -1,8 +1,9 @@
-import express from 'express';
-const router = express.Router();
-import { v4 as uuidv4 } from 'uuid';
+import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
-import Quote from '../../models/Quotes';
+import Quote from "../../models/Quotes";
+
+const router = express.Router();
 /**
  * @swagger
  * /admin/quotes/{id}:
@@ -28,7 +29,7 @@ import Quote from '../../models/Quotes';
  *        500:
  *          description: Internal Server Error
  */
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   const id = req.params.id;
   Quote.findById(id, (err, quote) => {
     if (err) {
@@ -68,7 +69,7 @@ router.get('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
   Quote.findByIdAndUpdate(id, body, (err, quote) => {
@@ -105,7 +106,7 @@ router.put('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Quote.findByIdAndDelete(id, (err, quote) => {
     if (err) {
@@ -154,14 +155,14 @@ router.delete('/:id', (req, res) => {
  *        500:
  *          description: Internal Server Error
  */
-router.post('/add', async (req, res) => {
+router.post("/add", async (req, res) => {
   const rawQuote = req.body.quote;
 
-  let query = { quote: rawQuote };
+  const query = { quote: rawQuote };
 
   const quoteExists = await Quote.findOne(query);
   if (quoteExists)
-    return res.status(400).send('Quote already exists in system!');
+    {return res.status(400).send("Quote already exists in system!");}
 
   const quote = new Quote({
     _id: uuidv4(),

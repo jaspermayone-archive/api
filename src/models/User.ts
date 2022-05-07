@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * @swagger
@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    enum: ['user', 'bot', 'admin'],
-    default: 'user',
+    enum: ["user", "bot", "admin"],
+    default: "user",
     required: true,
   },
   date_created: {
@@ -51,4 +51,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);

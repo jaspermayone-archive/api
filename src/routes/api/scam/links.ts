@@ -1,12 +1,12 @@
-import express from 'express';
-import 'dotenv/config';
-import jsonwebtoken from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
+import express from "express";
+import "dotenv/config";
+import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+
+import ScamLink from "../../../models/scam/Link";
+import { getUserInfo } from "../../../utils/getUserInfo";
 
 const jwt = jsonwebtoken;
-
-import ScamLink from '../../../models/scam/Link';
-import { getUserInfo } from '../../../utils/getUserInfo';
 
 const router = express.Router();
 
@@ -58,13 +58,13 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.post('/report', async (req, res) => {
+router.post("/report", async (req, res) => {
   const body = req.body;
 
-  let query = { link: body.link };
+  const query = { link: body.link };
 
   const linkExists = await ScamLink.findOne(query);
-  if (linkExists) return res.status(400).send('Link already flagged!');
+  if (linkExists) {return res.status(400).send("Link already flagged!");}
 
   const user = await getUserInfo(req, res);
 
@@ -79,7 +79,7 @@ router.post('/report', async (req, res) => {
   try {
     const newLink = await link.save();
     res.send({
-      message: 'Link reported!',
+      message: "Link reported!",
       link: newLink.link,
       type: newLink.type,
       reportedBy: newLink.reportedBy,
@@ -116,17 +116,17 @@ router.post('/report', async (req, res) => {
  *       401:
  *        description: Unauthorized (No token provided)
  */
-router.get('/check', async (req, res) => {
+router.get("/check", async (req, res) => {
   const query = req.query;
   const body = req.body;
 
   const url = query.url;
   const link = body.link;
 
-  let dbQuery = { link: link };
+  const dbQuery = { link: link };
 
   if (!url) {
-    if (!link) return res.status(400).send('No link provided!');
+    if (!link) {return res.status(400).send("No link provided!");}
 
     const linkExists = await ScamLink.findOne(dbQuery);
 
@@ -141,7 +141,7 @@ router.get('/check', async (req, res) => {
     }
   }
   if (url) {
-    let urldbQuery = { link: url };
+    const urldbQuery = { link: url };
 
     const linkExists = await ScamLink.findOne(urldbQuery);
 

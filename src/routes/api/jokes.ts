@@ -1,7 +1,8 @@
-import express from 'express';
-const router = express.Router();
+import express from "express";
 
-import Joke from '../../models/Jokes';
+import Joke from "../../models/Jokes";
+
+const router = express.Router();
 
 /**
  * @swagger
@@ -16,8 +17,8 @@ import Joke from '../../models/Jokes';
  *        401:
  *          description: Unauthorized (No token provided)
  */
-router.get('/', (req, res) => {
-  res.redirect('/api/v0/jokes/random');
+router.get("/", (req, res) => {
+  res.redirect("/api/v0/jokes/random");
 });
 
 /**
@@ -44,7 +45,7 @@ router.get('/', (req, res) => {
  *        401:
  *          description: Unauthorized (No token provided)
  */
-router.get('/random', async (req, res) => {
+router.get("/random", async (req, res) => {
   const targetRecord = await Joke.aggregate([{$sample: {size: 1}}]);
   res.send(targetRecord[0]);
 });

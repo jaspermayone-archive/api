@@ -1,4 +1,5 @@
 import express from "express";
+
 const router = express.Router();
 
 /**
@@ -25,7 +26,6 @@ const router = express.Router();
  *                maximum: 6
  *        401:
  *          description: Unauthorized (No token provided)
- *
  */
 
 router.get("/", (req, res) => {
