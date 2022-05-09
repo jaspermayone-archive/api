@@ -4,20 +4,20 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import actuator from "express-actuator";
-import {rateLimit} from "express-rate-limit";
-import {routeCheck} from "express-suite";
+import { rateLimit } from "express-rate-limit";
+import { routeCheck } from "express-suite";
 import helmet from "helmet";
 import errorHandler from "node-error-handler";
 import "dotenv/config";
 
 import swaggerUi from "swagger-ui-express";
 
-import {authToken} from "./middlewear/authToken";
-import {isAdmin} from "./middlewear/isAdmin";
+import { authToken } from "./middlewear/authToken";
+import { isAdmin } from "./middlewear/isAdmin";
 import adminRoutes from "./routes/admin";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
-import {apiSpecs} from "./utils/apiSpecs";
+import { apiSpecs } from "./utils/apiSpecs";
 
 const corsOptions = {
   credentials: true,
@@ -35,9 +35,9 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 app.use(Sentry.Handlers.errorHandler());
-app.use(errorHandler({debug: true, trace: true, camel_case: true}));
+app.use(errorHandler({ debug: true, trace: true, camel_case: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 app.use(actuator());

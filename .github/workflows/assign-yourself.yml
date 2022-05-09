@@ -1,12 +1,12 @@
 name: Assign
 on:
   issue_comment:
-  
+
 jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      # .take in an issue comment. 
+      # .take in an issue comment.
       - name: take an issue
         uses: bdougie/take-action@main
         env:

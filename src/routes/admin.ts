@@ -17,5 +17,4 @@ router.use("/quotes", quoteRoutes);
 router.use("/qotd", qotdRoutes);
 router.use("/restart", restartRoute);
 
-
 export default router;

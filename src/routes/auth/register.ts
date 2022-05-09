@@ -49,42 +49,44 @@ const router = express.Router();
  *          description: Internal Server Error
  */
 router.post("/", async (req, res) => {
-    const { error } = registerValidation(req.body);
-    if (error) {return res.status(401).send(error.details[0].message);}
+  const { error } = registerValidation(req.body);
+  if (error) {
+    return res.status(401).send(error.details[0].message);
+  }
 
-    const email = req.body.email;
-    const password = req.body.password;
-    const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const name = req.body.name;
 
-    const query = { email: email };
+  const query = { email: email };
 
-    const emailExists = await User.findOne(query);
-    if (emailExists)
-        {return res.status(400).send("Email already exists in system!");}
+  const emailExists = await User.findOne(query);
+  if (emailExists) {
+    return res.status(400).send("Email already exists in system!");
+  }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
-        _id: uuidv4(),
-        name: name,
-        email: email,
-        password: hashedPassword,
+  const user = new User({
+    _id: uuidv4(),
+    name: name,
+    email: email,
+    password: hashedPassword,
+  });
+
+  try {
+    const newUser = await user.save();
+    res.send({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      password: newUser.password,
+      dateCreated: newUser.dateCreated,
+      accountType: newUser.accountType,
     });
-
-    try {
-        const newUser = await user.save();
-        res.send({
-            _id: newUser._id,
-            name: newUser.name,
-            last_name: newUser.last_name,
-            email: newUser.email,
-            password: newUser.password,
-            dateCreated: newUser.dateCreated,
-            accountType: newUser.accountType,
-        });
-    } catch (err) {
-        res.status(500).send("An error has occured. Please contact a developer.");
-    }
+  } catch (err) {
+    res.status(500).send("An error has occured. Please contact a developer.");
+  }
 });
 
 export default router;

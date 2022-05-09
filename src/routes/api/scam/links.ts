@@ -1,12 +1,9 @@
 import express from "express";
 import "dotenv/config";
-import jsonwebtoken from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
 import ScamLink from "../../../models/scam/Link";
 import { getUserInfo } from "../../../utils/getUserInfo";
-
-const jwt = jsonwebtoken;
 
 const router = express.Router();
 
@@ -64,7 +61,9 @@ router.post("/report", async (req, res) => {
   const query = { link: body.link };
 
   const linkExists = await ScamLink.findOne(query);
-  if (linkExists) {return res.status(400).send("Link already flagged!");}
+  if (linkExists) {
+    return res.status(400).send("Link already flagged!");
+  }
 
   const user = await getUserInfo(req, res);
 
@@ -126,7 +125,9 @@ router.get("/check", async (req, res) => {
   const dbQuery = { link: link };
 
   if (!url) {
-    if (!link) {return res.status(400).send("No link provided!");}
+    if (!link) {
+      return res.status(400).send("No link provided!");
+    }
 
     const linkExists = await ScamLink.findOne(dbQuery);
 

@@ -9,8 +9,8 @@ const options = {
         "Basic API, designed and coded for the @Heptagram-Bot-Project",
     },
     tags: [
-      {name: "/api/v0", description: "API version 0 endpoints"},
-      {name: "/admin", description: "Admin endpoints"},
+      { name: "/api/v0", description: "API version 0 endpoints" },
+      { name: "/admin", description: "Admin endpoints" },
     ],
   },
   apis: ["./src/routes/**/*.ts", "./src/models/**/*.ts"],

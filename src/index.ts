@@ -27,7 +27,11 @@ console.log(colors.yellow("Sentry Connected!"));
 mongoose.connect(`${process.env.MONGODB_URI_REMOTE}`);
 
 mongoose.connection.on("open", () => {
-  console.log(colors.magenta("MongoDB Connected at: " + `${process.env.MONGODB_URI_REMOTE}`));
+  console.log(
+    colors.magenta(
+      "MongoDB Connected at: " + `${process.env.MONGODB_URI_REMOTE}`
+    )
+  );
 });
 
 mongoose.connection.on("error", (err) => {

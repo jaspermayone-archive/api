@@ -16,23 +16,23 @@ import mongoose from "mongoose";
  */
 
 const qotdSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        required: true,
-    },
-    uniqueID: {
-        type: String,
-        required: true,
-    },
-    qotd: {
-        type: String,
-        required: true,
-    },
-    dateUploaded: {
-        type: Date,
-        default: Date.now,
-        required: true,
-    },
+  _id: {
+    type: String,
+    required: true,
+  },
+  uniqueID: {
+    type: String,
+    required: true,
+  },
+  qotd: {
+    type: String,
+    required: true,
+  },
+  dateUploaded: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
 });
 
 export default mongoose.model("Qotd", qotdSchema);

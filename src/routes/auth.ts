@@ -1,7 +1,5 @@
 import express from "express";
 
-import app from "../app";
-
 import loginRoute from "./auth/login";
 import registerRoute from "./auth/register";
 

@@ -9,8 +9,6 @@ const jwt = jsonwebtoken;
 const bcrypt = bcryptjs;
 const router = express.Router();
 
-
-
 /**
  * @swagger
  * /auth/login:
@@ -44,12 +42,16 @@ const router = express.Router();
  */
 router.post("/", async (req, res) => {
   const { error } = loginValidation(req.body);
-  if (error) {return res.status(400).send(error.details[0].message);}
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
 
   const query = { email: req.body.email };
 
   const user = await User.findOne(query);
-  if (!user) {return res.status(400).send("Can not find user");}
+  if (!user) {
+    return res.status(400).send("Can not find user");
+  }
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
@@ -67,7 +69,7 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({
       error: err,
-      message: "Server error"
+      message: "Server error",
     });
   }
 });

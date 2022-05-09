@@ -1,12 +1,9 @@
 import express from "express";
 import "dotenv/config";
-import jsonwebtoken from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
 import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
 import { getUserInfo } from "../../../utils/getUserInfo";
-
-const jwt = jsonwebtoken;
 
 const router = express.Router();
 
@@ -64,8 +61,9 @@ router.post("/report", async (req, res) => {
   const query = { phoneNumber: body.phoneNumber };
 
   const phoneNumberExists = await ScamPhoneNumber.findOne(query);
-  if (phoneNumberExists)
-    {return res.status(400).send("Phone Number already flagged!");}
+  if (phoneNumberExists) {
+    return res.status(400).send("Phone Number already flagged!");
+  }
 
   const user = await getUserInfo(req, res);
 
@@ -123,7 +121,9 @@ router.get("/check", async (req, res) => {
 
   const query = { phoneNumber: phoneNumber };
 
-  if (!phoneNumber) {return res.status(400).send("No Phone Number provided!");}
+  if (!phoneNumber) {
+    return res.status(400).send("No Phone Number provided!");
+  }
 
   const phoneNumberExists = await ScamPhoneNumber.findOne(query);
 

@@ -161,8 +161,9 @@ router.post("/add", async (req, res) => {
   const query = { quote: rawQuote };
 
   const quoteExists = await Quote.findOne(query);
-  if (quoteExists)
-    {return res.status(400).send("Quote already exists in system!");}
+  if (quoteExists) {
+    return res.status(400).send("Quote already exists in system!");
+  }
 
   const quote = new Quote({
     _id: uuidv4(),

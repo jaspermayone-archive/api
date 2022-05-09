@@ -156,13 +156,14 @@ router.delete("/:id", (req, res) => {
  *          description: Internal Server Error
  */
 router.post("/add", async (req, res) => {
-
   const rawJoke = req.body.joke;
 
   const query = { joke: rawJoke };
 
   const jokeExists = await Joke.findOne(query);
-  if (jokeExists) {return res.status(400).send("Joke already exists in system!");}
+  if (jokeExists) {
+    return res.status(400).send("Joke already exists in system!");
+  }
 
   const joke = new Joke({
     _id: uuidv4(),

@@ -8,8 +8,7 @@ export const registerValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().required(),
 
-    password: Joi.string()
-      .required(),
+    password: Joi.string().required(),
 
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
@@ -28,11 +27,8 @@ export const registerValidation = (data) => {
  * @param data
  */
 export const loginValidation = (data) => {
-
   const schema = Joi.object({
-    email: Joi.string()
-      .email()
-      .required(),
+    email: Joi.string().email().required(),
 
     password: Joi.string().required(),
   });

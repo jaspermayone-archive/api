@@ -46,7 +46,7 @@ router.get("/", (req, res) => {
  *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
-  const targetRecord = await Joke.aggregate([{$sample: {size: 1}}]);
+  const targetRecord = await Joke.aggregate([{ $sample: { size: 1 } }]);
   res.send(targetRecord[0]);
 });
 
