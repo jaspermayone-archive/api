@@ -4,7 +4,6 @@ import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
 
 import User from "../../models/User";
-import { registerValidation } from "../../utils/validation";
 
 const bcrypt = bcryptjs;
 
@@ -49,10 +48,6 @@ const router = express.Router();
  *          description: Internal Server Error
  */
 router.post("/add", async (req, res) => {
-  const { error } = registerValidation(req.body);
-  if (error) {
-    return res.status(401).send(error.details[0].message);
-  }
 
   const email = req.body.email;
   const password = req.body.password;
