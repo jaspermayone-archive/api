@@ -59,12 +59,9 @@ const router = express.Router();
 router.post(
   "/report",
 
-  body("link")
-    .isURL(),
-  body("type")
-    .isString(),
-  body("reportedBy")
-    .isString(),
+  body("link").isURL(),
+  body("type").isString(),
+  body("reportedBy").isString(),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
@@ -135,8 +132,7 @@ router.post(
 router.get(
   "/check",
 
-  body("url")
-    .isURL(),
+  body("url").isURL(),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);

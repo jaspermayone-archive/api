@@ -43,12 +43,8 @@ const router = express.Router();
 router.post(
   "/",
 
-  body("email", "Email is required")
-    .exists()
-    .isEmail()
-    .normalizeEmail(),
-  body("password", "Password is required")
-    .exists(),
+  body("email", "Email is required").exists().isEmail().normalizeEmail(),
+  body("password", "Password is required").exists(),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);

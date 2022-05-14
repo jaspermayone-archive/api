@@ -63,9 +63,7 @@ router.post(
     .isEmail()
     .withMessage("Email must be a valid email")
     .normalizeEmail(),
-  body("reportedBy")
-    .isString()
-    .withMessage("ReportedBy must be a string"),
+  body("reportedBy").isString().withMessage("ReportedBy must be a string"),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
