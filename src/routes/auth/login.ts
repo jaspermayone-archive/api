@@ -1,9 +1,9 @@
 import bcryptjs from "bcryptjs";
 import express from "express";
 import jsonwebtoken from "jsonwebtoken";
+import { body, validationResult } from "express-validator";
 
 import User from "../../models/User";
-import { loginValidation } from "../../utils/validation";
 
 const jwt = jsonwebtoken;
 const bcrypt = bcryptjs;
@@ -40,38 +40,45 @@ const router = express.Router();
  *        500:
  *          description: Internal Server Error
  */
-router.post("/", async (req, res) => {
-  const { error } = loginValidation(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
+router.post(
+  "/",
 
-  const query = { email: req.body.email };
+  body("email", "Email is required").exists().isEmail(),
+  body("password", "Password is required").exists(),
 
-  const user = await User.findOne(query);
-  if (!user) {
-    return res.status(400).send("Can not find user");
-  }
-
-  try {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      const accessToken = await jwt.sign(
-        { userId: user._id, accountType: user.accountType },
-        process.env.ACCESS_TOKEN_SECRET
-      );
-
-      res.json({
-        accessToken: accessToken,
-      });
-    } else {
-      res.send("Not allowed");
+  async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-  } catch (err) {
-    res.status(500).json({
-      error: err,
-      message: "Server error",
-    });
+
+    const query = { email: req.body.email };
+
+    const user = await User.findOne(query);
+    if (!user) {
+      return res.status(400).send("Can not find user");
+    }
+
+    try {
+      if (await bcrypt.compare(req.body.password, user.password)) {
+        const accessToken = await jwt.sign(
+          { userId: user._id, accountType: user.accountType },
+          process.env.ACCESS_TOKEN_SECRET
+        );
+
+        res.json({
+          accessToken: accessToken,
+        });
+      } else {
+        res.send("Not allowed");
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err,
+        message: "Server error",
+      });
+    }
   }
-});
+);
 
 export default router;

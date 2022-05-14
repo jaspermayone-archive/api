@@ -1,7 +1,8 @@
-import * as Sentry from "@sentry/node";
-import * as Tracing from "@sentry/tracing";
 import colors from "colors";
 import mongoose from "mongoose";
+
+import * as Sentry from "@sentry/node";
+import * as Tracing from "@sentry/tracing";
 
 import "dotenv/config";
 

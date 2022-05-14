@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
+import { body, validationResult } from "express-validator";
 
 import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
 import { getUserInfo } from "../../../utils/getUserInfo";
@@ -55,38 +56,51 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.post("/report", async (req, res) => {
-  const body = req.body;
+router.post(
+  "/report",
 
-  const query = { phoneNumber: body.phoneNumber };
+  body("phoneNumber")
+    .isLength({ min: 1 })
+    .withMessage("Phone number is required"),
 
-  const phoneNumberExists = await ScamPhoneNumber.findOne(query);
-  if (phoneNumberExists) {
-    return res.status(400).send("Phone Number already flagged!");
-  }
+  async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  const user = await getUserInfo(req, res);
+    const body = req.body;
 
-  const phoneNumber = new ScamPhoneNumber({
-    _id: uuidv4(),
-    phoneNumber: body.phoneNumber,
-    reportedBy: body.reportedBy,
-    reportedByID: user.userId,
-  });
+    const query = { phoneNumber: body.phoneNumber };
 
-  try {
-    const newPhoneNumber = await phoneNumber.save();
-    res.send({
-      message: "Phone Number reported!",
-      phoneNumber: newPhoneNumber.phoneNumber,
-      reportedBy: newPhoneNumber.reportedBy,
-      reportedByID: newPhoneNumber.reportedByID,
-      dateReported: newPhoneNumber.dateCreated,
+    const phoneNumberExists = await ScamPhoneNumber.findOne(query);
+    if (phoneNumberExists) {
+      return res.status(400).send("Phone Number already flagged!");
+    }
+
+    const user = await getUserInfo(req, res);
+
+    const phoneNumber = new ScamPhoneNumber({
+      _id: uuidv4(),
+      phoneNumber: body.phoneNumber,
+      reportedBy: body.reportedBy,
+      reportedByID: user.userId,
     });
-  } catch (err) {
-    res.status(400).send("An error has occured. Please contact a developer.");
+
+    try {
+      const newPhoneNumber = await phoneNumber.save();
+      res.send({
+        message: "Phone Number reported!",
+        phoneNumber: newPhoneNumber.phoneNumber,
+        reportedBy: newPhoneNumber.reportedBy,
+        reportedByID: newPhoneNumber.reportedByID,
+        dateReported: newPhoneNumber.dateCreated,
+      });
+    } catch (err) {
+      res.status(400).send("An error has occured. Please contact a developer.");
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -114,26 +128,37 @@ router.post("/report", async (req, res) => {
  *       401:
  *        description: Unauthorized (No token provided)
  */
-router.get("/check", async (req, res) => {
-  const body = req.body;
+router.get(
+  "/check",
 
-  const phoneNumber = body.phoneNumber;
+  body("phoneNumber").isString(),
 
-  const query = { phoneNumber: phoneNumber };
+  async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!phoneNumber) {
-    return res.status(400).send("No Phone Number provided!");
+    const body = req.body;
+
+    const phoneNumber = body.phoneNumber;
+
+    const query = { phoneNumber: phoneNumber };
+
+    if (!phoneNumber) {
+      return res.status(400).send("No Phone Number provided!");
+    }
+
+    const phoneNumberExists = await ScamPhoneNumber.findOne(query);
+
+    if (phoneNumberExists) {
+      res.send("PhoneNumber is a scam!");
+    } else {
+      res.send(
+        "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
+      );
+    }
   }
-
-  const phoneNumberExists = await ScamPhoneNumber.findOne(query);
-
-  if (phoneNumberExists) {
-    res.send("PhoneNumber is a scam!");
-  } else {
-    res.send(
-      "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-    );
-  }
-});
+);
 
 export default router;
