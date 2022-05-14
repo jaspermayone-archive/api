@@ -131,7 +131,8 @@ router.post(
 router.get(
   "/check",
 
-  body("phoneNumber").isString(),
+  body("phoneNumber")
+    .isString(),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);

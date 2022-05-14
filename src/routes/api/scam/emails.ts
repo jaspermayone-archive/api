@@ -59,8 +59,13 @@ const router = express.Router();
 router.post(
   "/report",
 
-  body("email").isEmail().withMessage("Email must be a valid email"),
-  body("reportedBy").isString().withMessage("ReportedBy must be a string"),
+  body("email")
+    .isEmail()
+    .withMessage("Email must be a valid email")
+    .normalizeEmail(),
+  body("reportedBy")
+    .isString()
+    .withMessage("ReportedBy must be a string"),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
@@ -131,7 +136,10 @@ router.post(
 router.get(
   "/check",
 
-  body("email").isEmail().withMessage("Email must be a valid email"),
+  body("email")
+    .isEmail()
+    .withMessage("Email must be a valid email")
+    .normalizeEmail(),
 
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
