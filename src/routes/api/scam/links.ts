@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
-import { v4 as uuidv4 } from "uuid";
 import { body, validationResult } from "express-validator";
+import { v4 as uuidv4 } from "uuid";
 
 import ScamLink from "../../../models/scam/Link";
 import { getUserInfo } from "../../../utils/getUserInfo";
@@ -59,7 +59,7 @@ const router = express.Router();
 router.post(
   "/report",
 
-  body("link").isURL(),
+  body("link").isString().isURL(),
   body("type").isString(),
   body("reportedBy").isString(),
 
@@ -129,58 +129,47 @@ router.post(
  *       401:
  *        description: Unauthorized (No token provided)
  */
-router.get(
-  "/check",
+router.get("/check", async (req, res) => {
+  const query = req.query;
+  const body = req.body;
 
-  body("url").isURL(),
+  const url = query.url;
+  const link = body.link;
 
-  async (req: express.Request, res: express.Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+  const dbQuery = { link: link };
+
+  if (!url) {
+    if (!link) {
+      return res.status(400).send("No link provided!");
     }
 
-    const query = req.query;
-    const body = req.body;
+    const linkExists = await ScamLink.findOne(dbQuery);
 
-    const url = query.url;
-    const link = body.link;
-
-    const dbQuery = { link: link };
-
-    if (!url) {
-      if (!link) {
-        return res.status(400).send("No link provided!");
-      }
-
-      const linkExists = await ScamLink.findOne(dbQuery);
-
-      if (linkExists) {
-        res.json({
-          scamDetected: true,
-        });
-      } else {
-        res.json({
-          scamDetected: false,
-        });
-      }
-    }
-    if (url) {
-      const urldbQuery = { link: url };
-
-      const linkExists = await ScamLink.findOne(urldbQuery);
-
-      if (linkExists) {
-        res.json({
-          scamDetected: true,
-        });
-      } else {
-        res.json({
-          scamDetected: false,
-        });
-      }
+    if (linkExists) {
+      res.json({
+        scamDetected: true,
+      });
+    } else {
+      res.json({
+        scamDetected: false,
+      });
     }
   }
-);
+  if (url) {
+    const urldbQuery = { link: url };
+
+    const linkExists = await ScamLink.findOne(urldbQuery);
+
+    if (linkExists) {
+      res.json({
+        scamDetected: true,
+      });
+    } else {
+      res.json({
+        scamDetected: false,
+      });
+    }
+  }
+});
 
 export default router;

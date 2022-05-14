@@ -1,7 +1,7 @@
 import express from "express";
 import "dotenv/config";
-import { v4 as uuidv4 } from "uuid";
 import { body, validationResult } from "express-validator";
+import { v4 as uuidv4 } from "uuid";
 
 import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
 import { getUserInfo } from "../../../utils/getUserInfo";
