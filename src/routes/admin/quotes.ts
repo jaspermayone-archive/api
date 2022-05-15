@@ -1,6 +1,7 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 
+import errorLogger from "../../logger";
 import Quote from "../../models/Quotes";
 
 const router = express.Router();
@@ -31,9 +32,15 @@ const router = express.Router();
  */
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  Quote.findById(id, (err, quote) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
+  Quote.findById(id, (error, quote) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(quote);
     }
@@ -72,9 +79,15 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
-  Quote.findByIdAndUpdate(id, body, (err, quote) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
+  Quote.findByIdAndUpdate(id, body, (error, quote) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(quote);
     }
@@ -108,9 +121,15 @@ router.put("/:id", (req, res) => {
  */
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  Quote.findByIdAndDelete(id, (err, quote) => {
-    if (err) {
-      res.status(500).send("An error has occured. Please contact a developer.");
+  Quote.findByIdAndDelete(id, (error, quote) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(quote);
     }
@@ -177,8 +196,12 @@ router.post("/add", async (req, res) => {
       _id: newQuote._id,
       dateUploaded: newQuote.dateUploaded,
     });
-  } catch (err) {
-    res.status(500).send("An error has occured. Please contact a developer.");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res
+      .status(500)
+      .send(`An error has occured. Please contact a developer. \n ${errorID}`);
   }
 });
 

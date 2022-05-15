@@ -9,13 +9,6 @@ import scamRoutes from "./api/scam";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send(
-    `<h1>Welcome to the API</h1>
-    <p>You can find the API documentation <a href="/api/docs">here</a></p>`
-  );
-});
-
 router.use("/quotes", qoutesRoutes);
 router.use("/jokes", jokesRoutes);
 router.use("/coinflip", coinflipRoutes);

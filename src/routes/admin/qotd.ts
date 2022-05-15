@@ -1,14 +1,21 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 
+import errorLogger from "../../logger";
 import Qotd from "../../models/Qotd";
 
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
-  Qotd.findById(req.params.id, (err, qotd) => {
-    if (err) {
-      res.status(500).send(err);
+  Qotd.findById(req.params.id, (error, qotd) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(qotd);
     }
@@ -40,15 +47,25 @@ router.post("/add", async (req, res) => {
       uniqueID: newQotd.uniqueID,
       dateUploaded: newQotd.dateUploaded,
     });
-  } catch (err) {
-    res.status(500).send(err);
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res
+      .status(500)
+      .send(`An error has occured. Please contact a developer. \n ${errorID}`);
   }
 });
 
 router.put("/:id", (req, res) => {
-  Qotd.findByIdAndUpdate(req.params.id, req.body, (err, qotd) => {
-    if (err) {
-      res.status(500).send(err);
+  Qotd.findByIdAndUpdate(req.params.id, req.body, (error, qotd) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(qotd);
     }
@@ -56,9 +73,15 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  Qotd.findByIdAndDelete(req.params.id, (err, qotd) => {
-    if (err) {
-      res.status(500).send(err);
+  Qotd.findByIdAndDelete(req.params.id, (error, qotd) => {
+    if (error) {
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
+      res
+        .status(500)
+        .send(
+          `An error has occured. Please contact a developer. \n ${errorID}`
+        );
     } else {
       res.json(qotd);
     }
