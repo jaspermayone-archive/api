@@ -66,17 +66,6 @@ app.get("/api/docs", (req, res) => {
   }
 });
 
-app.get("/e", (req, res) => {
-  try {
-    // code that will throw an error
-    throw new Error("Something went wrong!");
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
-  }
-});
-
 app.use("/auth", authRoutes);
 app.use("/api/v0", authToken, apiRoute);
 app.use("/admin", isAdmin, adminRoutes);
