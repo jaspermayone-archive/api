@@ -8,12 +8,13 @@ import { rateLimit } from "express-rate-limit";
 import { routeCheck } from "express-suite";
 import helmet from "helmet";
 import errorHandler from "node-error-handler";
+import swaggerUi from "swagger-ui-express";
+import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
 
-import swaggerUi from "swagger-ui-express";
-
-import { authToken } from "./middlewear/authToken";
-import { isAdmin } from "./middlewear/isAdmin";
+import errorLogger from "./logger";
+import { isAdmin } from "./middleware/isAdmin";
+import { authToken } from "./middleware/middleware";
 import adminRoutes from "./routes/admin";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
@@ -46,11 +47,34 @@ app.use(cors(corsOptions));
 app.use(limiter);
 
 app.get("/", (req, res) => {
-  res.redirect("/docs");
+  try {
+    res.redirect("/docs");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
 });
 
 app.get("/api/docs", (req, res) => {
-  res.redirect("/docs");
+  try {
+    res.redirect("/docs");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
+});
+
+app.get("/e", (req, res) => {
+  try {
+    // code that will throw an error
+    throw new Error("Something went wrong!");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
 });
 
 app.use("/auth", authRoutes);

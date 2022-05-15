@@ -1,8 +1,10 @@
 import bcryptjs from "bcryptjs";
 import express from "express";
-import jsonwebtoken from "jsonwebtoken";
 import { body, validationResult } from "express-validator";
+import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 
+import errorLogger from "../../logger";
 import User from "../../models/User";
 
 const jwt = jsonwebtoken;
@@ -72,11 +74,13 @@ router.post(
       } else {
         res.send("Not allowed");
       }
-    } catch (err) {
+    } catch (error) {
       res.status(500).json({
-        error: err,
+        error: error,
         message: "Server error",
       });
+      const errorID = uuidv4();
+      errorLogger(error, errorID);
     }
   }
 );

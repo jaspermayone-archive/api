@@ -1,5 +1,7 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
+import errorLogger from "../../logger";
 import Quote from "../../models/Quotes";
 
 const router = express.Router();
@@ -18,7 +20,13 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  res.redirect("/api/v0/quotes/random");
+  try {
+    res.redirect("/api/v0/quotes/random");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
 });
 
 /**
@@ -48,8 +56,14 @@ router.get("/", (req, res) => {
  *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
-  const targetRecord = await Quote.aggregate([{ $sample: { size: 1 } }]);
-  res.send(targetRecord[0]);
+  try {
+    const targetRecord = await Quote.aggregate([{ $sample: { size: 1 } }]);
+    res.send(targetRecord[0]);
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
 });
 
 export default router;
