@@ -21,11 +21,14 @@ router.use("/qotd", qotdRoutes);
 router.use("/restart", restartRoute);
 
 router.get("/error", (req, res) => {
-  res.status(500).json({
-    error: "Internal Server Error",
-    id: uuidv4(),
-    timestamp: new Date().toISOString()
-  });
+  try {
+    // code that will throw an error
+    throw new Error("Test error from admin route");
+  } catch (error) {
+    const errorID = uuidv4();
+    errorLogger(error, errorID);
+    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  }
 });
 
 export default router;
