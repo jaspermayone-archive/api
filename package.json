@@ -38,11 +38,28 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
-    "test": "jest",
-    "lint": "prettier --write --ignore-unknown './**/*.ts'",
-    "prepare": "husky install"
+    "start": "wireit",
+    "dev": "wireit",
+    "test": "wireit",
+    "lint": "wireit",
+    "prepare": "wireit"
+  },
+  "wireit": {
+    "start": {
+      "command": "ts-node src/index.ts"
+    },
+    "dev": {
+      "command": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts"
+    },
+    "test": {
+      "command": "jest"
+    },
+    "lint": {
+      "command": "prettier --write --ignore-unknown './**/*.ts'"
+    },
+    "prepare": {
+      "command": "husky install"
+    }
   },
   "repository": {
     "type": "git",
@@ -69,6 +86,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "gts": "^3.1.0",
     "husky": "^8.0.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "wireit": "^0.4.3"
   }
 }
