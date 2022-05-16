@@ -16,7 +16,6 @@ const username =
 
 // create function to handle error
 const errorLogger = (error, errorID) => {
-
   // remove error: from error message
   const errorMessage = error.message.replace("Error: ", "");
 
