@@ -16,6 +16,10 @@ const username =
 
 // create function to handle error
 const errorLogger = (error, errorID) => {
+
+  // remove error: from error message
+  const errorMessage = error.message.replace("Error: ", "");
+
   try {
     axios.request({
       url: errorUrl,
@@ -29,7 +33,7 @@ const errorLogger = (error, errorID) => {
         embeds: [
           {
             title: "An Error has occurred...",
-            description: ` \`Error:\` \`${error}\` \n\n \`ErrorID:\` **\`${errorID}\`**`,
+            description: ` \`Error:\` \`${errorMessage}\` \n\n \`ErrorID:\` **\`${errorID}\`**`,
             color: 15158332,
           },
         ],

@@ -55,7 +55,7 @@
       "command": "jest"
     },
     "lint": {
-      "command": "prettier --write --ignore-unknown './**/*.ts'"
+      "command": "prettier --write --ignore-unknown --color './**/*.ts'"
     },
     "prepare": {
       "command": "husky install"
