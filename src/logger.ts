@@ -27,6 +27,7 @@ const errorLogger = (error, errorID) => {
     data: {
       username: username,
       avatar_url: avatarUrl,
+      content: "Yo <@722121621610954773>...",
       embeds: [
         {
           title: "An Error has occurred...",
