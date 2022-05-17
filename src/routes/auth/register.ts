@@ -4,7 +4,6 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../logger";
 import User from "../../models/User";
 
 const bcrypt = bcryptjs;
@@ -82,25 +81,15 @@ router.post(
       password: hashedPassword,
     });
 
-    try {
-      const newUser = await user.save();
-      res.send({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        password: newUser.password,
-        dateCreated: newUser.dateCreated,
-        accountType: newUser.accountType,
-      });
-    } catch (error) {
-      const errorID = uuidv4();
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-      errorLogger(error, errorID);
-    }
+    const newUser = await user.save();
+    res.send({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      password: newUser.password,
+      dateCreated: newUser.dateCreated,
+      accountType: newUser.accountType,
+    });
   }
 );
 

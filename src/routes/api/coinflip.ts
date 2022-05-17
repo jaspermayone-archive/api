@@ -1,6 +1,4 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
-import errorLogger from "../../logger";
 
 const router = express.Router();
 
@@ -32,21 +30,15 @@ router.get("/", (req, res) => {
     }
   }
 
-  try {
-    const rndInt = Math.floor(Math.random() * 1000) + 1;
+  const rndInt = Math.floor(Math.random() * 1000) + 1;
 
-    if (isEven(rndInt)) {
-      const resault = "Heads";
-      res.send(resault);
-    }
-    if (!isEven(rndInt)) {
-      const resault = "Tails";
-      res.send(resault);
-    }
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+  if (isEven(rndInt)) {
+    const resault = "Heads";
+    res.send(resault);
+  }
+  if (!isEven(rndInt)) {
+    const resault = "Tails";
+    res.send(resault);
   }
 });
 

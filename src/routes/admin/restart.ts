@@ -1,16 +1,11 @@
-import Sentry from "@sentry/node";
 import express from "express";
 
 const router = express.Router();
 
 async function restart(req, res) {
-  await Sentry.close(2000)
-    .then(function () {
-      res.send("Restarting...");
-    })
-    .finally(function () {
-      process.exit(0);
-    });
+  await res.send("Restarting...").then(() => {
+    process.exit(0);
+  });
 }
 
 /**

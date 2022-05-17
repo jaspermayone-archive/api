@@ -1,6 +1,5 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import errorLogger from "../../logger";
 
 import Joke from "../../models/Jokes";
 
@@ -33,17 +32,7 @@ const router = express.Router();
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   Joke.findById(id, (error, joke) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(joke);
-    }
+    res.json(joke);
   });
 });
 
@@ -80,17 +69,7 @@ router.put("/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
   Joke.findByIdAndUpdate(id, body, (error, joke) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(joke);
-    }
+    res.json(joke);
   });
 });
 
@@ -122,17 +101,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Joke.findByIdAndDelete(id, (error, joke) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(joke);
-    }
+    res.json(joke);
   });
 });
 
@@ -189,20 +158,12 @@ router.post("/add", async (req, res) => {
     joke: rawJoke,
   });
 
-  try {
-    const newJoke = await joke.save();
-    res.send({
-      joke: newJoke.joke,
-      _id: newJoke._id,
-      dateUploaded: newJoke.dateUploaded,
-    });
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res
-      .status(500)
-      .send(`An error has occured. Please contact a developer. \n ${errorID}`);
-  }
+  const newJoke = await joke.save();
+  res.send({
+    joke: newJoke.joke,
+    _id: newJoke._id,
+    dateUploaded: newJoke.dateUploaded,
+  });
 });
 
 export default router;

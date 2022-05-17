@@ -1,7 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../logger";
 import Joke from "../../models/Jokes";
 
 const router = express.Router();
@@ -20,13 +19,7 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  try {
-    res.redirect("/api/v0/jokes/random");
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
-  }
+  res.redirect("/api/v0/jokes/random");
 });
 
 /**
@@ -54,14 +47,8 @@ router.get("/", (req, res) => {
  *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
-  try {
-    const targetRecord = await Joke.aggregate([{ $sample: { size: 1 } }]);
-    res.send(targetRecord[0]);
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
-  }
+  const targetRecord = await Joke.aggregate([{ $sample: { size: 1 } }]);
+  res.send(targetRecord[0]);
 });
 
 export default router;

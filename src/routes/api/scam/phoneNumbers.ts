@@ -3,7 +3,6 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../../logger";
 import ScamPhoneNumber from "../../../models/scam/PhoneNumber";
 import { getUserInfo } from "../../../utils/getUserInfo";
 
@@ -65,51 +64,37 @@ router.post(
     .withMessage("Phone number is required"),
 
   async (req: express.Request, res: express.Response) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const body = req.body;
-
-      const query = { phoneNumber: body.phoneNumber };
-
-      const phoneNumberExists = await ScamPhoneNumber.findOne(query);
-      if (phoneNumberExists) {
-        return res.status(400).send("Phone Number already flagged!");
-      }
-
-      const user = await getUserInfo(req, res);
-
-      const phoneNumber = new ScamPhoneNumber({
-        _id: uuidv4(),
-        phoneNumber: body.phoneNumber,
-        reportedBy: body.reportedBy,
-        reportedByID: user.userId,
-      });
-
-      try {
-        const newPhoneNumber = await phoneNumber.save();
-        res.send({
-          message: "Phone Number reported!",
-          phoneNumber: newPhoneNumber.phoneNumber,
-          reportedBy: newPhoneNumber.reportedBy,
-          reportedByID: newPhoneNumber.reportedByID,
-          dateReported: newPhoneNumber.dateCreated,
-        });
-      } catch (error) {
-        const errorID = uuidv4();
-        errorLogger(error, errorID);
-        res
-          .status(500)
-          .send("An error has occured. Please contact a developer.");
-      }
-    } catch (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+
+    const body = req.body;
+
+    const query = { phoneNumber: body.phoneNumber };
+
+    const phoneNumberExists = await ScamPhoneNumber.findOne(query);
+    if (phoneNumberExists) {
+      return res.status(400).send("Phone Number already flagged!");
+    }
+
+    const user = await getUserInfo(req, res);
+
+    const phoneNumber = new ScamPhoneNumber({
+      _id: uuidv4(),
+      phoneNumber: body.phoneNumber,
+      reportedBy: body.reportedBy,
+      reportedByID: user.userId,
+    });
+
+    const newPhoneNumber = await phoneNumber.save();
+    res.send({
+      message: "Phone Number reported!",
+      phoneNumber: newPhoneNumber.phoneNumber,
+      reportedBy: newPhoneNumber.reportedBy,
+      reportedByID: newPhoneNumber.reportedByID,
+      dateReported: newPhoneNumber.dateCreated,
+    });
   }
 );
 
@@ -145,35 +130,29 @@ router.get(
   body("phoneNumber").isString(),
 
   async (req: express.Request, res: express.Response) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-      const body = req.body;
+    const body = req.body;
 
-      const phoneNumber = body.phoneNumber;
+    const phoneNumber = body.phoneNumber;
 
-      const query = { phoneNumber: phoneNumber };
+    const query = { phoneNumber: phoneNumber };
 
-      if (!phoneNumber) {
-        return res.status(400).send("No Phone Number provided!");
-      }
+    if (!phoneNumber) {
+      return res.status(400).send("No Phone Number provided!");
+    }
 
-      const phoneNumberExists = await ScamPhoneNumber.findOne(query);
+    const phoneNumberExists = await ScamPhoneNumber.findOne(query);
 
-      if (phoneNumberExists) {
-        res.send("PhoneNumber is a scam!");
-      } else {
-        res.send(
-          "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-        );
-      }
-    } catch (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+    if (phoneNumberExists) {
+      res.send("PhoneNumber is a scam!");
+    } else {
+      res.send(
+        "PhoneNumber is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
+      );
     }
   }
 );

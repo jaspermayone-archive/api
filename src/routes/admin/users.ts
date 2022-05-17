@@ -3,7 +3,6 @@ import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../logger";
 import User from "../../models/User";
 
 const bcrypt = bcryptjs;
@@ -71,23 +70,15 @@ router.post("/add", async (req, res) => {
     accountType: accountType,
   });
 
-  try {
-    const newUser = await user.save();
-    res.send({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-      password: newUser.password,
-      dateCreated: newUser.dateCreated,
-      accountType: newUser.accountType,
-    });
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res
-      .status(500)
-      .send(`An error has occured. Please contact a developer. \n ${errorID}`);
-  }
+  const newUser = await user.save();
+  res.send({
+    _id: newUser._id,
+    name: newUser.name,
+    email: newUser.email,
+    password: newUser.password,
+    dateCreated: newUser.dateCreated,
+    accountType: newUser.accountType,
+  });
 });
 
 export default router;

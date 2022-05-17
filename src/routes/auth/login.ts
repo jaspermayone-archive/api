@@ -4,7 +4,6 @@ import { body, validationResult } from "express-validator";
 import jsonwebtoken from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../logger";
 import User from "../../models/User";
 
 const jwt = jsonwebtoken;
@@ -61,26 +60,17 @@ router.post(
       return res.status(400).send("Can not find user");
     }
 
-    try {
-      if (await bcrypt.compare(req.body.password, user.password)) {
-        const accessToken = await jwt.sign(
-          { userId: user._id, accountType: user.accountType },
-          process.env.ACCESS_TOKEN_SECRET
-        );
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      const accessToken = await jwt.sign(
+        { userId: user._id, accountType: user.accountType },
+        process.env.ACCESS_TOKEN_SECRET
+      );
 
-        res.json({
-          accessToken: accessToken,
-        });
-      } else {
-        res.send("Not allowed");
-      }
-    } catch (error) {
-      res.status(500).json({
-        error: error,
-        message: "Server error",
+      res.json({
+        accessToken: accessToken,
       });
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
+    } else {
+      res.send("Not allowed");
     }
   }
 );

@@ -1,7 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../logger";
 import Quote from "../../models/Quotes";
 
 const router = express.Router();
@@ -33,17 +32,7 @@ const router = express.Router();
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   Quote.findById(id, (error, quote) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(quote);
-    }
+    res.json(quote);
   });
 });
 
@@ -80,17 +69,7 @@ router.put("/:id", (req, res) => {
   const id = req.params.id;
   const body = req.body;
   Quote.findByIdAndUpdate(id, body, (error, quote) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(quote);
-    }
+    res.json(quote);
   });
 });
 
@@ -122,17 +101,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
   Quote.findByIdAndDelete(id, (error, quote) => {
-    if (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res
-        .status(500)
-        .send(
-          `An error has occured. Please contact a developer. \n ${errorID}`
-        );
-    } else {
-      res.json(quote);
-    }
+    res.json(quote);
   });
 });
 
@@ -189,20 +158,12 @@ router.post("/add", async (req, res) => {
     quote: rawQuote,
   });
 
-  try {
-    const newQuote = await quote.save();
-    res.send({
-      quote: newQuote.quote,
-      _id: newQuote._id,
-      dateUploaded: newQuote.dateUploaded,
-    });
-  } catch (error) {
-    const errorID = uuidv4();
-    errorLogger(error, errorID);
-    res
-      .status(500)
-      .send(`An error has occured. Please contact a developer. \n ${errorID}`);
-  }
+  const newQuote = await quote.save();
+  res.send({
+    quote: newQuote.quote,
+    _id: newQuote._id,
+    dateUploaded: newQuote.dateUploaded,
+  });
 });
 
 export default router;

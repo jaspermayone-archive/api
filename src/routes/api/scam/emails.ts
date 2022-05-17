@@ -3,7 +3,6 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import errorLogger from "../../../logger";
 import ScamEmail from "../../../models/scam/Email";
 import { getUserInfo } from "../../../utils/getUserInfo";
 
@@ -67,51 +66,37 @@ router.post(
   body("reportedBy").isString().withMessage("ReportedBy must be a string"),
 
   async (req: express.Request, res: express.Response) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const body = req.body;
-
-      const query = { email: body.email };
-
-      const emailExists = await ScamEmail.findOne(query);
-      if (emailExists) {
-        return res.status(400).send("Email already flagged!");
-      }
-
-      const user = await getUserInfo(req, res);
-
-      const email = new ScamEmail({
-        _id: uuidv4(),
-        email: body.email,
-        reportedBy: body.reportedBy,
-        reportedByID: user.userId,
-      });
-
-      try {
-        const newEmail = await email.save();
-        res.send({
-          message: "Email reported!",
-          email: newEmail.email,
-          reportedBy: newEmail.reportedBy,
-          reportedByID: newEmail.reportedByID,
-          dateReported: newEmail.dateCreated,
-        });
-      } catch (error) {
-        res
-          .status(500)
-          .send("An error has occured. Please contact a developer.");
-        const errorID = uuidv4();
-        errorLogger(error, errorID);
-      }
-    } catch (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+
+    const body = req.body;
+
+    const query = { email: body.email };
+
+    const emailExists = await ScamEmail.findOne(query);
+    if (emailExists) {
+      return res.status(400).send("Email already flagged!");
+    }
+
+    const user = await getUserInfo(req, res);
+
+    const email = new ScamEmail({
+      _id: uuidv4(),
+      email: body.email,
+      reportedBy: body.reportedBy,
+      reportedByID: user.userId,
+    });
+
+    const newEmail = await email.save();
+    res.send({
+      message: "Email reported!",
+      email: newEmail.email,
+      reportedBy: newEmail.reportedBy,
+      reportedByID: newEmail.reportedByID,
+      dateReported: newEmail.dateCreated,
+    });
   }
 );
 
@@ -151,34 +136,28 @@ router.get(
     .normalizeEmail(),
 
   async (req: express.Request, res: express.Response) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-      const body = req.body;
+    const body = req.body;
 
-      const query = { email: body.email };
+    const query = { email: body.email };
 
-      const email = body.email;
-      if (!email) {
-        return res.status(400).send("No email provided!");
-      }
+    const email = body.email;
+    if (!email) {
+      return res.status(400).send("No email provided!");
+    }
 
-      const emailExists = await ScamEmail.findOne(query);
+    const emailExists = await ScamEmail.findOne(query);
 
-      if (emailExists) {
-        res.send("Email is a scam!");
-      } else {
-        res.send(
-          "Email is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
-        );
-      }
-    } catch (error) {
-      const errorID = uuidv4();
-      errorLogger(error, errorID);
-      res.status(500).send({ error: `${error}`, errorID: `${errorID}` });
+    if (emailExists) {
+      res.send("Email is a scam!");
+    } else {
+      res.send(
+        "Email is not registered in our scam database! If you believe this is a scam, please report it using the /report endpoint!"
+      );
     }
   }
 );
