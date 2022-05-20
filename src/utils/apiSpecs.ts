@@ -4,7 +4,7 @@ const options = {
   swaggerDefinition: {
     info: {
       title: "Heptagram API",
-      version: process.env.npm_package_version || "0.0.0",
+      version: process.env.npm_package_version,
       description:
         "Basic API, designed and coded for the @Heptagram-Bot-Project",
     },

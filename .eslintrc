@@ -10,7 +10,6 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "jsdoc",
     "import"
   ],
   "extends": [
@@ -46,21 +45,6 @@
     "no-param-reassign": [
       "error"
     ],
-    "jsdoc/require-jsdoc": [
-      "error",
-      {
-        "require": {
-          "ArrowFunctionExpression": true,
-          "ClassDeclaration": true,
-          "ClassExpression": true,
-          "FunctionDeclaration": true,
-          "FunctionExpression": true,
-          "MethodDefinition": true
-        },
-        "publicOnly": true
-      }
-    ],
-    "jsdoc/require-description-complete-sentence": "error",
     "import/first": "error",
     "import/exports-last": "error",
     "import/newline-after-import": "error",

@@ -1,12 +1,10 @@
-import bcryptjs from "bcryptjs";
+import { bcryptjs as bcrypt } from "bcryptjs";
 import express from "express";
 import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
 import User from "../../models/User";
-
-const bcrypt = bcryptjs;
 
 const router = express.Router();
 
