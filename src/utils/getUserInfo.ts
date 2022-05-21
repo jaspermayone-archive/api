@@ -1,21 +1,15 @@
-import jsonwebtoken from "jsonwebtoken";
+import { jsonwebtoken as jwt } from "jsonwebtoken";
 
-const jwt = jsonwebtoken;
+import { getToken } from "./getToken";
 
 /**
  *
  * @param req
  * @param res
  */
-export async function getUserInfo(req, res) {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) {
-    return res.status(401).send("No authorization header!");
-  }
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).send("No token provided!");
-  }
+export async function getUserInfo(req, res, next) {
+  const token = await getToken(req, res);
+
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
   const { userId, email, role } = decoded as {
@@ -24,4 +18,6 @@ export async function getUserInfo(req, res) {
     role: string;
   };
   return { userId, email, role };
+
+  next();
 }
