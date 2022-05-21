@@ -1,5 +1,7 @@
 import bodyParser from "body-parser";
 import compression from "compression";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
 import health from "express-ping";
 import rateLimit from "express-rate-limit";
@@ -25,10 +27,12 @@ const app = express();
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 app.use(limiter);
 app.use(health.ping());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.redirect("/docs");
