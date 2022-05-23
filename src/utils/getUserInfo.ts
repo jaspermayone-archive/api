@@ -7,7 +7,7 @@ import { getToken } from "./getToken";
  * @param req
  * @param res
  */
-export async function getUserInfo(req, res, next) {
+export async function getUserInfo(req, res) {
   const token = await getToken(req, res);
 
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
@@ -18,6 +18,4 @@ export async function getUserInfo(req, res, next) {
     role: string;
   };
   return { userId, email, role };
-
-  next();
 }
