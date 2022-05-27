@@ -1,6 +1,8 @@
-import { jsonwebtoken as jwt } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 
 import { getToken } from "../utils/getToken";
+
+const jwt = jsonwebtoken;
 
 /**
  *
@@ -9,7 +11,7 @@ import { getToken } from "../utils/getToken";
  * @param next
  */
 export async function isAdmin(req, res, next) {
-  const token = getToken(req, res);
+  const token = getToken(req);
 
   const decodedToken = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 

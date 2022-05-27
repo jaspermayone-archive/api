@@ -78,7 +78,7 @@ router.post(
       return res.status(400).send("Phone Number already flagged!");
     }
 
-    const user = await getUserInfo(req, res);
+    const user = await getUserInfo(req);
 
     const phoneNumber = new ScamPhoneNumber({
       _id: uuidv4(),

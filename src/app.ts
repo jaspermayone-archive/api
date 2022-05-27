@@ -3,6 +3,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import correlator from "express-correlation-id";
 import health from "express-ping";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -33,6 +34,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(health.ping());
 app.use(cors());
+app.use(correlator());
 
 app.get("/", (req, res) => {
   res.redirect("/docs");
@@ -50,10 +52,13 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 // catch all errors
 app.use((err, req, res, next) => {
   const errorID = uuidv4();
-  errorLogger(err, errorID);
+  errorLogger(err, errorID, req);
   res.status(500).json({
+    message:
+      "Please contact a developer in our discord support server, and provide the information below.",
     error: err.message,
     errorID,
+    requestID: req.correlationId(),
   });
 });
 

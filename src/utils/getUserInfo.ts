@@ -1,16 +1,18 @@
-import { jsonwebtoken as jwt } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 
 import { getToken } from "./getToken";
+
+const jwt = jsonwebtoken;
 
 /**
  *
  * @param req
  * @param res
  */
-export async function getUserInfo(req, res) {
-  const token = await getToken(req, res);
+export async function getUserInfo(req) {
+  const token = await getToken(req);
 
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   const { userId, email, role } = decoded as {
     userId: string;

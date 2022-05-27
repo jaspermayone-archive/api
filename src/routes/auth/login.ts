@@ -1,9 +1,12 @@
-import { bcryptjs as bcrypt } from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import express from "express";
 import { body, validationResult } from "express-validator";
-import { jsonwebtoken as jwt } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 
 import User from "../../models/User";
+
+const jwt = jsonwebtoken;
+const bcrypt = bcryptjs;
 
 const router = express.Router();
 
@@ -57,7 +60,7 @@ router.post(
       return res.status(400).send("Can not find user");
     }
 
-    if (await bcrypt.compare(req.body.password, user.password)) {
+    if (bcrypt.compare(req.body.password, user.password)) {
       const accessToken = await jwt.sign(
         { userId: user._id, accountType: user.accountType },
         process.env.ACCESS_TOKEN_SECRET
@@ -67,7 +70,7 @@ router.post(
         accessToken: accessToken,
       });
     } else {
-      res.send("Not allowed");
+      res.status(400).send("Not allowed");
     }
   }
 );
