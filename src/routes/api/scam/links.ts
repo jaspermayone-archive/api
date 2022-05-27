@@ -78,7 +78,7 @@ router.post(
       return res.status(400).send("Link already flagged!");
     }
 
-    const user = await getUserInfo(req, res);
+    const user = await getUserInfo(req);
 
     const link = new ScamLink({
       _id: uuidv4(),

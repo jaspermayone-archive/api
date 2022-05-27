@@ -1,6 +1,9 @@
-import { jsonwebtoken as jwt } from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 
 import { getToken } from "../utils/getToken";
+
+const jwt = jsonwebtoken;
 
 /**
  *
@@ -9,7 +12,7 @@ import { getToken } from "../utils/getToken";
  * @param next
  */
 export function authToken(req, res, next) {
-  const token = getToken(req, res);
+  const token = getToken(req);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
