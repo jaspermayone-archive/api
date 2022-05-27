@@ -22,7 +22,6 @@ import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 import { apiSpecs } from "./utils/apiSpecs";
 
-
 const app = express();
 
 const limiter = rateLimit({

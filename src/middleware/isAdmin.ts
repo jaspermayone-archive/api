@@ -4,12 +4,6 @@ import { getToken } from "../utils/getToken";
 
 const jwt = jsonwebtoken;
 
-/**
- *
- * @param req
- * @param res
- * @param next
- */
 export async function isAdmin(req, res, next) {
   const token = getToken(req);
 

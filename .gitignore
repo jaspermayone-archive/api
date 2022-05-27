@@ -4,3 +4,4 @@ dist.wireit
 .wireit/*
 **/.DS_Store
 .yarn/*
+.npmrc/*
