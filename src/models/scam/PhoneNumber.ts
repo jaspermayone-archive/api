@@ -21,15 +21,17 @@ import mongoose from "mongoose";
 const scamPhoneNumberSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "Phone Number ID is required"],
+    unique: true,
   },
   phoneNumber: {
     type: String,
-    required: true,
+    required: [true, "Phone Number is required"],
+    unique: true,
   },
   reportedBy: {
     type: String,
-    required: true,
+    required: [true, "Reported By is required"],
   },
   reportedByID: {
     type: String,
@@ -37,7 +39,7 @@ const scamPhoneNumberSchema = new mongoose.Schema({
   dateReported: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date is required"],
   },
 });
 

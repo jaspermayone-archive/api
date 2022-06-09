@@ -18,16 +18,18 @@ import mongoose from "mongoose";
 const jokeSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "Joke ID is required"],
+    unique: true,
   },
   joke: {
     type: String,
-    required: true,
+    required: [true, "Joke is required"],
+    unique: true,
   },
   dateUploaded: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date is required"],
   },
 });
 

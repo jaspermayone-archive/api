@@ -24,30 +24,32 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "User ID is required"],
+    unique: true,
   },
   name: {
     type: String,
-    required: true,
+    required: [true, "Name is required"],
   },
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"],
+    unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "Password is required"],
   },
   accountType: {
     type: String,
     enum: ["user", "bot", "admin"],
     default: "user",
-    required: true,
+    required: [true, "Account type is required"],
   },
   date_created: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date created is required"],
   },
 });
 

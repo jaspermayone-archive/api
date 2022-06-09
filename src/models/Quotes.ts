@@ -20,20 +20,22 @@ import mongoose from "mongoose";
 const quoteSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "Quote ID is required"],
+    unique: true,
   },
   quote: {
     type: String,
-    required: true,
+    required: [true, "Quote is required"],
+    unique: true,
   },
   author: {
     type: String,
-    required: true,
+    required: [true, "Author is required"],
   },
   dateUploaded: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date is required"],
   },
 });
 

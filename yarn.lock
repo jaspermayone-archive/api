@@ -1164,6 +1164,7 @@ __metadata:
     mathjs: ^10.4.1
     mongoose: ^6.2.10
     nodemon: ^2.0.15
+    prettier: ^2.6.2
     serve-favicon: ^2.5.0
     swagger-jsdoc: ^6.2.1
     swagger-ui-express: ^4.3.0
@@ -5617,7 +5618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.1.2":
+"prettier@npm:^2.1.2, prettier@npm:^2.6.2":
   version: 2.6.2
   resolution: "prettier@npm:2.6.2"
   bin:

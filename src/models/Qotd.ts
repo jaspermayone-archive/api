@@ -18,20 +18,23 @@ import mongoose from "mongoose";
 const qotdSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "Qotd ID is required"],
+    unique: true,
   },
   uniqueID: {
     type: String,
-    required: true,
+    required: [true, "Unique ID is required"],
+    unique: true,
   },
   qotd: {
     type: String,
-    required: true,
+    required: [true, "Qotd is required"],
+    unique: true,
   },
   dateUploaded: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date is required"],
   },
 });
 
