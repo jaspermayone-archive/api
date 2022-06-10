@@ -9,10 +9,17 @@ const PORT = process.env.PORT;
 
 mongoose.connect(`${process.env.MONGODB_URI_REMOTE}`);
 
+/*
+mongoose.connect(
+  `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URI}`
+);
+*/
+
 mongoose.connection.on("open", () => {
   console.log(
     colors.magenta(
-      "MongoDB Connected at: " + `${process.env.MONGODB_URI_REMOTE}`
+      "MongoDB Connected at: " +
+        `${mongoose.connection.host}:${mongoose.connection.port}`
     )
   );
 });

@@ -23,30 +23,32 @@ import mongoose from "mongoose";
 const scamLinkSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    required: [true, "Link ID is required"],
+    unique: true,
   },
   link: {
     type: String,
-    required: true,
+    required: [true, "Link is required"],
+    unique: true,
   },
   type: {
     type: String,
     enum: ["unknown", "discord", "instagram", "other"],
-    required: true,
+    required: [true, "Type is required"],
     default: "unknown",
   },
   reportedBy: {
     type: String,
-    required: true,
+    required: [true, "Reported By is required"],
   },
   reportedByID: {
     type: String,
-    required: true,
+    required: [true, "Reported By ID is required"],
   },
   dateReported: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: [true, "Date is required"],
   },
 });
 

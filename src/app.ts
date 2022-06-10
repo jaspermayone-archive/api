@@ -46,12 +46,8 @@ app.get("/", (req, res) => {
   res.redirect("/docs");
 });
 
-app.get("/api/docs", (req, res) => {
-  res.redirect("/docs");
-});
-
 app.use("/auth", limiter, authRoutes);
-app.use("/api/v0", limiter, authToken, apiRoute);
+app.use("/v4", limiter, authToken, apiRoute);
 app.use("/admin", limiter, isAdmin, adminRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 

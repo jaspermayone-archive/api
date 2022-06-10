@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
   "keywords": [],
@@ -30,35 +30,14 @@
     "swagger-ui-express": "^4.3.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4",
-    "uuid": "^8.3.2",
-    "wireit": "^0.4.3"
+    "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "wireit",
-    "dev": "wireit",
-    "test": "wireit",
-    "lint": "wireit",
-    "prepare": "wireit"
-  },
-  "wireit": {
-    "start": {
-      "command": "ts-node src/index.ts"
-    },
-    "dev": {
-      "command": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
-      "dependencies": [
-        "lint"
-      ]
-    },
-    "test": {
-      "command": "jest"
-    },
-    "lint": {
-      "command": "prettier --write --ignore-unknown --color './**/*.ts'"
-    },
-    "prepare": {
-      "command": "husky install"
-    }
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
+    "test": "jest",
+    "lint": "prettier --write --ignore-unknown --color './**/*.ts'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -85,6 +64,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "gts": "^3.1.0",
     "husky": "^8.0.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.2"
   }
 }
