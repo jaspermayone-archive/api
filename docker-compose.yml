@@ -3,8 +3,9 @@ services:
   express-app:
     build: .
     ports:
-      - "8080:3000"
       - "3000:3000"
+      - "8080:3000"
+      - "80:3000"
     env_file:
       - ./.env
     depends_on:

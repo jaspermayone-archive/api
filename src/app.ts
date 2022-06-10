@@ -50,10 +50,6 @@ app.get("/api/docs", (req, res) => {
   res.redirect("/docs");
 });
 
-app.get('/api/v0/*', (req, res) => {
-  res.status(410).send('API v0 is deprecated. Please use /v4 instead. Also, we have droped the /api prefix.');
-});
-
 app.use("/auth", limiter, authRoutes);
 app.use("/v4", limiter, authToken, apiRoute);
 app.use("/admin", limiter, isAdmin, adminRoutes);
