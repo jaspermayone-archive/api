@@ -52,6 +52,7 @@ app.use("/admin", limiter, isAdmin, adminRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
 // catch all errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err, req, res, next) => {
   const errorID = uuidv4();
   errorLogger(err, errorID, req);
