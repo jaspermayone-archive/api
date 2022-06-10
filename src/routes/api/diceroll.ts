@@ -5,10 +5,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v0/diceroll:
+ * /v4/diceroll:
  *    get:
  *      tags:
- *        - /api/v0
+ *        - /v4
  *      summary: Roll a dice
  *      produces: application/json
  *      responses:

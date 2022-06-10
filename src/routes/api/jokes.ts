@@ -7,10 +7,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v0/jokes:
+ * /v4/jokes:
  *    get:
  *      tags:
- *        - /api/v0
+ *        - /v4
  *      summary: Fetch jokes
  *      responses:
  *        302:
@@ -19,15 +19,15 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  res.redirect("/api/v0/jokes/random");
+  res.redirect("/v4/jokes/random");
 });
 
 /**
  * @swagger
- * /api/v0/jokes/random:
+ * /v4/jokes/random:
  *    get:
  *      tags:
- *        - /api/v0
+ *        - /v4
  *      summary: Fetch a random joke
  *      produces: application/json
  *      responses:

@@ -4,10 +4,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v0/coinflip:
+ * /v4/coinflip:
  *    get:
  *      tags:
- *        - /api/v0
+ *        - /v4
  *      summary: Flip a coin
  *      produces: plain/text
  *      responses:

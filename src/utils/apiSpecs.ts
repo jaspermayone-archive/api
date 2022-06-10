@@ -9,7 +9,8 @@ const options = {
         "Basic API, designed and coded for the @Heptagram-Bot-Project",
     },
     tags: [
-      { name: "/api/v0", description: "API version 0 endpoints" },
+      { name: "/v4", description: "API Version 4 Endpoints" },
+      { name: "auth", description: "Authentication Endpoints" },
       { name: "/admin", description: "Admin endpoints" },
     ],
   },

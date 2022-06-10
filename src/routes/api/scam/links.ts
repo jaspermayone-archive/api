@@ -10,10 +10,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v0/scam/links/report:
+ * /v4/scam/links/report:
  *   post:
  *     tags:
- *       - /api/v0
+ *       - /v4
  *     summary: Report a link as scam
  *     produces: application/json
  *     parameters:
@@ -102,10 +102,10 @@ router.post(
 
 /**
  * @swagger
- * /api/v0/scam/links/check:
+ * /v4/scam/links/check:
  *   get:
  *     tags:
- *       - /api/v0
+ *       - /v4
  *     summary: Check a link for scam
  *     produces: application/json
  *     parameters:

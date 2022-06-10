@@ -6,7 +6,7 @@ import Qotd from "../../models/Qotd";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.redirect("/api/v0/qotd/random");
+  res.redirect("/v4/qotd/random");
 });
 
 router.get("/random", async (req, res) => {
