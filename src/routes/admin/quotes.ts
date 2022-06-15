@@ -126,7 +126,7 @@ router.delete("/:id", (req, res) => {
  *          schema:
  *            type: "object"
  *            properties:
- *              _id:
+ *              id:
  *                type: string
  *              quote:
  *                type: string
@@ -154,14 +154,14 @@ router.post("/add", async (req, res) => {
   }
 
   const quote = new Quote({
-    _id: uuidv4(),
+    id: uuidv4(),
     quote: rawQuote,
   });
 
   const newQuote = await quote.save();
   res.send({
     quote: newQuote.quote,
-    _id: newQuote._id,
+    id: newQuote.id,
     dateUploaded: newQuote.dateUploaded,
   });
 });

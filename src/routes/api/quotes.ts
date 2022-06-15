@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
  *          schema:
  *            type: "object"
  *            properties:
- *              _id:
+ *              id:
  *                type: string
  *              quote:
  *                type: string

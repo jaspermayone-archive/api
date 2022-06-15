@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   Joke:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       joke:
  *         type: string
@@ -16,7 +16,7 @@ import mongoose from "mongoose";
  */
 
 const jokeSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Joke ID is required"],
     unique: true,

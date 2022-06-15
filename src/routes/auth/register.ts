@@ -1,4 +1,4 @@
-import { bcryptjs as bcrypt } from "bcryptjs";
+import * as bcrypt from 'bcryptjs';
 import express from "express";
 import "dotenv/config";
 import { body, validationResult } from "express-validator";
@@ -29,7 +29,7 @@ const router = express.Router();
  *          schema:
  *            type: "object"
  *            properties:
- *              _id:
+ *              id:
  *                type: string
  *              user:
  *                type: string
@@ -50,7 +50,7 @@ router.post(
   "/",
 
   body("name", "Name is required").isString(),
-  body("email", "Email is required").isEmail().normalizeEmail(),
+  body("email", "Email is required").isEmail(),
   body("password", "Password is required").isString(),
 
   async (req: express.Request, res: express.Response) => {
@@ -73,7 +73,7 @@ router.post(
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
-      _id: uuidv4(),
+      id: uuidv4(),
       name: name,
       email: email,
       password: hashedPassword,
@@ -81,7 +81,7 @@ router.post(
 
     const newUser = await user.save();
     res.send({
-      _id: newUser._id,
+      id: newUser.id,
       name: newUser.name,
       email: newUser.email,
       password: newUser.password,

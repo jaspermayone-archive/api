@@ -126,7 +126,7 @@ router.delete("/:id", (req, res) => {
  *          schema:
  *            type: "object"
  *            properties:
- *              _id:
+ *              id:
  *                type: string
  *              joke:
  *                type: string
@@ -154,14 +154,14 @@ router.post("/add", async (req, res) => {
   }
 
   const joke = new Joke({
-    _id: uuidv4(),
+    id: uuidv4(),
     joke: rawJoke,
   });
 
   const newJoke = await joke.save();
   res.send({
     joke: newJoke.joke,
-    _id: newJoke._id,
+    id: newJoke.id,
     dateUploaded: newJoke.dateUploaded,
   });
 });

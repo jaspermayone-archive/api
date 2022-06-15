@@ -23,7 +23,7 @@ router.post("/add", async (req, res) => {
   }
 
   const qotd = new Qotd({
-    _id: uuidv4(),
+    id: uuidv4(),
     qotd: req.body.qotd,
     uniqueID: req.body.uniqueID,
   });
@@ -31,7 +31,7 @@ router.post("/add", async (req, res) => {
   const newQotd = await qotd.save();
   res.send({
     qotd: newQotd.qotd,
-    _id: newQotd._id,
+    id: newQotd.id,
     uniqueID: newQotd.uniqueID,
     dateUploaded: newQotd.dateUploaded,
   });

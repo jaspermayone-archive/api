@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   User:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       name:
  *         type: string
@@ -22,7 +22,7 @@ import mongoose from "mongoose";
  */
 
 const userSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "User ID is required"],
     unique: true,

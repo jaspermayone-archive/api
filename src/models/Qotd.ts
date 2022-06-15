@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   Qotd:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       qotd:
  *         type: string
@@ -16,7 +16,7 @@ import mongoose from "mongoose";
  */
 
 const qotdSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Qotd ID is required"],
     unique: true,

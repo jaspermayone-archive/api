@@ -7,7 +7,7 @@ import app from "./app";
 
 const PORT = process.env.PORT;
 
-mongoose.connect(`${process.env.MONGODB_URI_REMOTE}`);
+mongoose.connect(`${process.env.MONGODB_URI}`);
 
 /*
 mongoose.connect(
@@ -19,7 +19,7 @@ mongoose.connection.on("open", () => {
   console.log(
     colors.magenta(
       "MongoDB Connected at: " +
-        `${mongoose.connection.host}:${mongoose.connection.port}`
+        `${process.env.MONGODB_URI}`
     )
   );
 });

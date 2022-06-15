@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   ScamLink:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       link:
  *         type: string
@@ -21,7 +21,7 @@ import mongoose from "mongoose";
  *         format: date
  */
 const scamLinkSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Link ID is required"],
     unique: true,

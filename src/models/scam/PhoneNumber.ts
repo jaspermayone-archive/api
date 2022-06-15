@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   ScamPhoneNumber:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       phoneNumber:
  *         type: string
@@ -19,7 +19,7 @@ import mongoose from "mongoose";
  *         format: date
  */
 const scamPhoneNumberSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Phone Number ID is required"],
     unique: true,

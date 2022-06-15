@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   ScamEmail:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       email:
  *         type: string
@@ -19,7 +19,7 @@ import mongoose from "mongoose";
  *         format: date
  */
 const scamEmailSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Email ID is required"],
     unique: true,

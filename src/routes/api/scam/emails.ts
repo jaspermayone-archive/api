@@ -83,7 +83,7 @@ router.post(
     const user = await getUserInfo(req);
 
     const email = new ScamEmail({
-      _id: uuidv4(),
+      id: uuidv4(),
       email: body.email,
       reportedBy: body.reportedBy,
       reportedByID: user.userId,

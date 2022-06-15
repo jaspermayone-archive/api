@@ -81,7 +81,7 @@ router.post(
     const user = await getUserInfo(req);
 
     const phoneNumber = new ScamPhoneNumber({
-      _id: uuidv4(),
+      id: uuidv4(),
       phoneNumber: body.phoneNumber,
       reportedBy: body.reportedBy,
       reportedByID: user.userId,

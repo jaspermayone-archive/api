@@ -1,4 +1,4 @@
-import { bcryptjs as bcrypt } from "bcryptjs";
+import * as bcrypt from 'bcryptjs';
 import express from "express";
 import "dotenv/config";
 import { v4 as uuidv4 } from "uuid";
@@ -28,7 +28,7 @@ const router = express.Router();
  *          schema:
  *            type: "object"
  *            properties:
- *              _id:
+ *              id:
  *                type: string
  *              user:
  *                type: string
@@ -61,7 +61,7 @@ router.post("/add", async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = new User({
-    _id: uuidv4(),
+    id: uuidv4(),
     name: name,
     email: email,
     password: hashedPassword,
@@ -70,7 +70,7 @@ router.post("/add", async (req, res) => {
 
   const newUser = await user.save();
   res.send({
-    _id: newUser._id,
+    id: newUser.id,
     name: newUser.name,
     email: newUser.email,
     password: newUser.password,

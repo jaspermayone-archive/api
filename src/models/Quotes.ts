@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  *   Quote:
  *     type: object
  *     properties:
- *       _id:
+ *       id:
  *         type: string
  *       quote:
  *         type: string
@@ -18,7 +18,7 @@ import mongoose from "mongoose";
  */
 
 const quoteSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: [true, "Quote ID is required"],
     unique: true,

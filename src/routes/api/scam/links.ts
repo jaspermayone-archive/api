@@ -81,7 +81,7 @@ router.post(
     const user = await getUserInfo(req);
 
     const link = new ScamLink({
-      _id: uuidv4(),
+      id: uuidv4(),
       link: body.link,
       type: body.type,
       reportedBy: body.reportedBy,
