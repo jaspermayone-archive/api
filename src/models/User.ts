@@ -46,6 +46,11 @@ const userSchema = new mongoose.Schema({
     default: "user",
     required: [true, "Account type is required"],
   },
+  hasLockedAccess: {
+    type: Boolean,
+    default: false,
+    required: [true, "Has locked access is required"],
+  },
   date_created: {
     type: Date,
     default: Date.now,
