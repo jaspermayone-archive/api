@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", limiter, authRoutes);
 app.use("/v4", limiter, authToken, apiRoute);
-app.use("/locked", limiter, hasLockedAccess, lockedRoutes);
+app.use("/locked/all", limiter, hasLockedAccess, lockedRoutes);
 app.use("/admin", limiter, isAdmin, adminRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
