@@ -14,10 +14,13 @@ export async function getUserInfo(req) {
 
   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-  const { userId, email, role } = decoded as {
+  const { userId, name, email, accountType, hasLockedAccess, dateCreated } = decoded as {
     userId: string;
+    name: string;
     email: string;
-    role: string;
+    accountType: string;
+    hasLockedAccess: boolean;
+    dateCreated: Date;
   };
-  return { userId, email, role };
+  return { userId, name, email, accountType, hasLockedAccess, dateCreated };
 }

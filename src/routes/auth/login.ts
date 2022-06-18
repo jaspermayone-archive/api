@@ -62,7 +62,14 @@ router.post(
 
     if (bcrypt.compare(req.body.password, user.password)) {
       const accessToken = await jwt.sign(
-        { userId: user.id, accountType: user.accountType },
+        {
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+          accountType: user.accountType,
+          hasLockedAccess: user.hasLockedAccess,
+          dateCreated: user.dateCreated
+        },
         process.env.ACCESS_TOKEN_SECRET
       );
 

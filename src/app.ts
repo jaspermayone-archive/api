@@ -15,11 +15,13 @@ import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
 
 import errorLogger from "./logger";
+import { hasLockedAccess } from "./middleware/hasLockedAccess";
 import { isAdmin } from "./middleware/isAdmin";
 import { authToken } from "./middleware/middleware";
 import adminRoutes from "./routes/admin";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
+import lockedRoutes from "./routes/locked";
 import { apiSpecs } from "./utils/apiSpecs";
 
 const app = express();
@@ -48,6 +50,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", limiter, authRoutes);
 app.use("/v4", limiter, authToken, apiRoute);
+app.use("/locked/all", limiter, hasLockedAccess, lockedRoutes);
 app.use("/admin", limiter, isAdmin, adminRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
