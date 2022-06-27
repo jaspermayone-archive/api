@@ -5,6 +5,21 @@
   "license": "EPL-2.0",
   "keywords": [],
   "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
+    "test": "jest",
+    "lint": "prettier --write --color './**/*.ts'",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heptagram-Bot-Project/api-with-stripe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
+  },
+  "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "dependencies": {
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
@@ -32,21 +47,6 @@
     "typescript": "^4.6.4",
     "uuid": "^8.3.2"
   },
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
-    "test": "jest",
-    "lint": "prettier --write --ignore-unknown --color './**/*.ts'",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Heptagram-Bot-Project/api-with-stripe.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
-  },
-  "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "devDependencies": {
     "@japa/api-client": "^1.2.0",
     "@japa/assert": "^1.3.4",
@@ -64,7 +64,11 @@
     "eslint-plugin-prettier": "^4.0.0",
     "gts": "^3.1.0",
     "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.2"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --color --ignore-unknown"
   }
 }
