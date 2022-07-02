@@ -93,7 +93,7 @@ router.post(
       phoneNumber: newPhoneNumber.phoneNumber,
       reportedBy: newPhoneNumber.reportedBy,
       reportedByID: newPhoneNumber.reportedByID,
-      dateReported: newPhoneNumber.dateCreated,
+      dateReported: newPhoneNumber.dateReported,
     });
   }
 );

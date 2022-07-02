@@ -95,7 +95,7 @@ router.post(
       email: newEmail.email,
       reportedBy: newEmail.reportedBy,
       reportedByID: newEmail.reportedByID,
-      dateReported: newEmail.dateCreated,
+      dateReported: newEmail.dateReported,
     });
   }
 );

@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: [true, "Has locked access is required"],
   },
-  date_created: {
+  dateCreated: {
     type: Date,
     default: Date.now,
     required: [true, "Date created is required"],

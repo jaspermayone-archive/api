@@ -95,7 +95,7 @@ router.post(
       type: newLink.type,
       reportedBy: newLink.reportedBy,
       reportedByID: newLink.reportedByID,
-      dateReported: newLink.dateCreated,
+      dateReported: newLink.dateReported,
     });
   }
 );
