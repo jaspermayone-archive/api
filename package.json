@@ -5,6 +5,21 @@
   "license": "EPL-2.0",
   "keywords": [],
   "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
+    "test": "jest",
+    "lint": "prettier --write --color './**/*.ts'",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heptagram-Bot-Project/api-with-stripe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
+  },
+  "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "dependencies": {
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
@@ -32,39 +47,28 @@
     "typescript": "^4.6.4",
     "uuid": "^8.3.2"
   },
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
-    "test": "jest",
-    "lint": "prettier --write --ignore-unknown --color './**/*.ts'",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Heptagram-Bot-Project/api-with-stripe.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
-  },
-  "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
   "devDependencies": {
-    "@japa/api-client": "^1.2.0",
-    "@japa/assert": "^1.3.4",
-    "@japa/runner": "^2.0.7",
-    "@japa/spec-reporter": "^1.1.12",
-    "@types/body-parser": "^1.19.2",
-    "@types/compression": "^1.7.2",
-    "@types/node": "^14.11.2",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "eslint": "^8.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsdoc": "^39.2.9",
-    "eslint-plugin-prettier": "^4.0.0",
-    "gts": "^3.1.0",
-    "husky": "^8.0.1",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.6.2"
+    "@japa/api-client": "1.4.0",
+    "@japa/assert": "1.3.4",
+    "@japa/runner": "2.0.9",
+    "@japa/spec-reporter": "1.1.12",
+    "@types/body-parser": "1.19.2",
+    "@types/compression": "1.7.2",
+    "@types/node": "16.11.42",
+    "@typescript-eslint/eslint-plugin": "5.30.0",
+    "@typescript-eslint/parser": "5.30.0",
+    "eslint": "8.18.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsdoc": "39.3.3",
+    "eslint-plugin-prettier": "4.2.1",
+    "gts": "3.1.0",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.3",
+    "nodemon": "2.0.18",
+    "prettier": "2.7.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --color --ignore-unknown"
   }
 }
