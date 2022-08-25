@@ -406,10 +406,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:16.11.48":
-  version: 16.11.48
-  resolution: "@types/node@npm:16.11.48"
-  checksum: 10cd539cb2cf5a8f51f3c2bd761c093b752e534b1f2dc0d7193debd7986145b68db2a5fd48498af641e8641fb8d24b7c4851ea3e30fb8f56cc13ac719cad1e1f
+"@types/node@npm:16.11.56":
+  version: 16.11.56
+  resolution: "@types/node@npm:16.11.56"
+  checksum: b4efade16eb08a39810921c54a1637e69c8f3184a20d87e8fe74d557d9bda73f0829ac318e2a30a32b1903e4b099812defd1dfe438be70b98dbfbea5b0d99a53
   languageName: node
   linkType: hard
 
@@ -799,7 +799,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"all-contributors-cli@npm:^6.20.0":
+"all-contributors-cli@npm:6.20.0":
   version: 6.20.0
   resolution: "all-contributors-cli@npm:6.20.0"
   dependencies:
@@ -899,10 +899,10 @@ __metadata:
   dependencies:
     "@types/body-parser": 1.19.2
     "@types/compression": 1.7.2
-    "@types/node": 16.11.48
+    "@types/node": 16.11.56
     "@typescript-eslint/eslint-plugin": 5.33.0
     "@typescript-eslint/parser": 5.33.0
-    all-contributors-cli: ^6.20.0
+    all-contributors-cli: 6.20.0
     axios: ^0.27.2
     bcryptjs: ^2.4.3
     body-parser: ^1.20.0
