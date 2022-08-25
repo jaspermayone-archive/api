@@ -799,7 +799,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"all-contributors-cli@npm:^6.20.0":
+"all-contributors-cli@npm:6.20.0":
   version: 6.20.0
   resolution: "all-contributors-cli@npm:6.20.0"
   dependencies:
@@ -902,7 +902,7 @@ __metadata:
     "@types/node": 16.11.49
     "@typescript-eslint/eslint-plugin": 5.33.0
     "@typescript-eslint/parser": 5.33.0
-    all-contributors-cli: ^6.20.0
+    all-contributors-cli: 6.20.0
     axios: ^0.27.2
     bcryptjs: ^2.4.3
     body-parser: ^1.20.0
