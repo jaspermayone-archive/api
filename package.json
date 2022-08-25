@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "4.2.0",
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "yarn@3.2.3",
   "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
   "keywords": [],
