@@ -144,11 +144,15 @@ router.get("/links/check", async (req, res) => {
   const body = req.body;
 
   const url = query.url;
-  const scamlink = body.link;
+  // eslint-disable-next-line init-declarations
+  let scamlink;
+  //const scamlink = body.link;
 
   const dbQuery = { link: scamlink };
 
   if (!url) {
+    scamlink = body.link;
+
     if (!scamlink) {
       return res.status(400).send("No link provided!");
     }
@@ -192,6 +196,9 @@ router.get("/links/check", async (req, res) => {
   }
 
   if (url) {
+    // eslint-disable-next-line require-atomic-updates
+    scamlink = query.url;
+
     const urldbQuery = { link: url };
 
     const linkExists = await ScamLink.findOne(urldbQuery);
