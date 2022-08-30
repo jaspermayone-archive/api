@@ -13,21 +13,24 @@ export const validateEnv = (): { valid: boolean; message: string } => {
     }
 
     if (!process.env.MONGODB_URI) {
-        return { valid: false, message: "Missing MongoDB URI" };
+      return { valid: false, message: "Missing MongoDB URI" };
     }
 
     if (!process.env.ERROR_WEBHOOK_URL) {
-        return { valid: false, message: "Missing Error Webhook URL" };
+      return { valid: false, message: "Missing Error Webhook URL" };
     }
 
     if (!process.env.AVATAR_URL) {
-        return { valid: false, message: "Missing Avatar URL" };
+      return { valid: false, message: "Missing Avatar URL" };
+    }
+
+    if (!process.env.GOOGLE_SAFE_BROWSING_API_KEY) {
+      return { valid: false, message: "Missing Google Safe Browsing API Key" };
     }
 
     return { valid: true, message: "Environment variables validated!" };
-
   } catch (err) {
-   console.error(err);
+    console.error(err);
     return {
       valid: false,
       message: "Unknown error when validating environment",
