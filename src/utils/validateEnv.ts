@@ -28,6 +28,18 @@ export const validateEnv = (): { valid: boolean; message: string } => {
       return { valid: false, message: "Missing Google Safe Browsing API Key" };
     }
 
+    if (!process.env.PHISHERMAN_API_KEY) {
+      return { valid: false, message: "Missing Phisherman API Key" };
+    }
+
+    if (!process.env.IP_QUALITY_SCORE_API_KEY) {
+      return { valid: false, message: "Missing IP Quality Score API Key" };
+    }
+
+    if (!process.env.PHISH_REPORT_API_KEY) {
+      return { valid: false, message: "Missing Phish Report API Key" };
+    }
+
     return { valid: true, message: "Environment variables validated!" };
   } catch (err) {
     console.error(err);

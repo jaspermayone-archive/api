@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import express from "express";
 import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import ScamLink from "../../models/scam/Link";
+import ScamLink from "../../models/Link";
 import { checkExternal } from "../../utils/checkExternal";
 import { getUserInfo } from "../../utils/getUserInfo";
 
@@ -100,6 +101,26 @@ router.post(
       }
     );
 
+    const reportPhishermanAPI = await axios.put(
+      "https://api.phisherman.gg/v2/phish/report",
+      {
+        headers: {
+          Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
+          ContentType: "application/json",
+        },
+        data: {
+          url: scamlink,
+        },
+      }
+    );
+
+    const reportPhisReportAPI = await axios.post(
+      "https://phish.report/api/v0/cases",
+      {
+        url: scamlink,
+      }
+    );
+
     res.send({
       message: "Link reported!",
       link: newLink.link,
@@ -108,9 +129,70 @@ router.post(
       reportedByID: newLink.reportedByID,
       dateReported: newLink.dateReported,
       walshyAPIresponse: reportWalshyAPI.data.message,
+      phishermanAPIresponse: reportPhishermanAPI.data.message,
+      phishReportID: reportPhisReportAPI.data.id,
     });
   }
 );
+// create a bulk report endpoint
+router.post("/links/report/bulk", async (req, res) => {
+  const user = await getUserInfo(req);
+
+  // get array of links from request body
+  const links = req.body.links;
+
+  // for each link, create a new scam link
+  for (const link of links) {
+    const query = { link: link };
+
+    const linkExists = await ScamLink.findOne(query);
+    if (linkExists) {
+      continue;
+    } else {
+      const scamlink = link;
+
+      const reportWalshyAPI = await axios.post<{ message: string }>(
+        "https://bad-domains.walshy.dev/report",
+        {
+          domain: scamlink,
+        }
+      );
+
+      const reportPhishermanAPI = await axios.put(
+        "https://api.phisherman.gg/v2/phish/report",
+        {
+          headers: {
+            Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
+            ContentType: "application/json",
+          },
+          data: {
+            url: scamlink,
+          },
+        }
+      );
+
+      const reportPhisReportAPI = await axios.post(
+        "https://phish.report/api/v0/cases",
+        {
+          url: scamlink,
+        }
+      );
+
+      const newlink = new ScamLink({
+        id: uuidv4(),
+        link: scamlink,
+        type: "unknown",
+        reportedBy: user.name,
+        reportedByID: user.userId,
+      });
+
+      await newlink.save();
+    }
+  }
+  res.send({
+    message: "Links reported!",
+  });
+});
 
 /**
  * @swagger

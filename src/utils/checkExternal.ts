@@ -1,25 +1,34 @@
 import axios from "axios";
-import { body } from "express-validator";
 /**
  *
  * @param link
  */
 export const checkExternal = async (link: string) => {
   try {
-    const checkSinkingYahts = await axios.get<boolean>(
-      `https://phish.sinking.yachts/v2/check/${link}`,
+    const checkPhishermanAPI = await axios.get(
+      `https://api.phisherman.gg/v2/domains/check/${link}`,
       {
         headers: {
-          accept: "application/json",
-          "X-Identity": "Heptagram API",
+          Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
         },
       }
     );
 
-    if (checkSinkingYahts.data) {
+    if (checkPhishermanAPI.data.verifiedPhish) {
       return {
         scamDetected: true,
-        source: "SinkingYahts",
+        source: "PhishermanAPI",
+      };
+    }
+
+    const checkIpQualityScoreAPI = await axios.get(
+      `https://ipqualityscore.com/api/json/url/${process.env.IP_QUALITY_SCORE_API_KEY}/${link}`
+    );
+
+    if (checkIpQualityScoreAPI.data.unsafe) {
+      return {
+        scamDetected: true,
+        source: "IpQualityScoreAPI",
       };
     }
 
@@ -34,6 +43,23 @@ export const checkExternal = async (link: string) => {
       return {
         scamDetected: true,
         source: "WalshyAPI",
+      };
+    }
+
+    const checkSinkingYahts = await axios.get<boolean>(
+      `https://phish.sinking.yachts/v2/check/${link}`,
+      {
+        headers: {
+          accept: "application/json",
+          "X-Identity": "Heptagram API",
+        },
+      }
+    );
+
+    if (checkSinkingYahts.data) {
+      return {
+        scamDetected: true,
+        source: "SinkingYahts",
       };
     }
 
