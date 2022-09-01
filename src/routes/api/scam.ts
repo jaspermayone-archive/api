@@ -121,7 +121,7 @@ router.post(
       }
     );
 
-    res.send({
+    res.status(200).json({
       message: "Link reported!",
       link: newLink.link,
       type: newLink.type,
