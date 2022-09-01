@@ -63,45 +63,39 @@ export const checkExternal = async (link: string) => {
       };
     }
 
-    /* TODO: Check against Google Safe Browsing API (https://developers.google.com/safe-browsing/v4/lookup)
-     For implementation, Heptagram already as a key to the api. I am having trouble getting it to work, so am looking for some help.
-     See Lines 46-77 for the implementation I have so far.
-    */
-
-    /*
-    const GOOGLE_SAFE_BROWSING_API_KEY = process.env.GOOGLE_SAFE_BROWSING_API_KEY;
-    const checkGoogleSafeBrowsing = await axios.post(`https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${GOOGLE_SAFE_BROWSING_API_KEY}`,
+    const GOOGLE_SAFE_BROWSING_API_KEY =
+      process.env.GOOGLE_SAFE_BROWSING_API_KEY;
+    const checkGoogleSafeBrowsing = await axios.post(
+      `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${GOOGLE_SAFE_BROWSING_API_KEY}`,
       {
-        headers: {
-          Accept: "application/json",
-          ContentType: "application/json",
+        client: {
+          clientId: "Heptagram Bot Project",
+          clientVersion: "TESTING",
         },
-        body: {
-          "client": {
-            "clientId": "yourcompanyname",
-            "clientVersion": "1.5.2"
-          },
-          "threatInfo": {
-            "threatTypes": ["MALWARE", "SOCIAL_ENGINEERING"],
-            "platformTypes": ["WINDOWS"],
-            "threatEntryTypes": ["URL"],
-            "threatEntries": [
-              { "url": "http://www.urltocheck1.org/" },
-              { "url": "http://www.urltocheck2.org/" },
-              { "url": "http://www.urltocheck3.com/" }
-            ]
-          }
-        }
+        threatInfo: {
+          threatTypes: [
+            "MALWARE",
+            "SOCIAL_ENGINEERING",
+            "UNWANTED_SOFTWARE",
+            "POTENTIALLY_HARMFUL_APPLICATION",
+          ],
+          platformTypes: ["ANY_PLATFORM", "ALL_PLATFORMS"],
+          threatEntryTypes: ["URL"],
+          threatEntries: [
+            {
+              url: link,
+            },
+          ],
+        },
       }
     );
 
-    if (checkGoogleSafeBrowsing.data.matches.length > 0) {
+    if (Object.keys(checkGoogleSafeBrowsing.data).length > 0) {
       return {
         scamDetected: true,
         source: "GoogleSafeBrowsing",
       };
     }
-    */
 
     return {
       scamDetected: false,

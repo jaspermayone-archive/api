@@ -134,7 +134,49 @@ router.post(
     });
   }
 );
-// create a bulk report endpoint
+
+/**
+ * @swagger
+ * /v4/scam/links/report/bulk:
+ *   post:
+ *     tags:
+ *       - /v4
+ *     summary: Bulk report links as scam
+ *     produces: application/json
+ *     parameters:
+ *       - in: header
+ *         name: links
+ *         description: array of links to report
+ *         schema:
+ *           type: array
+ *           example: ["101nitro2.com", "1111sa2le.us"]
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Successful Response
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               example: "Link reported!"
+ *             link:
+ *               type: string
+ *             reportedBy:
+ *               type: string
+ *             id:
+ *               type: string
+ *             dateReported:
+ *               type: string
+ *               format: date
+ *       400:
+ *         description: Bad Request (Some error occurred, or link was already reported)
+ *         schema:
+ *           type: string
+ *           example: Link already flagged!
+ *       401:
+ *         description: Unauthorized (No token provided)
+ */
 router.post("/links/report/bulk", async (req, res) => {
   const user = await getUserInfo(req);
 
