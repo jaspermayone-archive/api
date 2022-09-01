@@ -101,26 +101,6 @@ router.post(
       }
     );
 
-    const reportPhishermanAPI = await axios.put(
-      "https://api.phisherman.gg/v2/phish/report",
-      {
-        headers: {
-          Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
-          ContentType: "application/json",
-        },
-        data: {
-          url: scamlink,
-        },
-      }
-    );
-
-    const reportPhisReportAPI = await axios.post(
-      "https://phish.report/api/v0/cases",
-      {
-        url: scamlink,
-      }
-    );
-
     res.status(200).json({
       message: "Link reported!",
       link: newLink.link,
@@ -129,8 +109,6 @@ router.post(
       reportedByID: newLink.reportedByID,
       dateReported: newLink.dateReported,
       walshyAPIresponse: reportWalshyAPI.data.message,
-      phishermanAPIresponse: reportPhishermanAPI.data.message,
-      phishReportID: reportPhisReportAPI.data.id,
     });
   }
 );
