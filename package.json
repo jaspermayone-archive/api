@@ -51,7 +51,7 @@
   "devDependencies": {
     "@types/body-parser": "1.19.2",
     "@types/compression": "1.7.2",
-    "@types/node": "16.11.49",
+    "@types/node": "16.11.56",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
     "all-contributors-cli": "6.20.0",
