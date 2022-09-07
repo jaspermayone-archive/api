@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Heptagram-Bot-Project/api-with-stripe.git"
+    "url": "git+https://github.com/Heptagram-Bot-Project/api.git"
   },
   "bugs": {
-    "url": "https://github.com/Heptagram-Bot-Project/api-with-stripe/issues"
+    "url": "https://github.com/Heptagram-Bot-Project/api/issues"
   },
-  "homepage": "https://github.com/Heptagram-Bot-Project/api-with-stripe#readme",
+  "homepage": "https://github.com/Heptagram-Bot-Project/api#readme",
   "dependencies": {
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
