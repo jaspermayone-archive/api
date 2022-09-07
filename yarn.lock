@@ -273,7 +273,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cors@npm:^2.8.12":
+"@types/cors@npm:2.8.12":
   version: 2.8.12
   resolution: "@types/cors@npm:2.8.12"
   checksum: 8c45f112c7d1d2d831b4b266f2e6ed33a1887a35dcbfe2a18b28370751fababb7cd045e745ef84a523c33a25932678097bf79afaa367c6cb3fa0daa7a6438257
@@ -362,7 +362,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/swagger-ui-express@npm:^4.1.3":
+"@types/swagger-ui-express@npm:4.1.3":
   version: 4.1.3
   resolution: "@types/swagger-ui-express@npm:4.1.3"
   dependencies:
@@ -666,9 +666,9 @@ __metadata:
   dependencies:
     "@types/body-parser": 1.19.2
     "@types/compression": 1.7.2
-    "@types/cors": ^2.8.12
+    "@types/cors": 2.8.12
     "@types/node": 16.11.56
-    "@types/swagger-ui-express": ^4.1.3
+    "@types/swagger-ui-express": 4.1.3
     "@typescript-eslint/eslint-plugin": 5.36.1
     "@typescript-eslint/parser": 5.36.1
     all-contributors-cli: 6.20.0
@@ -4604,7 +4604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.0.3":
+"typescript@npm:4.8.2":
   version: 4.8.2
   resolution: "typescript@npm:4.8.2"
   bin:
@@ -4614,7 +4614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.8.2#~builtin<compat/typescript>":
   version: 4.8.2
   resolution: "typescript@patch:typescript@npm%3A4.8.2#~builtin<compat/typescript>::version=4.8.2&hash=a1c5e5"
   bin:
