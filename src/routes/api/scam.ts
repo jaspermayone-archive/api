@@ -155,64 +155,84 @@ router.post(
  *       401:
  *         description: Unauthorized (No token provided)
  */
-router.post("/links/report/bulk", async (req, res) => {
-  const user = await getUserInfo(req);
-
-  // get array of links from request body
-  const links = req.body.links;
-
-  // for each link, create a new scam link
-  for (const link of links) {
-    const query = { link: link };
-
-    const linkExists = await ScamLink.findOne(query);
-    if (linkExists) {
-      continue;
-    } else {
-      const scamlink = link;
-
-      const reportWalshyAPI = await axios.post<{ message: string }>(
-        "https://bad-domains.walshy.dev/report",
-        {
-          domain: scamlink,
-        }
-      );
-
-      const reportPhishermanAPI = await axios.put(
-        "https://api.phisherman.gg/v2/phish/report",
-        {
-          headers: {
-            Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
-            ContentType: "application/json",
-          },
-          data: {
-            url: scamlink,
-          },
-        }
-      );
-
-      const reportPhisReportAPI = await axios.post(
-        "https://phish.report/api/v0/cases",
-        {
-          url: scamlink,
-        }
-      );
-
-      const newlink = new ScamLink({
-        id: uuidv4(),
-        link: scamlink,
-        type: "unknown",
-        reportedBy: user.name,
-        reportedByID: user.userId,
-      });
-
-      await newlink.save();
+// create bulk report endpoint
+router.post(
+  "/links/report/bulk",
+  body("links").isArray(),
+  async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+
+    const body = req.body;
+    const links = body.links;
+    const user = await getUserInfo(req);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const reportedLinks: any = [];
+    const alreadyReportedLinks: string[] = [];
+    const walshyAPIresponse: string[] = [];
+    const PhishReportAPIresponse: string[] = [];
+    const PhishermanAPIresponse: string[] = [];
+
+    for (const link of links) {
+      const query = { link: link };
+      const linkExists = await ScamLink.findOne(query);
+      if (linkExists) {
+        alreadyReportedLinks.push(link);
+      } else {
+        const scamlink = link;
+        const newLink = new ScamLink({
+          id: uuidv4(),
+          link: scamlink,
+          type: "unknown",
+          reportedBy: user.name,
+          reportedByID: user.userId,
+        });
+        const savedLink = await newLink.save();
+        reportedLinks.push(savedLink);
+
+        const reportWalshyAPI = await axios.post<{ message: string }>(
+          "https://bad-domains.walshy.dev/report",
+          {
+            domain: scamlink,
+          }
+        );
+        walshyAPIresponse.push(reportWalshyAPI.data.message);
+
+        const reportPhishReportAPI = await axios.post(
+          "https://phish.report/api/v0/cases",
+          {
+            url: scamlink,
+          }
+        );
+        PhishReportAPIresponse.push(reportPhishReportAPI.data);
+
+        const reportPhishermanAPI = await axios.put(
+          "https://api.phisherman.gg/v2/phish/report",
+          {
+            headers: {
+              Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
+              ContentType: "application/json",
+            },
+            data: {
+              url: scamlink,
+            },
+          }
+        );
+        PhishermanAPIresponse.push(reportPhishermanAPI.data);
+      }
+    }
+    res.status(200).json({
+      message: "Links reported!",
+      reportedLinks: reportedLinks,
+      alreadyReportedLinks: alreadyReportedLinks,
+      walshyAPIresponses: walshyAPIresponse,
+      PhishReportAPIresponses: PhishReportAPIresponse,
+      PhishermanAPIresponses: PhishermanAPIresponse,
+    });
   }
-  res.send({
-    message: "Links reported!",
-  });
-});
+);
 
 /**
  * @swagger

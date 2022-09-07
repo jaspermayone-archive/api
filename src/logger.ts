@@ -62,11 +62,6 @@ const errorLogger = async (error, errorID, req) => {
               inline: true,
             },
             {
-              name: "Request Id:",
-              value: `\`${req.correlationId()}\``,
-              inline: true,
-            },
-            {
               name: "Request Method:",
               value: `\`${req.method}\``,
               inline: true,

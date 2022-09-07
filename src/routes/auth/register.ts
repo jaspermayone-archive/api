@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from "bcryptjs";
 import express from "express";
 import "dotenv/config";
 import { body, validationResult } from "express-validator";

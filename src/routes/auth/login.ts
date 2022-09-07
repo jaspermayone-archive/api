@@ -68,7 +68,7 @@ router.post(
           email: user.email,
           accountType: user.accountType,
           hasLockedAccess: user.hasLockedAccess,
-          dateCreated: user.dateCreated
+          dateCreated: user.dateCreated,
         },
         process.env.ACCESS_TOKEN_SECRET
       );
