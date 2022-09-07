@@ -1,8 +1,8 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
+import ExpressBrute from "express-brute";
 import health from "express-ping";
-import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
 import { v4 as uuidv4 } from "uuid";
@@ -20,11 +20,16 @@ import { apiSpecs } from "./utils/apiSpecs";
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+const store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
+const bruteforce = new ExpressBrute(store, {
+  freeRetries: 5,
+  minWait: 5 * 60 * 1000, // 5 minutes
+  maxWait: 60 * 60 * 1000, // 1 hour
+  failCallback: (req, res) => {
+    res.status(429).json({
+      error: "Too many requests, please try again later.",
+    });
+  },
 });
 
 app.use(express.json());
@@ -37,10 +42,10 @@ app.get("/", (req, res) => {
   res.redirect("/docs");
 });
 
-app.use("/auth", limiter, authRoutes);
-app.use("/v4", limiter, authToken, apiRoute);
-app.use("/locked/all", limiter, hasLockedAccess, lockedRoutes);
-app.use("/admin", limiter, isAdmin, adminRoutes);
+app.use("/auth", bruteforce.prevent, authRoutes);
+app.use("/v4", bruteforce.prevent, authToken, apiRoute);
+app.use("/locked/all", bruteforce.prevent, hasLockedAccess, lockedRoutes);
+app.use("/admin", bruteforce.prevent, isAdmin, adminRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
 // catch all errors
