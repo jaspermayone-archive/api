@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "packageManager": "yarn@3.2.3",
   "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
