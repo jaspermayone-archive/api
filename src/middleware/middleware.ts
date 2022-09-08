@@ -1,8 +1,6 @@
-import jsonwebtoken from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 
 import { getToken } from "../utils/getToken";
-
-const jwt = jsonwebtoken;
 
 /**
  *
@@ -18,6 +16,7 @@ export async function authToken(req, res, next) {
       return res.status(403).send("Invalid token");
     }
     req.user = user;
+
     next();
   });
 }

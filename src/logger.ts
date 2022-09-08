@@ -1,8 +1,6 @@
 import axios from "axios";
-import jsonwebtoken from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import "dotenv/config";
-
-const jwt = jsonwebtoken;
 
 const env = process.env.NODE_ENV;
 const errorUrl = process.env.ERROR_WEBHOOK_URL;

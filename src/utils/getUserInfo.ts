@@ -1,8 +1,6 @@
-import jsonwebtoken from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 
 import { getToken } from "./getToken";
-
-const jwt = jsonwebtoken;
 
 /**
  *
