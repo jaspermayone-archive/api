@@ -87,7 +87,7 @@ export const checkExternal = async (link: string) => {
       {
         client: {
           clientId: "Heptagram Bot Project",
-          clientVersion: "TESTING",
+          clientVersion: process.env.npm_package_version,
         },
         threatInfo: {
           threatTypes: [

@@ -13,9 +13,20 @@ const limiter = rateLimit({
 
 export async function rateLimiterMiddleware(req, res, next) {
   const user = await getUserInfo(req);
-  if (user.accountType === "admin" || user.accountType === "bot") {
+
+  if (!user) {
     next();
-  } else {
-    limiter(req, res, next);
+  }
+
+  if (user) {
+    if (user.accountType === "admin") {
+      next();
+    }
+    if (user.accountType === "bot") {
+      next();
+    }
+    if (user.accountType === "user") {
+      limiter(req, res, next);
+    }
   }
 }
