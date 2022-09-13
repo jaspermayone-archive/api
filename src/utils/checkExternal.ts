@@ -63,6 +63,23 @@ export const checkExternal = async (link: string) => {
       };
     }
 
+    const checkUrlScan = await axios.post<{
+      status: "queued" | "completed";
+      result: "malicious" | "clean";
+    }>("https://urlscan.io/api/v1/scan/", {
+      url: link,
+      public: "on",
+    });
+
+    if (checkUrlScan.data.status === "completed") {
+      if (checkUrlScan.data.result === "malicious") {
+        return {
+          scamDetected: true,
+          source: "UrlScan",
+        };
+      }
+    }
+
     const GOOGLE_SAFE_BROWSING_API_KEY =
       process.env.GOOGLE_SAFE_BROWSING_API_KEY;
     const checkGoogleSafeBrowsing = await axios.post(
