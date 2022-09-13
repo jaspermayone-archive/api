@@ -19,13 +19,13 @@ export async function rateLimiterMiddleware(req, res, next) {
   }
 
   if (user) {
-    if (user.accountType === "admin") {
+    if (user.accountType === "admin" || user.accountType === "Admin") {
       next();
     }
-    if (user.accountType === "bot") {
+    if (user.accountType === "bot" || user.accountType === "Bot") {
       next();
     }
-    if (user.accountType === "user") {
+    if (user.accountType === "user" || user.accountType === "User") {
       limiter(req, res, next);
     }
   }
