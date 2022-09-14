@@ -4,6 +4,8 @@ import express from "express";
 import health from "express-ping";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
+import ipinfo from "ipinfo-express";
+import { ipinfoOptions } from "./utils/ipinfoOptions";
 import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
 
@@ -24,6 +26,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(health.ping());
 app.use(cors());
+app.use(ipinfo(ipinfoOptions));
 
 app.get("/", (req, res) => {
   res.redirect("/docs");
