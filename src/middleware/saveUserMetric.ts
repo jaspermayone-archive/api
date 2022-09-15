@@ -19,7 +19,7 @@ export async function saveUserMetrics(req, res, next) {
     ...getLatitudeAndLongidute(loc),
     urlAccessed: req.url,
   });
-
+  console.log("Metric obj", metric);
   await metric.save();
   next();
 }
