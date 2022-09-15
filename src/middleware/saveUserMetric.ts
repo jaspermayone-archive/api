@@ -8,6 +8,7 @@ export async function saveUserMetrics(req, res, next) {
     errorLogger(errorMessage, 400, req);
     return next();
   }
+
   const { ip, city, region, country, timezone, loc } = req.ipinfo;
   const metric = new Metrics({
     id: req.user.userId,
@@ -19,7 +20,7 @@ export async function saveUserMetrics(req, res, next) {
     ...getLatitudeAndLongidute(loc),
     urlAccessed: req.url,
   });
-  console.log("Metric obj", metric);
-  await metric.save();
+
+  await metric.save(); // TODO: Handle exception
   next();
 }
