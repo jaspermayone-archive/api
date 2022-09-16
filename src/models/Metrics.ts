@@ -67,4 +67,7 @@ const metricsSchema = new Schema<IMetrics>({
   },
 });
 
-export default mongoose.model("Metrics", metricsSchema);
+//TODO: indexing
+const MetricsModel = mongoose.model("Metrics", metricsSchema);
+
+export { MetricsModel, IMetrics };

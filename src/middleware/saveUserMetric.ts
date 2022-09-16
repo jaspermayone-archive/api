@@ -1,5 +1,5 @@
 import errorLogger from "../logger";
-import Metrics from "../models/Metrics";
+import { MetricsModel } from "../models/Metrics";
 import { getLatitudeAndLongidute } from "../utils/getLatitudeAndLongitude";
 
 export async function saveUserMetrics(req, res, next) {
@@ -10,7 +10,7 @@ export async function saveUserMetrics(req, res, next) {
   }
 
   const { ip, city, region, country, timezone, loc } = req.ipinfo;
-  const metric = new Metrics({
+  const metric = new MetricsModel({
     id: req.user.userId,
     ip: ip,
     city: city,
