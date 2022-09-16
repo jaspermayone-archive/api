@@ -1,11 +1,12 @@
 import errorLogger from "../logger";
 import { MetricsModel } from "../models/Metrics";
 import { getLatitudeAndLongidute } from "../utils/getLatitudeAndLongitude";
+import { v4 as uuidv4 } from "uuid";
 
 export async function saveUserMetrics(req, res, next) {
   if (req.ipinfo.bogon) {
     const errorMessage = `Error: Bogon IP!`;
-    errorLogger({ message: errorMessage }, 400, req);
+    errorLogger({ message: errorMessage }, uuidv4(), req);
     return next();
   }
 
