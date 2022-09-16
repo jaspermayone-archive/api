@@ -4,8 +4,8 @@ import { getLatitudeAndLongidute } from "../utils/getLatitudeAndLongitude";
 
 export async function saveUserMetrics(req, res, next) {
   if (req.ipinfo.bogon) {
-    const errorMessage = `Bogon IP!`;
-    errorLogger(errorMessage, 400, req);
+    const errorMessage = `Error: Bogon IP!`;
+    errorLogger({ message: errorMessage }, 400, req);
     return next();
   }
 

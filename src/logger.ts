@@ -24,10 +24,9 @@ const errorLogger = async (error, errorID, req) => {
   const bearer = bearerHeader.split(" ");
   const bearerToken = bearer[1];
 
-  const decoded = await jwt.verify(
-    bearerToken,
-    process.env.ACCESS_TOKEN_SECRET
-  );
+  const decoded =
+    req.user ??
+    (await jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET));
 
   axios.request({
     url: errorUrl,
