@@ -19,7 +19,7 @@ export async function saveUserMetrics(req, res, next) {
     country: country,
     timezone: timezone,
     ...getLatitudeAndLongidute(loc),
-    urlAccessed: req.url,
+    urlAccessed: req.originalUrl,
   });
 
   await metric.save(); // TODO: Handle exception
