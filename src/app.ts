@@ -3,9 +3,8 @@ import cors from "cors";
 import express from "express";
 import health from "express-ping";
 import helmet from "helmet";
+import ipinfo, { defaultIpSelector } from "ipinfo-express";
 import swaggerUi from "swagger-ui-express";
-import ipinfo from "ipinfo-express";
-import { ipinfoOptions } from "./utils/ipinfoOptions";
 import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
 
@@ -14,11 +13,11 @@ import { hasLockedAccess } from "./middleware/hasLockedAccess";
 // import { isAdmin } from "./middleware/isAdmin";
 import { authToken } from "./middleware/middleware";
 import { rateLimiterMiddleware } from "./middleware/rateLimitController";
+import { saveUserMetrics } from "./middleware/saveUserMetric";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 import lockedRoutes from "./routes/locked";
 import { apiSpecs } from "./utils/apiSpecs";
-import { saveUserMetrics } from "./middleware/saveUserMetric";
 
 const app = express();
 
@@ -27,7 +26,14 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(health.ping());
 app.use(cors());
-app.use(ipinfo(ipinfoOptions));
+app.use(
+  ipinfo({
+    token: process.env.IP_INFO_BEARER_TOKEN,
+    cache: null, // TOOD: Set caching mechanism
+    timeout: 5000,
+    ipSelector: defaultIpSelector,
+  })
+);
 
 app.get("/", (req, res) => {
   res.redirect("/docs");

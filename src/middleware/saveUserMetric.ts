@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function saveUserMetrics(req, res, next) {
   if (req.ipinfo.bogon) {
     const errorMessage = `Error: Bogon IP!`;
+    console.log(req.ipinfo.IP);
     errorLogger({ message: errorMessage }, uuidv4(), req);
     return next();
   }
@@ -18,7 +19,8 @@ export async function saveUserMetrics(req, res, next) {
     region: region,
     country: country,
     timezone: timezone,
-    ...getLatitudeAndLongidute(loc),
+    longitude: getLatitudeAndLongidute(loc).longitude,
+    latitude: getLatitudeAndLongidute(loc).latitude,
     urlAccessed: req.originalUrl,
   });
 
