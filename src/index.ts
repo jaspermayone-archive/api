@@ -30,7 +30,7 @@ void (async () => {
     console.log(colors.red(`MongoDB Error: \n${err}`));
   });
 
-  const application = app.listen(PORT, () => {
+  const application = await app.listen(PORT, () => {
     console.log(colors.green(`API running at http://localhost:${PORT}`));
   });
 

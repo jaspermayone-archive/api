@@ -11,7 +11,7 @@ const router = express.Router();
  * /v4/metrics/location/{userId}:
  *    get:
  *      tags:
- *        - /v4/metrics
+ *        - /v4
  *      parameters:
  *        - in: path
  *          name: userId
@@ -46,7 +46,7 @@ router.get(
  * /v4/metrics/usage/{userId}:
  *    get:
  *      tags:
- *        - /v4/metrics
+ *        - /v4
  *      parameters:
  *        - in: path
  *          name: userId
@@ -105,7 +105,7 @@ router.get(
  * /v4/metrics/history/{userId}:
  *    get:
  *      tags:
- *        - /v4/metrics
+ *        - /v4
  *      parameters:
  *        - in: path
  *          name: userId
