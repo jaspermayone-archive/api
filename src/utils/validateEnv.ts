@@ -40,6 +40,10 @@ export const validateEnv = (): { valid: boolean; message: string } => {
       return { valid: false, message: "Missing Phish Report API Key" };
     }
 
+    if (!process.env.IP_INFO_BEARER_TOKEN) {
+      return { valid: false, message: "Missing ipinfo API Bearer Token" };
+    }
+
     return { valid: true, message: "Environment variables validated!" };
   } catch (err) {
     console.error(err);
