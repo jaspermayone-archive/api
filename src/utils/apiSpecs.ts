@@ -11,7 +11,7 @@ const options = {
     tags: [
       { name: "/v4", description: "API Version 4 Endpoints" },
       { name: "/auth", description: "Authentication Endpoints" },
-      { name: "/admin", description: "Admin endpoints" },
+      { name: "/metrics", description: "Metrics Endpoints" },
     ],
   },
   apis: ["./src/routes/**/*.ts", "./src/models/**/*.ts"],

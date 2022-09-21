@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from "express";
 import { isAdminOrAccessingOwnData } from "../../middleware/isAdminOrAccessingOwnData";
 import { MetricsModel } from "../../models/Metrics";
@@ -8,10 +9,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /v4/metrics/location/{userId}:
+ * /metrics/location/{userId}:
  *    get:
  *      tags:
- *        - /v4
+ *        - /metrics
  *      parameters:
  *        - in: path
  *          name: userId
@@ -32,21 +33,17 @@ const router = express.Router();
  *        401:
  *          description: Unauthorized (No token provided)
  */
-router.get(
-  "/location/:userId",
-  isAdminOrAccessingOwnData,
-  async (req: any, res) => {
-    const latestLocation = getLocationDetails(req.ipinfo);
-    return res.status(200).json(latestLocation);
-  }
-);
+router.get("/location/:userId", isAdminOrAccessingOwnData, (req: any, res) => {
+  const latestLocation = getLocationDetails(req.ipinfo);
+  return res.status(200).json(latestLocation);
+});
 
 /**
  * @swagger
- * /v4/metrics/usage/{userId}:
+ * /metrics/usage/{userId}:
  *    get:
  *      tags:
- *        - /v4
+ *        - /metrics
  *      parameters:
  *        - in: path
  *          name: userId
@@ -102,10 +99,10 @@ router.get(
 
 /**
  * @swagger
- * /v4/metrics/history/{userId}:
+ * /metrics/history/{userId}:
  *    get:
  *      tags:
- *        - /v4
+ *        - /metrics
  *      parameters:
  *        - in: path
  *          name: userId

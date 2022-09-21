@@ -17,6 +17,7 @@ import { saveUserMetrics } from "./middleware/saveUserMetric";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 import lockedRoutes from "./routes/locked";
+import metricsRoutes from "./routes/metrics/metrics";
 import { apiSpecs } from "./utils/apiSpecs";
 
 const app = express();
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/metrics", rateLimiterMiddleware, authToken, metricsRoutes);
 app.use("/v4", rateLimiterMiddleware, authToken, saveUserMetrics, apiRoute);
 app.use("/locked/all", rateLimiterMiddleware, hasLockedAccess, lockedRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
