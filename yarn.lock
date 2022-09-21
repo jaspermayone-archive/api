@@ -3389,6 +3389,20 @@ __metadata:
   checksum: 1437fa4a879b5b9010604128e8da8609b57c66034262087539ee04a8b764b8436af2be01bab66f8fc729a3adba2dcc21b10a32b9f552696c3fa8cd657d134fc4
   languageName: node
   linkType: hard
+
+"node-ipinfo@npm:^3.0.2":
+  version: 3.1.1
+  resolution: "node-ipinfo@npm:3.1.1"
+  dependencies:
+    "@types/lru-cache": ^5.1.1
+    lru-cache: ^6.0.0
+  checksum: 1ce2d8b3be8cb2ee6c2dbb68092891b49e2cccd9d2b1583f52cf3bcd33071f1ce37dc320d60fcbd5187a1e1323905908a9f1f02855ae21b28a952b1195a70ac6
+  languageName: node
+  linkType: hard
+
+"nodemon@npm:2.0.20":
+  version: 2.0.20
+  resolution: "nodemon@npm:2.0.20"
   dependencies:
     chokidar: ^3.5.2
     debug: ^3.2.7
