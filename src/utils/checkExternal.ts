@@ -25,11 +25,13 @@ export const checkExternal = async (link: string) => {
       `https://ipqualityscore.com/api/json/url/${process.env.IP_QUALITY_SCORE_API_KEY}/${link}`
     );
 
-    if (checkIpQualityScoreAPI.data.unsafe) {
-      return {
-        scamDetected: true,
-        source: "IpQualityScoreAPI",
-      };
+    if (checkIpQualityScoreAPI.data.success) {
+      if (checkIpQualityScoreAPI.data.threat_type === "phishing") {
+        return {
+          scamDetected: true,
+          source: "IpQualityScoreAPI",
+        };
+      }
     }
 
     const checkWalshyAPI = await axios.post<{
