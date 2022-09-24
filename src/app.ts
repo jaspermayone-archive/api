@@ -42,7 +42,12 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/metrics", rateLimiterMiddleware, authToken, metricsRoutes);
-app.use("/v4", rateLimiterMiddleware, authToken, saveUserMetrics, apiRoute);
+app.use(
+  "/v4",
+  rateLimiterMiddleware,
+  authToken,
+  /**saveUserMetrics,**/ apiRoute
+);
 app.use("/locked/all", rateLimiterMiddleware, hasLockedAccess, lockedRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
