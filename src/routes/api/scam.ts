@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import ScamLink from "../../models/Link";
 import { checkExternal } from "../../utils/checkExternal";
+import { flattenLink } from "../../utils/flattenLink";
 import { getUserInfo } from "../../utils/getUserInfo";
 
 const router = express.Router();
@@ -74,7 +75,9 @@ router.post(
 
     const body = req.body;
 
-    const query = { link: body.link };
+    const flatLink = await flattenLink(body.link);
+
+    const query = { link: flatLink };
 
     const linkExists = await ScamLink.findOne(query);
     if (linkExists) {
@@ -82,7 +85,7 @@ router.post(
     }
 
     const user = await getUserInfo(req);
-    const scamlink = body.link;
+    const scamlink = flatLink;
 
     const link = new ScamLink({
       id: uuidv4(),
@@ -176,12 +179,14 @@ router.post(
     const PhishermanAPIresponse: string[] = [];
 
     for (const link of links) {
-      const query = { link: link };
+      const flatLink = await flattenLink(link);
+
+      const query = { link: flatLink };
       const linkExists = await ScamLink.findOne(query);
       if (linkExists) {
-        alreadyReportedLinks.push(link);
+        alreadyReportedLinks.push(flatLink);
       } else {
-        const scamlink = link;
+        const scamlink = flatLink;
         const newLink = new ScamLink({
           id: uuidv4(),
           link: scamlink,
@@ -268,12 +273,15 @@ router.get("/links/check", async (req, res) => {
   const url = query.url;
   // eslint-disable-next-line init-declarations
   let scamlink;
-  //const scamlink = body.link;
+  // eslint-disable-next-line init-declarations
+  let flatLink;
 
-  const dbQuery = { link: scamlink };
+  const dbQuery = { link: flatLink };
 
   if (!url) {
     scamlink = body.link;
+    // eslint-disable-next-line require-atomic-updates
+    flatLink = await flattenLink(scamlink);
 
     if (!scamlink) {
       return res.status(400).send("No link provided!");
@@ -287,7 +295,7 @@ router.get("/links/check", async (req, res) => {
         native: true,
       });
     } else {
-      checkExternal(scamlink).then(async (result) => {
+      checkExternal(flatLink).then(async (result) => {
         if (!result) {
           return res.status(500).send("Error checking link!");
         }
@@ -301,7 +309,7 @@ router.get("/links/check", async (req, res) => {
 
           const link = new ScamLink({
             id: uuidv4(),
-            link: scamlink,
+            link: flatLink,
             type: "unknown",
             reportedBy: result.source,
             reportedByID: user.userId,
@@ -320,8 +328,11 @@ router.get("/links/check", async (req, res) => {
   if (url) {
     // eslint-disable-next-line require-atomic-updates
     scamlink = query.url;
+    // eslint-disable-next-line require-atomic-updates
+    flatLink = await flattenLink(scamlink);
+    console.log(flatLink);
 
-    const urldbQuery = { link: url };
+    const urldbQuery = { link: flatLink };
 
     const linkExists = await ScamLink.findOne(urldbQuery);
 
@@ -331,7 +342,7 @@ router.get("/links/check", async (req, res) => {
         native: true,
       });
     } else {
-      checkExternal(scamlink).then(async (result) => {
+      checkExternal(flatLink).then(async (result) => {
         if (!result) {
           return res.status(500).send("Error checking link!");
         }
@@ -345,7 +356,7 @@ router.get("/links/check", async (req, res) => {
 
           const link = new ScamLink({
             id: uuidv4(),
-            link: scamlink,
+            link: flatLink,
             type: "unknown",
             reportedBy: result.source,
             reportedByID: user.userId,
