@@ -23,7 +23,11 @@ export async function saveUserMetrics(req, res, next) {
     latitude: getLatitudeAndLongidute(loc).latitude,
     urlAccessed: req.originalUrl,
   });
-
-  await metric.save(); // TODO: Handle exception
+  // handle exception for await metric.save()
+  try {
+    await metric.save();
+  } catch (error) {
+    errorLogger(error, uuidv4(), req);
+  }
   next();
 }
