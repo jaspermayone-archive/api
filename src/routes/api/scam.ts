@@ -10,6 +10,10 @@ import { checkExternal } from "../../utils/checkExternal";
 import { flattenLink } from "../../utils/flattenLink";
 import { getUserInfo } from "../../utils/getUserInfo";
 
+const env = process.env.NODE_ENV;
+const changelogUrl = process.env.DB_CHANGELOG_URL;
+const avatarUrl = process.env.AVATAR_URL;
+
 const router = express.Router();
 
 /**
@@ -112,6 +116,31 @@ router.post(
       reportedByID: newLink.reportedByID,
       dateReported: newLink.dateReported,
       walshyAPIresponse: reportWalshyAPI.data.message,
+    });
+
+    axios.request({
+      url: changelogUrl,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        username: "DB Changelog Reporter",
+        avatar_url: avatarUrl,
+        embeds: [
+          {
+            title: "New Scam Link Reported",
+            description:
+              `**Link:** ${newLink.link}` +
+              `
+**Type:** ${newLink.type}
+**Reported By:** ${newLink.reportedBy}
+**Reported By ID:** ${newLink.reportedByID}
+**Date Reported:** ${newLink.dateReported}`,
+            color: 16711680,
+          },
+        ],
+      },
     });
   }
 );
@@ -235,6 +264,25 @@ router.post(
       walshyAPIresponses: walshyAPIresponse,
       PhishReportAPIresponses: PhishReportAPIresponse,
       PhishermanAPIresponses: PhishermanAPIresponse,
+    });
+
+    axios.request({
+      url: changelogUrl,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        username: "DB Changelog Reporter",
+        avatar_url: avatarUrl,
+        embeds: [
+          {
+            title: "Bulk Scam Link Report",
+            description: `**User:** ${user.name} (${user.userId})\n**Environment:** ${env}\n**Links:** ${links}`,
+            color: 16711680,
+          },
+        ],
+      },
     });
   }
 );
