@@ -692,6 +692,7 @@ __metadata:
     eslint-plugin-prettier: 4.2.1
     express: ^4.18.1
     express-ping: ^1.4.0
+    express-public-ip: ^1.0.1
     express-rate-limit: ^6.6.0
     express-validator: ^6.14.0
     helmet: ^6.0.0
@@ -702,6 +703,7 @@ __metadata:
     mathjs: ^11.0.0
     mongoose: ^6.2.10
     nodemon: 2.0.20
+    openapi-types: ^12.0.2
     prettier: 2.7.1
     swagger-jsdoc: ^6.2.1
     swagger-ui-express: ^4.3.0
@@ -1802,6 +1804,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-public-ip@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "express-public-ip@npm:1.0.1"
+  dependencies:
+    ip: ^1.0.1
+  checksum: 73afa974b3682c4c3659f2d687810cfb75eff83a6f03701e3021ad035af9d746d21f38313ebaa2ccfd22299aa7b8bfd1f7c3fc913489d0fc87dd27021ae8290f
+  languageName: node
+  linkType: hard
+
 "express-rate-limit@npm:^6.6.0":
   version: 6.6.0
   resolution: "express-rate-limit@npm:6.6.0"
@@ -2501,6 +2512,13 @@ __metadata:
     has: ^1.0.3
     side-channel: ^1.0.4
   checksum: 1944f92e981e47aebc98a88ff0db579fd90543d937806104d0b96557b10c1f170c51fb777b97740a8b6ddeec585fca8c39ae99fd08a8e058dfc8ab70937238bf
+  languageName: node
+  linkType: hard
+
+"ip@npm:^1.0.1":
+  version: 1.1.8
+  resolution: "ip@npm:1.1.8"
+  checksum: a2ade53eb339fb0cbe9e69a44caab10d6e3784662285eb5d2677117ee4facc33a64679051c35e0dfdb1a3983a51ce2f5d2cb36446d52e10d01881789b76e28fb
   languageName: node
   linkType: hard
 
@@ -3549,6 +3567,13 @@ __metadata:
   dependencies:
     mimic-fn: ^4.0.0
   checksum: 0846ce78e440841335d4e9182ef69d5762e9f38aa7499b19f42ea1c4cd40f0b4446094c455c713f9adac3f4ae86f613bb5e30c99e52652764d06a89f709b3788
+  languageName: node
+  linkType: hard
+
+"openapi-types@npm:^12.0.2":
+  version: 12.0.2
+  resolution: "openapi-types@npm:12.0.2"
+  checksum: 097edc46adb5a8fc2a3419e2e0adbb5516737fd83b4041ec62ee28427e85d9f18c6ead9231b9d1c8f718d86eeccf3c0997437414011d8bb1597387a047493fea
   languageName: node
   linkType: hard
 
@@ -4662,11 +4687,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.8.2#~builtin<compat/typescript>":
   version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
+  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 301459fc3eb3b1a38fe91bf96d98eb55da88a9cb17b4ef80b4d105d620f4d547ba776cc27b44cc2ef58b66eda23fe0a74142feb5e79a6fb99f54fc018a696afa
+  checksum: 563a0ef47abae6df27a9a3ab38f75fc681f633ccf1a3502b1108e252e187787893de689220f4544aaf95a371a4eb3141e4a337deb9895de5ac3c1ca76430e5f0
   languageName: node
   linkType: hard
 

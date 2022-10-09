@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import health from "express-ping";
+import * as expressPublicIp from "express-public-ip";
 import helmet from "helmet";
 import ipinfo, { defaultIpSelector } from "ipinfo-express";
 import swaggerUi from "swagger-ui-express";
@@ -35,6 +36,12 @@ app.use(
     ipSelector: defaultIpSelector,
   })
 );
+app.enable("trust proxy");
+app.use(expressPublicIp());
+
+app.get("/test", (req, res) => {
+  res.send(req.ip);
+});
 
 app.get("/", (req, res) => {
   res.redirect("/docs");
