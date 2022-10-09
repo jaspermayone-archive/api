@@ -12,7 +12,7 @@ const limiter = rateLimit({
 });
 
 export async function rateLimiterMiddleware(req, res, next) {
-  const user = await getUserInfo(req);
+  const user = await getUserInfo(req, res);
 
   if (!user) {
     next();

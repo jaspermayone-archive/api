@@ -88,7 +88,7 @@ router.post(
       return res.status(400).send("Link already flagged!");
     }
 
-    const user = await getUserInfo(req);
+    const user = await getUserInfo(req, res);
     const scamlink = flatLink;
 
     const link = new ScamLink({
@@ -199,7 +199,7 @@ router.post(
 
     const body = req.body;
     const links = body.links;
-    const user = await getUserInfo(req);
+    const user = await getUserInfo(req, res);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const reportedLinks: any = [];
     const alreadyReportedLinks: string[] = [];
@@ -353,7 +353,7 @@ router.get("/links/check", async (req, res) => {
             scamDetected: false,
           });
         } else {
-          const user = await getUserInfo(req);
+          const user = await getUserInfo(req, res);
 
           const link = new ScamLink({
             id: uuidv4(),
@@ -400,7 +400,7 @@ router.get("/links/check", async (req, res) => {
             scamDetected: false,
           });
         } else {
-          const user = await getUserInfo(req);
+          const user = await getUserInfo(req, res);
 
           const link = new ScamLink({
             id: uuidv4(),
