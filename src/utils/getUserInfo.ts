@@ -11,12 +11,9 @@ export async function getUserInfo(req, res) {
   const token = await getToken(req);
 
   if (!token) {
-    return (
-      null &&
-      res.status(401).json({
-        message: "No token provided",
-      })
-    );
+    return res.status(401).json({
+      message: "No token provided",
+    });
   }
 
   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
