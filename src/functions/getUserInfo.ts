@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
 
-import { getToken } from "./getToken";
+import { getToken } from "./fx";
 
 /**
  *
