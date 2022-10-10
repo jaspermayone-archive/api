@@ -13,8 +13,8 @@
     "lint": "prettier --write --color './**/*.ts'",
     "prepare": "husky install",
     "compile": "tsc",
-    "pretest": "yarn run compile",
-    "posttest": "yarn run lint"
+    "pretest": "bun run compile",
+    "posttest": "bun run lint"
   },
   "repository": {
     "type": "git",
