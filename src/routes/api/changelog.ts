@@ -10,6 +10,34 @@ interface Release {
   draft: boolean;
 }
 
+/**
+ * @swagger
+ * /v4/changelog:
+ *    get:
+ *      tags:
+ *        - /v4
+ *      summary: Get the recent changelog from Github
+ *      produces: application/json
+ *      responses:
+ *        200:
+ *          description: Successful Response
+ *          schema:
+ *            type: object
+ *            properties:
+ *              change_log:
+ *                type: string
+ *                example: "Added a new feature"
+ *              version:
+ *                type: string
+ *                example: "v1.0.0"
+ * 
+ *        401:
+ *          description: Unauthorized (No token provided)
+ * 
+ *        500:
+ *          description: Internal Server Error
+ */
+
 router.get("/", (req, res) => {
   const repoOwner = 'Heptagram-Project';
   const repoName = 'discord-bot';
