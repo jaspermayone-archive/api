@@ -3,7 +3,6 @@ import cors from "cors";
 import express from "express";
 import health from "express-ping";
 import helmet from "helmet";
-import ipinfo, { defaultIpSelector } from "ipinfo-express";
 import swaggerUi from "swagger-ui-express";
 import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
@@ -27,15 +26,6 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(health.ping());
 app.use(cors());
-app.use(
-  ipinfo({
-    token: process.env.IP_INFO_BEARER_TOKEN,
-    cache: null, // TOOD: Set caching mechanism
-    timeout: 5000,
-    ipSelector: defaultIpSelector,
-  })
-);
-app.enable("trust proxy");
 
 app.get("/test", (req, res) => {
   res.send(req.ip);
@@ -51,7 +41,7 @@ app.use(
   "/v4",
   rateLimiterMiddleware,
   authToken,
-  /**saveUserMetrics,**/ apiRoute
+  apiRoute
 );
 app.use("/locked/all", rateLimiterMiddleware, hasLockedAccess, lockedRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
