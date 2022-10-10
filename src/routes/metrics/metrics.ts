@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from "express";
+import { getLocationDetails } from "../../functions/fx";
+import getHistory from "../../functions/fx";
 import { isAdminOrAccessingOwnData } from "../../middleware/isAdminOrAccessingOwnData";
 import { MetricsModel } from "../../models/Metrics";
-import getHistory from "../../utils/getHistory";
-import { getLocationDetails } from "../../utils/getLocationDetails";
 
 const router = express.Router();
 

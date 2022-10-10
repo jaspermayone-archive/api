@@ -1,6 +1,6 @@
 import rateLimit from "express-rate-limit";
 
-import { getUserInfo } from "../utils/getUserInfo";
+import { getUserInfo } from "../functions/getUserInfo";
 
 const limiter = rateLimit({
   // set windowMs to 1 minute

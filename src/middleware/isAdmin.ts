@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
 
-import { getToken } from "../utils/getToken";
+import { getToken } from "../functions/fx";
 
 export async function isAdmin(req, res, next) {
   const token = getToken(req);

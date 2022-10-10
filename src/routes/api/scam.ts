@@ -5,10 +5,11 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
+import { checkExternal } from "../../functions/external/checkExternal";
+import { reportExternal } from "../../functions/external/reportExternal";
+import { flattenLink } from "../../functions/flattenLink";
+import { getUserInfo } from "../../functions/getUserInfo";
 import ScamLink from "../../models/Link";
-import { checkExternal } from "../../utils/checkExternal";
-import { flattenLink } from "../../utils/flattenLink";
-import { getUserInfo } from "../../utils/getUserInfo";
 
 const env = process.env.NODE_ENV;
 const changelogUrl = process.env.DB_CHANGELOG_URL;
@@ -91,6 +92,8 @@ router.post(
     const user = await getUserInfo(req, res);
     const scamlink = flatLink;
 
+    const reportExternalData = await reportExternal(scamlink);
+
     const link = new ScamLink({
       id: uuidv4(),
       link: scamlink,
@@ -101,13 +104,6 @@ router.post(
 
     const newLink = await link.save();
 
-    const reportWalshyAPI = await axios.post<{ message: string }>(
-      "https://bad-domains.walshy.dev/report",
-      {
-        domain: scamlink,
-      }
-    );
-
     res.status(200).json({
       message: "Link reported!",
       link: newLink.link,
@@ -115,7 +111,7 @@ router.post(
       reportedBy: newLink.reportedBy,
       reportedByID: newLink.reportedByID,
       dateReported: newLink.dateReported,
-      walshyAPIresponse: reportWalshyAPI.data.message,
+      externalReportData: reportExternalData,
     });
 
     axios.request({
@@ -202,10 +198,9 @@ router.post(
     const user = await getUserInfo(req, res);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const reportedLinks: any = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const reportExternalData: any = [];
     const alreadyReportedLinks: string[] = [];
-    const walshyAPIresponse: string[] = [];
-    const PhishReportAPIresponse: string[] = [];
-    const PhishermanAPIresponse: string[] = [];
 
     for (const link of links) {
       const flatLink = await flattenLink(link);
@@ -226,44 +221,15 @@ router.post(
         const savedLink = await newLink.save();
         reportedLinks.push(savedLink);
 
-        const reportWalshyAPI = await axios.post<{ message: string }>(
-          "https://bad-domains.walshy.dev/report",
-          {
-            domain: scamlink,
-          }
-        );
-        walshyAPIresponse.push(reportWalshyAPI.data.message);
-
-        const reportPhishReportAPI = await axios.post(
-          "https://phish.report/api/v0/cases",
-          {
-            url: scamlink,
-          }
-        );
-        PhishReportAPIresponse.push(reportPhishReportAPI.data);
-
-        const reportPhishermanAPI = await axios.put(
-          "https://api.phisherman.gg/v2/phish/report",
-          {
-            headers: {
-              Authorization: "Bearer " + process.env.PHISHERMAN_API_KEY,
-              ContentType: "application/json",
-            },
-            data: {
-              url: scamlink,
-            },
-          }
-        );
-        PhishermanAPIresponse.push(reportPhishermanAPI.data);
+        const reportExternalDataRES = await reportExternal(scamlink);
+        reportExternalData.push(reportExternalDataRES);
       }
     }
     res.status(200).json({
       message: "Links reported!",
       reportedLinks: reportedLinks,
       alreadyReportedLinks: alreadyReportedLinks,
-      walshyAPIresponses: walshyAPIresponse,
-      PhishReportAPIresponses: PhishReportAPIresponse,
-      PhishermanAPIresponses: PhishermanAPIresponse,
+      externalReportData: reportExternalData,
     });
 
     axios.request({
@@ -367,6 +333,7 @@ router.get("/links/check", async (req, res) => {
           res.json({
             scamDetected: true,
             native: false,
+            source: result.source,
           });
         }
       });
@@ -378,7 +345,6 @@ router.get("/links/check", async (req, res) => {
     scamlink = query.url;
     // eslint-disable-next-line require-atomic-updates
     flatLink = await flattenLink(scamlink);
-    console.log(flatLink);
 
     const urldbQuery = { link: flatLink };
 
@@ -414,6 +380,7 @@ router.get("/links/check", async (req, res) => {
           res.json({
             scamDetected: true,
             native: false,
+            source: result.source,
           });
         }
       });

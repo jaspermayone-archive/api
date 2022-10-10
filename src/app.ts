@@ -18,7 +18,7 @@ import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 import lockedRoutes from "./routes/locked";
 import metricsRoutes from "./routes/metrics/metrics";
-import { apiSpecs } from "./utils/apiSpecs";
+import { apiSpecs } from "./functions/apiSpecs";
 
 const app = express();
 

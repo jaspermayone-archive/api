@@ -1,7 +1,7 @@
+import { v4 as uuidv4 } from "uuid";
+import { getLatitudeAndLongidute } from "../functions/fx";
 import errorLogger from "../logger";
 import { MetricsModel } from "../models/Metrics";
-import { getLatitudeAndLongidute } from "../utils/getLatitudeAndLongitude";
-import { v4 as uuidv4 } from "uuid";
 
 export async function saveUserMetrics(req, res, next) {
   if (req.ipinfo.bogon) {
