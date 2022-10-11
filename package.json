@@ -54,7 +54,7 @@
     "@types/body-parser": "1.19.2",
     "@types/compression": "1.7.2",
     "@types/cors": "2.8.12",
-    "@types/node": "16.11.64",
+    "@types/node": "16.11.65",
     "@types/swagger-ui-express": "4.1.3",
     "@typescript-eslint/eslint-plugin": "5.39.0",
     "@typescript-eslint/parser": "5.39.0",
