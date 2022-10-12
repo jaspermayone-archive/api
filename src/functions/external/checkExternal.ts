@@ -1,5 +1,4 @@
 import { GoogleSafeBrowsing } from "./apis/GoogleSafeBrowsing";
-import { IpQualityScore } from "./apis/IpQualityScore";
 import { Phisherman } from "./apis/Phisherman";
 import { SinkingYahts } from "./apis/SinkingYahts";
 import { Walshy } from "./apis/Walshy";
@@ -19,13 +18,6 @@ export const checkExternal = async (link: string) => {
       };
     }
 
-    const IpQualityScoreResponse = await IpQualityScore(`${link}`, true, false);
-    if (IpQualityScoreResponse) {
-      return {
-        scamDetected: true,
-        source: "IpQualityScore",
-      };
-    }
     const WalshyResponse = await Walshy(`${link}`, true, false);
     if (WalshyResponse) {
       return {
