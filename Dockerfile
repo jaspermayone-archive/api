@@ -4,9 +4,8 @@ FROM node
 WORKDIR /app
 
 COPY package.json ./
-COPY yarn.lock ./
-
-RUN yarn
+RUN yarn add pm2
+RUN yarn install
 
 # Bundle app source
 COPY . .
