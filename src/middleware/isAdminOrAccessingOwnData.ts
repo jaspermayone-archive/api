@@ -1,4 +1,4 @@
-export async function isAdminOrAccessingOwnData(req, res, next) {
+export function isAdminOrAccessingOwnData(req, res, next) {
   const { userId } = req.params;
   if (!userId) {
     return next();
@@ -6,7 +6,7 @@ export async function isAdminOrAccessingOwnData(req, res, next) {
 
   if (
     req.user.accountType.toLowerCase() === "admin" ||
-    userId == req.user.userId
+    userId === req.user.userId
   ) {
     return next();
   }

@@ -7,17 +7,15 @@ import swaggerUi from "swagger-ui-express";
 import { v4 as uuidv4 } from "uuid";
 import "dotenv/config";
 
+import { apiSpecs } from "./functions/apiSpecs";
 import errorLogger from "./logger";
 import { hasLockedAccess } from "./middleware/hasLockedAccess";
-// import { isAdmin } from "./middleware/isAdmin";
 import { authToken } from "./middleware/middleware";
 import { rateLimiterMiddleware } from "./middleware/rateLimitController";
-import { saveUserMetrics } from "./middleware/saveUserMetric";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 import lockedRoutes from "./routes/locked";
 import metricsRoutes from "./routes/metrics/metrics";
-import { apiSpecs } from "./functions/apiSpecs";
 
 const app = express();
 
@@ -37,12 +35,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/metrics", rateLimiterMiddleware, authToken, metricsRoutes);
-app.use(
-  "/v4",
-  rateLimiterMiddleware,
-  authToken,
-  apiRoute
-);
+app.use("/v4", rateLimiterMiddleware, authToken, apiRoute);
 app.use("/locked/all", rateLimiterMiddleware, hasLockedAccess, lockedRoutes);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 
