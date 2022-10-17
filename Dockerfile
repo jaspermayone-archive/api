@@ -1,8 +1,6 @@
 FROM node:bullseye
-LABEL maintainer="Ashwin Singh >"
-LABEL description="Heptagram-Project."
 
-#Node env  
+#Node env
 ENV NODE_ENV=development
 #ENV NODE_ENV=production
 
