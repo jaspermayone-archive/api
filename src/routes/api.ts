@@ -1,13 +1,13 @@
 import express from "express";
 
+import changelog from "./api/changelog";
 import coinflipRoutes from "./api/coinflip";
 import dicerollRoutes from "./api/diceroll";
 import jokesRoutes from "./api/jokes";
 import qotdRoutes from "./api/qotd";
 import qoutesRoutes from "./api/quotes";
-import scamRoutes from "./api/scam";
 import randomnumberRoutes from "./api/randomnumber";
-import changelog from "./api/changelog";
+import scamRoutes from "./api/scam";
 
 const router = express.Router();
 
