@@ -1,6 +1,8 @@
 import { GoogleSafeBrowsing } from "./apis/GoogleSafeBrowsing";
 import { Phisherman } from "./apis/Phisherman";
 import { SinkingYahts } from "./apis/SinkingYahts";
+import { UrlScan } from "./apis/UrlScan";
+import { VirusTotal } from "./apis/VirusTotal";
 import { Walshy } from "./apis/Walshy";
 
 /**
@@ -41,6 +43,22 @@ export const checkExternal = async (link: string) => {
       return {
         scamDetected: true,
         source: "GoogleSafeBrowsing",
+      };
+    }
+
+    const UrlScanResponse = await UrlScan(`${link}`, true, false);
+    if (UrlScanResponse) {
+      return {
+        scamDetected: true,
+        source: "UrlScan",
+      };
+    }
+
+    const VirusTotalResponse = await VirusTotal(`${link}`, true, false);
+    if (VirusTotalResponse) {
+      return {
+        scamDetected: true,
+        source: "VirusTotal",
       };
     }
 

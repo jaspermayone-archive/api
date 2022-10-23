@@ -30,18 +30,18 @@ interface Release {
  *              version:
  *                type: string
  *                example: "v1.0.0"
- * 
+ *
  *        401:
  *          description: Unauthorized (No token provided)
- * 
+ *
  *        500:
  *          description: Internal Server Error
  */
 
 router.get("/", (req, res) => {
-  const repoOwner = 'Heptagram-Project';
-  const repoName = 'discord-bot';
-  const apiEndpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/releases`
+  const repoOwner = "Heptagram-Project";
+  const repoName = "discord-bot";
+  const apiEndpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/releases`;
 
   // Max amount of pages to check for a non draft or pre-release before stopping
   const maxAttempts = 3;
@@ -50,7 +50,7 @@ router.get("/", (req, res) => {
     // Remove markdown from the changelog
     const changelog = releaseBody
       .replace(/(\*\*|\*|`)/gm, "")
-      .replace(/^#{1,6}/gm , "");
+      .replace(/^#{1,6}/gm, "");
 
     // Remove commits made by renovate
     const filteredChangelog = changelog
@@ -64,13 +64,10 @@ router.get("/", (req, res) => {
       .replace(/(\r)/gm, "")
       .replace(/(@)/gm, "")
       .trim();
-  }
+  };
 
-  const getLatestNonDraftRelease = (releases: Release[]) => (
-    releases.find((release) => (
-      !release.draft && !release.prerelease
-    ))
-  );
+  const getLatestNonDraftRelease = (releases: Release[]) =>
+    releases.find((release) => !release.draft && !release.prerelease);
 
   (async () => {
     let foundRelease = false;
