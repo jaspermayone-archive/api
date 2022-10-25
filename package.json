@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "7.4.0",
+  "version": "8.0.0",
   "packageManager": "yarn@3.2.4",
   "author": "Jasper Mayone <jasper@jaspermayone.com>",
   "license": "EPL-2.0",
@@ -13,8 +13,8 @@
     "lint": "prettier --write --color './**/*.ts'",
     "prepare": "husky install",
     "compile": "tsc",
-    "pretest": "bun run compile",
-    "posttest": "bun run lint"
+    "pretest": "yarn run compile",
+    "posttest": "yarn run lint"
   },
   "repository": {
     "type": "git",
