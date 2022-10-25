@@ -17,15 +17,18 @@ export const UrlScan = async (
 
     // check if the link is not already scanned
     if (checkSerch.data.results.length === 0) {
-      const scan = await axios.post(`https://urlscan.io/api/v1/scan/`, {
-        headers: {
-          "API-Key": process.env.URLSCAN_API_KEY,
-        },
-        data: {
+      // if not scan the link, providing the api key
+      const scan = await axios.post(
+        "https://urlscan.io/api/v1/scan/",
+        {
           url: link,
-          public: "on",
         },
-      });
+        {
+          headers: {
+            "API-Key": process.env.URLSCAN_API_KEY,
+          },
+        }
+      );
 
       // wait 15 seconds for the scan to finish
       setTimeout(async () => {
