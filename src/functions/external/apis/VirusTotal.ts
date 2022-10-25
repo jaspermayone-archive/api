@@ -24,7 +24,7 @@ export const VirusTotal = async (
     });
 
     if (
-      checkVirusTotalAPI.data.data.attributes.last_analysis_stats.malicious > 0
+      checkVirusTotalAPI.data.data.attributes.last_analysis_stats.malicious >= 2
     ) {
       return true;
     } else {
