@@ -37,17 +37,39 @@ router.get("/", (req, res) => {
  *            properties:
  *              id:
  *                type: string
- *              qo:
+ *              qotd:
  *                type: string
- *              uniqueID:
- *                type: string
- *                format: date
  *        401:
  *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
   const targetRecord = await Qotd.aggregate([{ $sample: { size: 1 } }]);
   res.send(targetRecord[0]);
+});
+
+// filtered route, where a user can pass all the ids they want to exclude
+
+router.get("/filtered", async (req, res) => {
+  const body = req.body;
+  const ids = body.ids;
+
+  if (!ids) {
+    return res.status(400).send("No ids provided");
+  }
+
+  const targetRecord = await Qotd.aggregate([
+    { $match: { id: { $nin: ids } } },
+    { $sample: { size: 1 } },
+  ]);
+
+  if (!targetRecord.length) {
+    return res.status(404).send("No records found");
+  }
+
+  res.send({
+    id: targetRecord[0].id,
+    qotd: targetRecord[0].qotd,
+  });
 });
 
 export default router;

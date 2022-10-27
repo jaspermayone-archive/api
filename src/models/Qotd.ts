@@ -21,12 +21,6 @@ const qotdSchema = new mongoose.Schema({
     required: [true, "Qotd ID is required"],
     unique: true,
   },
-  // unique id with a type of number
-  uniqueID: {
-    type: Number,
-    required: [true, "Unique ID is required"],
-    unique: true,
-  },
   qotd: {
     type: String,
     required: [true, "Qotd is required"],
