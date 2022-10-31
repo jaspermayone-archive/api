@@ -7,7 +7,7 @@ import jokesRoutes from "./api/jokes";
 import qotdRoutes from "./api/qotd";
 import qoutesRoutes from "./api/quotes";
 import randomnumberRoutes from "./api/randomnumber";
-import scamRoutes from "./api/scam";
+import scamRoutes from "./api/scam/scam";
 
 const router = express.Router();
 

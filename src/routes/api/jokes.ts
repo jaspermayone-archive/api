@@ -1,16 +1,15 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 
-import Joke from "../../models/Jokes";
+import Joke from "../../models/Jokes.schema";
 
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/jokes:
+ * @openapi
+ * /jokes:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Fetch jokes
  *      responses:
  *        302:
@@ -19,15 +18,15 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  res.redirect("/v4/jokes/random");
+  res.redirect("/jokes/random");
 });
 
 /**
- * @swagger
- * /v4/jokes/random:
+ * @openapi
+ * /jokes/random:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Fetch a random joke
  *      produces: application/json
  *      responses:

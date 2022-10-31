@@ -5,11 +5,11 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import { checkExternal } from "../../functions/external/checkExternal";
-import { reportExternal } from "../../functions/external/reportExternal";
-import { flattenLink } from "../../functions/flattenLink";
-import { getUserInfo } from "../../functions/getUserInfo";
-import ScamLink from "../../models/Link";
+import { flattenLink } from "../../../functions/flattenLink";
+import { getUserInfo } from "../../../functions/getUserInfo";
+import ScamLink from "../../../models/ScamLink.schema";
+import { checkExternal } from "./func/checkExternal";
+import { reportExternal } from "./func/reportExternal";
 
 const env = process.env.NODE_ENV;
 const changelogUrl = process.env.DB_CHANGELOG_URL;
@@ -18,11 +18,11 @@ const avatarUrl = process.env.AVATAR_URL;
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/scam/links/report:
+ * @openapi
+ * /scam/links/report:
  *   post:
  *     tags:
- *       - /v4
+ *       - /
  *     summary: Report a link as scam
  *     produces: application/json
  *     parameters:
@@ -142,11 +142,11 @@ router.post(
 );
 
 /**
- * @swagger
- * /v4/scam/links/report/bulk:
+ * @openapi
+ * /scam/links/report/bulk:
  *   post:
  *     tags:
- *       - /v4
+ *       - /
  *     summary: Bulk report links as scam
  *     produces: application/json
  *     parameters:
@@ -254,11 +254,11 @@ router.post(
 );
 
 /**
- * @swagger
- * /v4/scam/links/check:
+ * @openapi
+ * /scam/links/check:
  *   get:
  *     tags:
- *       - /v4
+ *       - /
  *     summary: Check a link for scam
  *     produces: application/json
  *     parameters:

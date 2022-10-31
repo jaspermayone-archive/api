@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 /**
- * @swagger
+ * @openapi
  * definitions:
  *   Quote:
  *     type: object

@@ -1,15 +1,15 @@
 import express from "express";
 
-import Qotd from "../../models/Qotd";
+import Qotd from "../../models/Qotd.schema";
 
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/qotd:
+ * @openapi
+ * /qotd:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: gets a question of the day
  *      responses:
  *        302:
@@ -18,15 +18,15 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  res.redirect("/v4/qotd/random");
+  res.redirect("/qotd/random");
 });
 
 /**
- * @swagger
- * /v4/qotd/random:
+ * @openapi
+ * /qotd/random:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Fetch a random question of the day
  *      produces: application/json
  *      responses:

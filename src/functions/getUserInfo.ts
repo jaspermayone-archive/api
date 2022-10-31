@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
 
-import { getToken } from "./fx";
+import { getToken } from "./getToken";
 
 /**
  *
@@ -18,14 +18,12 @@ export async function getUserInfo(req, res) {
 
   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-  const { userId, name, email, accountType, hasLockedAccess, dateCreated } =
-    decoded as {
-      userId: string;
-      name: string;
-      email: string;
-      accountType: string;
-      hasLockedAccess: boolean;
-      dateCreated: Date;
-    };
-  return { userId, name, email, accountType, hasLockedAccess, dateCreated };
+  const { userId, name, email, accountType, dateCreated } = decoded as {
+    userId: string;
+    name: string;
+    email: string;
+    accountType: string;
+    dateCreated: Date;
+  };
+  return { userId, name, email, accountType, dateCreated };
 }

@@ -3,11 +3,11 @@ import express from "express";
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/coinflip:
+ * @openapi
+ * /coinflip:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Flip a coin
  *      produces: plain/text
  *      responses:

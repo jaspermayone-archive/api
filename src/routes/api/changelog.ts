@@ -11,11 +11,11 @@ interface Release {
 }
 
 /**
- * @swagger
- * /v4/changelog:
+ * @openapi
+ * /changelog:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Get the recent changelog from Github
  *      produces: application/json
  *      responses:

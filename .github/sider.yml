@@ -5,7 +5,6 @@
 
 # Customize each tool. If analyses fail, try adjusting each option referencing the following example.
 linter:
-
 #   # hadolint example. See https://help.sider.review/tools/dockerfile/hadolint
 #   hadolint:
 #     root_dir: project/

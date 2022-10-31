@@ -3,14 +3,14 @@ import express from "express";
 import { body, validationResult } from "express-validator";
 import * as jwt from "jsonwebtoken";
 
-import User from "../../models/User";
+import User from "../../models/User.schema";
 
 const bcrypt = bcryptjs;
 
 const router = express.Router();
 
 /**
- * @swagger
+ * @openapi
  * /auth/login:
  *    post:
  *      tags:
@@ -74,7 +74,6 @@ router.post(
         name: user.name,
         email: user.email,
         accountType: user.accountType,
-        hasLockedAccess: user.hasLockedAccess,
         dateCreated: user.dateCreated,
       },
       process.env.ACCESS_TOKEN_SECRET

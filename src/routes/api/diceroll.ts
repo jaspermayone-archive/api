@@ -1,14 +1,13 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/diceroll:
+ * @openapi
+ * /diceroll:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Roll a dice
  *      produces: application/json
  *      responses:

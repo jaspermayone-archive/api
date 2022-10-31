@@ -4,12 +4,12 @@ import "dotenv/config";
 import { body, validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 
-import User from "../../models/User";
+import User from "../../models/User.schema";
 
 const router = express.Router();
 
 /**
- * @swagger
+ * @openapi
  * /auth/register:
  *    post:
  *      tags:

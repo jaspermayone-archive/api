@@ -3,11 +3,11 @@ import express from "express";
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/randomnumber:
+ * @openapi
+ * /randomnumber:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Generate a random number
  *      produces: application/json
  *      responses:

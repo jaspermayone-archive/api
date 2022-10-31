@@ -1,16 +1,15 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 
-import Quote from "../../models/Quotes";
+import Quote from "../../models/Quote.schema";
 
 const router = express.Router();
 
 /**
- * @swagger
- * /v4/quotes:
+ * @openapi
+ * /quotes:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Fetch a quote
  *      responses:
  *        302:
@@ -19,15 +18,15 @@ const router = express.Router();
  *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
-  res.redirect("/v4/quotes/random");
+  res.redirect("/quotes/random");
 });
 
 /**
- * @swagger
- * /v4/quotes/random:
+ * @openapi
+ * /quotes/random:
  *    get:
  *      tags:
- *        - /v4
+ *        - /
  *      summary: Fetch a random quote
  *      produces: application/json
  *      responses:

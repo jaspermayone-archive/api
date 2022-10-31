@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 /**
- * @swagger
+ * @openapi
  * definitions:
  *   User:
  *     type: object
@@ -45,11 +45,6 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "bot", "admin"],
     default: "user",
     required: [true, "Account type is required"],
-  },
-  hasLockedAccess: {
-    type: Boolean,
-    default: false,
-    required: [true, "Has locked access is required"],
   },
   dateCreated: {
     type: Date,
