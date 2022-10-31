@@ -887,8 +887,6 @@ __metadata:
   checksum: 5718f267085ed8edb3e7ef210137241775e607ee18b77d95aa5bd7514f47f5019aa2d82d96b3bf342ef7aa890a346fa1044532ff7cc3009e7d24fce3ce6200fa
   languageName: node
   linkType: hard
-
-"@es-joy/jsdoccomment@npm:~0.33.4":
   version: 0.33.4
   resolution: "@es-joy/jsdoccomment@npm:0.33.4"
   dependencies:
@@ -1146,20 +1144,6 @@ __metadata:
   checksum: 4040fac73fd0cea2460e29b348c1a6173da747f3a87da0dbce80dd7a9355a3d0e51d6d9a401654f3e5550620e3718b5a899b2ec1debf18424e298a2c605346e7
   languageName: node
   linkType: hard
-
-"@types/mongoose@npm:^5.11.97":
-  version: 5.11.97
-  resolution: "@types/mongoose@npm:5.11.97"
-  dependencies:
-    mongoose: "*"
-  checksum: 54c896814a92898535eb8965f90308f2661b75f4a53e28405802fbe9f90ba7d37140f151b1e291e08555a1700d3486911104c108ed02a94c6feddeab6bd3bfea
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:*, @types/node@npm:18.11.8":
-  version: 18.11.8
-  resolution: "@types/node@npm:18.11.8"
-  checksum: 60b358f97c1a029722dc785811b217615ef20249c3fbde60a65869cfd7a5cd5b1872ee95c79c187ef70e5a078f4ac7670d2129803985268b1f021ad6e8040af8
   languageName: node
   linkType: hard
 
