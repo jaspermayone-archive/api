@@ -20,6 +20,10 @@ export const validateEnv = (): { valid: boolean; message: string } => {
       return { valid: false, message: "Missing Error Webhook URL" };
     }
 
+    if (!process.env.DB_CHANGELOG_URL) {
+      return { valid: false, message: "Missing DB Changelog URL" };
+    }
+
     if (!process.env.AVATAR_URL) {
       return { valid: false, message: "Missing Avatar URL" };
     }
@@ -32,16 +36,16 @@ export const validateEnv = (): { valid: boolean; message: string } => {
       return { valid: false, message: "Missing Phisherman API Key" };
     }
 
-    if (!process.env.IP_QUALITY_SCORE_API_KEY) {
-      return { valid: false, message: "Missing IP Quality Score API Key" };
-    }
-
     if (!process.env.PHISH_REPORT_API_KEY) {
       return { valid: false, message: "Missing Phish Report API Key" };
     }
 
-    if (!process.env.IP_INFO_BEARER_TOKEN) {
-      return { valid: false, message: "Missing ipinfo API Bearer Token" };
+    if (!process.env.URLSCAN_API_KEY) {
+      return { valid: false, message: "Missing URLScan API Key" };
+    }
+
+    if (!process.env.VIRUS_TOTAL_API_KEY) {
+      return { valid: false, message: "Missing Virus Total API Key" };
     }
 
     return { valid: true, message: "Environment variables validated!" };
