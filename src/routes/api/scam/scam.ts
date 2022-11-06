@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import express from "express";
 import "dotenv/config";
@@ -7,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { flattenLink } from "../../../functions/flattenLink";
 import { getUserInfo } from "../../../functions/getUserInfo";
+import { authToken } from "../../../middleware/middleware";
+import { rateLimiterMiddleware } from "../../../middleware/rateLimitController";
 import ScamLink from "../../../models/ScamLink.schema";
 import { checkExternal } from "./func/checkExternal";
 import { reportExternal } from "./func/reportExternal";
@@ -67,6 +68,8 @@ const router = express.Router();
  */
 router.post(
   "/links/report",
+  rateLimiterMiddleware,
+  authToken,
 
   body("link").isString().isURL(),
   body("type").isString(),
@@ -186,6 +189,8 @@ router.post(
 // create bulk report endpoint
 router.post(
   "/links/report/bulk",
+  rateLimiterMiddleware,
+  authToken,
   body("links").isArray(),
   async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
@@ -277,8 +282,6 @@ router.post(
  *               type: boolean
  *             native:
  *              type: boolean
- *       401:
- *        description: Unauthorized (No token provided)
  */
 router.get("/links/check", async (req, res) => {
   const query = req.query;

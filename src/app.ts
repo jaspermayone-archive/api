@@ -9,8 +9,6 @@ import "dotenv/config";
 
 import { apiSpecs } from "./functions/apiSpecs";
 import errorLogger from "./logger";
-import { authToken } from "./middleware/middleware";
-import { rateLimiterMiddleware } from "./middleware/rateLimitController";
 import apiRoute from "./routes/api";
 import authRoutes from "./routes/auth";
 
@@ -29,7 +27,7 @@ app.use("/v4", (req, res) => {
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpecs));
 app.use("/auth", authRoutes);
-app.use("/", rateLimiterMiddleware, authToken, apiRoute);
+app.use("/", apiRoute);
 
 // catch all errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

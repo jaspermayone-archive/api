@@ -13,8 +13,6 @@ const router = express.Router();
  *      responses:
  *        200:
  *          description: Successful Response
- *        401:
- *          description: Unsuccessful response
  */
 
 router.get("/", (req, res) => {

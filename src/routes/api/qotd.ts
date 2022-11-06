@@ -14,8 +14,6 @@ const router = express.Router();
  *      responses:
  *        302:
  *          description: Found (Redirect to /random)
- *        401:
- *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
   res.redirect("/qotd/random");
@@ -39,8 +37,6 @@ router.get("/", (req, res) => {
  *                type: string
  *              qotd:
  *                type: string
- *        401:
- *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
   const targetRecord = await Qotd.aggregate([{ $sample: { size: 1 } }]);

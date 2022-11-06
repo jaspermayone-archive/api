@@ -41,8 +41,7 @@ const router = express.Router();
  *          schema:
  *            type: string
  *            example: "User already exists in system!"
- *        401:
- *          description: Unauthorized (No token provided)
+
  *        500:
  *          description: Internal Server Error
  */

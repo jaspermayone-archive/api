@@ -14,8 +14,6 @@ const router = express.Router();
  *      responses:
  *        302:
  *          description: Found (Redirect to /random)
- *        401:
- *          description: Unauthorized (No token provided)
  */
 router.get("/", (req, res) => {
   res.redirect("/quotes/random");
@@ -44,8 +42,6 @@ router.get("/", (req, res) => {
  *              dateUploaded:
  *                type: string
  *                format: date
- *        401:
- *          description: Unauthorized (No token provided)
  */
 router.get("/random", async (req, res) => {
   const targetRecord = await Quote.aggregate([{ $sample: { size: 1 } }]);

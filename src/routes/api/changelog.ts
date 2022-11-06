@@ -31,8 +31,6 @@ interface Release {
  *                type: string
  *                example: "v1.0.0"
  *
- *        401:
- *          description: Unauthorized (No token provided)
  *
  *        500:
  *          description: Internal Server Error

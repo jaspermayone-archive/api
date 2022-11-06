@@ -17,8 +17,6 @@ const router = express.Router();
  *            type: string
  *            example: "Heads"
  *
- *        401:
- *          description: Unauthorized (No token provided)
  */
 
 router.get("/", (req, res) => {

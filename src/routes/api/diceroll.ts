@@ -24,8 +24,6 @@ const router = express.Router();
  *                type: integer
  *                minimum: 1
  *                maximum: 6
- *        401:
- *          description: Unauthorized (No token provided)
  */
 
 router.get("/", (req, res) => {
