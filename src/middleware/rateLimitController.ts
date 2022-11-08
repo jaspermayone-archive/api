@@ -12,13 +12,10 @@ const limiter = rateLimit({
 });
 
 export async function rateLimiterMiddleware(req, res, next) {
-  const user = await getUserInfo(req, res);
+  // check if berrer token is present
+  if (req.headers.authorization) {
+    const user = await getUserInfo(req, res);
 
-  if (!user) {
-    next();
-  }
-
-  if (user) {
     if (user.accountType === "admin" || user.accountType === "Admin") {
       next();
     }
@@ -28,5 +25,7 @@ export async function rateLimiterMiddleware(req, res, next) {
     if (user.accountType === "user" || user.accountType === "User") {
       limiter(req, res, next);
     }
+  } else {
+    limiter(req, res, next);
   }
 }

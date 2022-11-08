@@ -51,12 +51,12 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     const query = { email: req.body.email };
 
     const user = await User.findOne(query);
+
     if (!user) {
-      return res.status(400).send("Can not find user");
+      return res.status(400).json({ msg: "Can not find user!" });
     }
 
     // check if password matches the one in the database
