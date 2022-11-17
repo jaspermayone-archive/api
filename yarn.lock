@@ -4420,12 +4420,12 @@ __metadata:
   linkType: hard
 
 "node-ipinfo@npm:^3.0.2":
-  version: 3.1.1
-  resolution: "node-ipinfo@npm:3.1.1"
+  version: 3.2.0
+  resolution: "node-ipinfo@npm:3.2.0"
   dependencies:
     "@types/lru-cache": ^5.1.1
     lru-cache: ^6.0.0
-  checksum: 1ce2d8b3be8cb2ee6c2dbb68092891b49e2cccd9d2b1583f52cf3bcd33071f1ce37dc320d60fcbd5187a1e1323905908a9f1f02855ae21b28a952b1195a70ac6
+  checksum: 9f7c9a3cc248e65cb39df5f926c39a50ea0d37c6b52cbd1a3ef2dee91206d1d871e874c2b49c768fd11d599a69921bc3da45a2a69dbf805476abd306e47bb016
   languageName: node
   linkType: hard
 
