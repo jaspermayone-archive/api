@@ -1624,7 +1624,7 @@ __metadata:
     axios: ^1.1.2
     bcryptjs: ^2.4.3
     body-parser: ^1.20.0
-    bun-types: ^0.2.0
+    bun-types: ^0.3.0
     chalk: ^5.0.1
     colors: ^1.4.0
     cors: ^2.8.5
@@ -1877,10 +1877,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bun-types@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "bun-types@npm:0.2.2"
-  checksum: 167901b25ed150fe760505296f7e0f7bd34dea8c6e7094f3875e120a6011d85ad35b4752bba048930d0a43762a086f37474535631f77c2f1e28e7a43f8528860
+"bun-types@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "bun-types@npm:0.3.0"
+  checksum: 247f60042e0ae08da97789e066b204faf4104f24f9c8af8058d01dfd22a3282d1979aa9536c84286371247439f1229c396a00c6b0465d0bb32a1590dc44f7262
   languageName: node
   linkType: hard
 
